@@ -9,7 +9,7 @@ use Models\Cinema as Cinema;
 ?>
 
 <main class="py-5">
-    
+    <h2>Probando </h2>
      <section id="listado" class="mb-5">
         <div class="container">
         
