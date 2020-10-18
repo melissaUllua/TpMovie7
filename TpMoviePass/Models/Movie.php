@@ -34,30 +34,109 @@ class Movie{
 		
 		
 	}
-	public function getOriginalTitle(){
-		return $this->original_title;
 
+	public function getPopularity(){
+		return $this->popularity;
 	}
-	public function getOriginalLanguage(){
-		return $this->original_language;
+
+	public function setPopularity($popularity){
+		$this->popularity = $popularity;
 	}
-	public function getRelease_date(){
-		return $this->release_date;
+
+	public function getVote_count(){
+		return $this->vote_count;
 	}
+
+	public function setVote_count($vote_count){
+		$this->vote_count = $vote_count;
+	}
+
+	public function getVideo(){
+		return $this->video;
+	}
+
+	public function setVideo($video){
+		$this->video = $video;
+	}
+
+	public function getPoster_path(){
+		return $this->poster_path;
+	}
+
+	public function setPoster_path($poster_path){
+		$this->poster_path = $poster_path;
+	}
+
 	public function getId(){
 		return $this->id;
 	}
+
+	public function setId($id){
+		$this->id = $id;
+	}
+
+	public function getAdult(){
+		return $this->adult;
+	}
+
+	public function setAdult($adult){
+		$this->adult = $adult;
+	}
+
+	public function getOriginal_language(){
+		return $this->original_language;
+	}
+
+	public function setOriginal_language($original_language){
+		$this->original_language = $original_language;
+	}
+
+	public function getOriginal_title(){
+		return $this->original_title;
+	}
+
+	public function setOriginal_title($original_title){
+		$this->original_title = $original_title;
+	}
+
+	public function getGenre_ids(){
+		return $this->genre_ids;
+	}
+
+	public function setGenre_ids($genre_ids){
+		$this->genre_ids = $genre_ids;
+	}
+
+	public function getTitle(){
+		return $this->title;
+	}
+
 	public function setTitle($title){
 		$this->title = $title;
 	}
-	public function setOriginalLanguage($original_language){
-		$this->original_language = $original_language;
+
+	public function getVote_average(){
+		return $this->vote_average;
 	}
-	public function setReleaseDate($release_date){
+
+	public function setVote_average($vote_average){
+		$this->vote_average = $vote_average;
+	}
+
+	public function getOverview(){
+		return $this->overview;
+	}
+
+	public function setOverview($overview){
+		$this->overview = $overview;
+	}
+
+	public function getRelease_date(){
+		return $this->release_date;
+	}
+
+	public function setRelease_date($release_date){
 		$this->release_date = $release_date;
-	}
-	public function setId($id){
-		$this->type = $id;
 	}
 }
  ?>
