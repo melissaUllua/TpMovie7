@@ -1,15 +1,15 @@
 <?php
 namespace Controllers;
 
-//use DAO\Movie as MovieDao;
-//use Models\Cinema as Cinema;
+use DAO\MovieDAO as MovieDAO;
+use Models\Cinema as Cinema;
 
-class CinemaController{
+class MovieController{
     private $MovieDao;
 
     public function __construct()
     {
-        $this->MovieDao = new MovieDao();
+        $this->MovieDao = new MovieDAO();
     }
 
     public function ShowAddView($message ="")
@@ -19,8 +19,9 @@ class CinemaController{
 
     public function ShowListView()
     {
-        $cinemaList = $this->MovieDao->getAll();
-        require_once(VIEWS_PATH."movie-list.php");
+        //$movieList = $this->MovieDao->getAll();
+        $movieList = $this->MovieDao->retrieveDataFromAPI();
+        require_once(VIEWS_PATH."movies-list.php");
     }
     public function ShowEditView()
     {

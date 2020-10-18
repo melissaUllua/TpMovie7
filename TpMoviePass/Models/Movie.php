@@ -1,5 +1,5 @@
 <?php 
-namespace model;
+namespace Models;
 
 class Movie{
 	
@@ -17,7 +17,7 @@ class Movie{
 	private $overview;
 	private $release_date;
 
-	function __construct($popularity, $vote_count, $video, $poster_path, $id, $adult, $original_language, $original_title, $genre_ids, $title, $vote_average, $overview, $release_date){
+	function __construct($popularity = "", $vote_count = "", $video = "", $poster_path = "", $id = "", $adult = "", $original_language = "", $original_title = "", $genre_ids = "", $title = "", $vote_average = "", $overview = "", $release_date = ""){
 		$this->popularity = $popularity;
 		$this->vote_count = $vote_count;
 		$this->video = $video;
