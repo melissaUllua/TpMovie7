@@ -17,7 +17,31 @@ class AdminController{
 
     public function ShowListView(){
         $adminList = $this->adminDAO->getAll();
-        require_once(VIEWS_PATHS."admin-list.php");
+        require_once(VIEWS_PATH."admin-list.php");
+    }
+
+    public function ShowLogInView(){
+        require_once(VIEWS_PATH."logIn.php");
+    }
+    public function ShowLogOutView(){ //I don't like it... this should link to the HomePage
+        require_once(VIEWS_PATH."logOut.php");
+    }
+
+    public function LogIn(){
+        session_start();
+    }
+
+    public function LogOut(){
+        session_start();
+
+        session_destroy();
+    
+        $this->ShowLogOutView();
+    }
+
+    public function signUp(){
+        session_start();
+
     }
 
     public function Add($adminName, $adminPass, $adminId, $isActive){

@@ -27,16 +27,18 @@
                     </thead>
                     <tbody>
                          <?php 
-                         var_dump($movieList);
-                              /*foreach($movieList as $id => $movie)
+
+                              foreach($movieList as $array)
                               {
-                                   ?>
+                                   foreach ($array as $movie) 
+                                   
+                                   {?>
                                         <tr>
                                              <td><?php echo $movie->getOriginal_title() ?></td>
                                         </tr> 
                                    <?php
                               }
-                              */
+                            }
                          ?>
                          </tr>
                     </tbody>

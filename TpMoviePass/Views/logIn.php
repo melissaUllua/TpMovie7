@@ -8,7 +8,7 @@ include('header.php');
                     <h2>Inicia sesion</h2>
                </header>
 
-               <form action="<?php echo FRONT_ROOT ?> user/login " method="POST" class="login-form bg-dark-alpha p-5 bg-light">
+               <form action="<?php echo FRONT_ROOT ?>  " method="POST" class="login-form bg-dark-alpha p-5 bg-light">
                     <div class="form-group">
                          <label for="">Email</label>
                          <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario" required>

@@ -1,7 +1,7 @@
 <?php
 namespace DAO;
 
-//use DAO\AdminDAO as AdminDAO; 
+//use Models\Admin as Admin; 
 
 class AdminDAO implements IDAO{
     private $adminList = array();

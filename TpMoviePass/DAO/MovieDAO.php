@@ -73,7 +73,6 @@ class MovieDAO implements IDAO{
             $totalPages = $arrayToDecode['total_pages'];                                  //tomamos el dato de totalpages para recorrer todas las paginas en el do while
             
             if (!empty($arrayToDecode['results'])){                                       //si la api funciona, hay algo en el arreglo en posicion "results". si no funciona la api, esto deberia estar vacio o no existir
-                var_dump($arrayToDecode);
                 foreach ($arrayToDecode['results'] as $valueArray){                       //dentro de la posicion results hay un arreglo de movies. por eso el for each, para recorrerlo entero
                     $movie = new Movie();                                                 //creamos el objeto movie y le damos los datos
                     $movie->setPopularity($valueArray['popularity']);
