@@ -27,7 +27,7 @@
                     </thead>
                     <tbody>
                          <?php 
-                         var_dump($movieList);
+                         //var_dump($movieList);
                               /*foreach($movieList as $id => $movie)
                               {
                                    ?>
