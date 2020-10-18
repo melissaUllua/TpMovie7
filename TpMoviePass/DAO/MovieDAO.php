@@ -39,10 +39,21 @@ class MovieDAO implements IDAO{
             if (!empty($arrayToDecode)){
                 foreach ($arrayToDecode as $valueArray){
                     $movie = new Movie();
-                    $movie->setTitle($valueArray['Title']);
-                    $movie->setRleaseDate($valueArray['RleaseDate']);
-                    $movie->setOriginalLanguage($valueArray['OriginalLanguage']);
-                   
+                    $movie->setPopularity($valueArray['popularity']);
+                    $movie->setVote_count($valueArray['vote_count']);
+                    $movie->setVideo($valueArray['video']);
+                    $movie->setPoster_path($valueArray['poster_path']);
+                    $movie->setId($valueArray['id']);                                     //este id va a ser la key en el arreglo asociativo, y tambien va a estar en value POR LAS DUDAS
+                    $movie->setAdult($valueArray['adult']);
+                    $movie->setOriginal_Language($valueArray['original_language']);
+                    $movie->setOriginal_title($valueArray['original_title']);
+                    $movie->setGenre_ids($valueArray['genre_ids']);
+                    $movie->setTitle($valueArray['title']);
+                    $movie->setVote_average($valueArray['vote_average']);
+                    $movie->setOverview($valueArray['overview']);
+                    $movie->setRelease_date($valueArray['release_date']);
+                    
+                    $this->movieList[$movie->getId()] = $movie;  
                     array_push($this->movieList, $movie);
                 }
             }
