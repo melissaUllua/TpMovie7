@@ -5,14 +5,19 @@
      </span>
      <ul class="navbar-nav ml-auto">
           <li class="nav-item ">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Show Cinemas</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Listar Cines</a>
           </li>
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Modify Cinemas</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Modificar Cines</a>
           </li>   
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Show Movies</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Listar Peliculas</a>
+          </li> 
+          <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Admin/ShowLogInView">Iniciar Sesión</a>
           </li>         
-          
+          <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Admin/ShowLogOutView">Cerrar Sesión</a>
+          </li> 
      </ul>
 </nav>
