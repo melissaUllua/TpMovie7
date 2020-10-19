@@ -28,9 +28,7 @@
                          if(!empty($movieList)){
                               foreach($movieList as $movie)
                               {
-                                   foreach ($array as $movie) 
-                                   
-                                   {?>
+                                   ?>
                                         <tr>
                                              <td><?php echo $movie->getTitle() ?></td>
                                              <td><?php echo $movie->getRelease_date() ?></td>

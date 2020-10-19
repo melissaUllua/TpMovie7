@@ -19,9 +19,10 @@
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogInView">Iniciar Sesión</a>
           </li>         
-          <li class="nav-item">
+         <!-- <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogOutView">Cerrar Sesión</a>
           </li> 
+          -->
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowSignUpView">Registrarse</a>
           </li> 
