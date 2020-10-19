@@ -11,10 +11,6 @@ class UserController{
         $this->userDAO = new UserDAO();
     }
 
-    public function ShowAddView(){
-        require_once(VIEWS_PATH."add-user.php");
-    }
-
     public function ShowProfileView(){
         require_once(VIEWS_PATH."user-profile.php");
     }
@@ -36,30 +32,39 @@ class UserController{
         if($_POST)
         {
             $users = $this->userDAO->getAll();
-            $user_aux = new User();                               //creo un user auxiliar para comparar
-            $user_aux->setuserEmail($_POST['userEmail']);   
-            $user_aux->setuserName($_POST['userName']);
-           
-            if ($users){ //verifico que haya datos para poder recorrerlo
+            if(empty($users)){
+                $this->AddSuperAdmin();
+                $users = $this->userDAO->getAll();
+            }          
+
+                $user_aux = new User();                               //creo un user auxiliar para comparar
+                $user_aux->setuserEmail($_POST['userEmail']);   
+                $user_aux->setuserPass($_POST['userPass']);
+                $user_aux->setuserName($_POST['userName']);            
+                $message;
                 foreach ($users as $user){ //recorro el listado
-                    if(($user_aux->getuserEmail() == $user->getuserEmail()) && ($user_aux->getuserPass() == $user->getuserPass()))
+                    if(($user_aux->getuserEmail() == $user->getuserEmail()) || ($user_aux->getuserName() == $user->getuserName()))
                     {
-                        session_start();
-            
-                        $_SESSION["loggedUser"] = $user;
-        
+                        $message = "El usuario ya existe";
                     }
-    
+                }
+                if (!isset($message)){
+            
+                    $this->userDAO->Add($user_aux);
+                    $this->ShowLogInView();
+                } else {
+                    $this->ShowSignUpView($message);
                 }
 
             }
                 
         }
-    }
+    
+
 
     public function LogIn(){
         if($_POST)
-        {
+        {   $this->AddSuperAdmin();
             $users = $this->userDAO->getAll();
             $user_aux = new User();                               //creo un user auxiliar para comparar
             $user_aux->setuserEmail($_POST['userEmail']);   
@@ -69,12 +74,17 @@ class UserController{
                 foreach ($users as $user){ //recorro el listado
                     if(($user_aux->getuserEmail() == $user->getuserEmail()) && ($user_aux->getuserPass() == $user->getuserPass()))
                     {
-                        session_start();
+                        $_SESSION['userName'] = $user_aux->getuserName();
+                        $_SESSION['isAdmin'] = $user_aux->getIsAdmin();
             
-                        $_SESSION["loggedUser"] = $user;
+                       $this->ShowProfileView();
         
                     }
     
+                }
+                if (empty($_SESSION)) {
+                    $message = "Usuario no encontrado";
+                    $this->ShowLogInView($message);
                 }
 
             }
@@ -116,17 +126,14 @@ class UserController{
 
     }
 
-
-    public function Add($userName, $userPass, $userId, $isActive){
-        $user = new user();
-        $user->setuserName($userName);
-        $user->setuserPass($userPass);
-        $user->setuserId($userId);
-        $user->setIsActive($isActive);
+       public function AddSuperAdmin(){
+        $user = new User();
+        $user->setuserName("SuperAdmin");
+        $user->setuserPass("123");
+        $user->setuserId(0);
+        $user->setIsActive(1);
 
         $this->userDAO->Add($user);
-
-        $this->ShowAddView(); //we should see if we keep this
     }
 
 }

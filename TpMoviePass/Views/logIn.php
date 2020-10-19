@@ -6,7 +6,7 @@
           <div class="content">
           
                <h2 class="mb-4">Inicio de Sesión</h2>
-               <form action="<?php echo FRONT_ROOT ?> User/LogInHC " method="POST" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT ?> User/LogIn " method="POST" class="bg-light-alpha p-5">
                <div class= "row">
                     <div class="col-lg-4">
                          <label for="">Email</label>

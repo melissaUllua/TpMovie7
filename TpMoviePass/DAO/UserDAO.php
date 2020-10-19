@@ -1,14 +1,15 @@
 <?php
 namespace DAO;
 
-//use Models\User as User; 
+use Models\User as User; 
 
 class UserDAO implements IDAO{
     private $userList = array();
     private $fileName;
 
-    public function __contruct(){
-        $this->fileName = str_replace("\\", "/", dirname(__DIR__)) . "/Data/users.json";
+    public function __construct(){
+        $this->fileName = str_replace("\\", "/", dirname(__DIR__)) . "/Data/Users.json";
+        
     }
 
     public function getAll(){
@@ -23,7 +24,10 @@ class UserDAO implements IDAO{
 
     public function Add($user){
         $this->retrieveData();
-        array_push($this->userList, $user);
+        if(!array_search($user, $this->userList)){
+            array_push($this->userList, $user);
+        }
+        
         $this->saveData();
     }
 
@@ -35,7 +39,7 @@ class UserDAO implements IDAO{
 
             if (!empty($arrayToDecode)){
                 foreach ($arrayToDecode as $valueArray){
-                    $user = new user();
+                    $user = new User();
                     $user->setuserName($valueArray['userName']);
                     $user->setuserPass($valueArray['userPass']);
                     $user->setuserId($valueArray['userId']);

@@ -11,40 +11,29 @@
                }
           ?>
                <h2 class="mb-4">Ingrese sus datos</h2>
-               <form action="<?php echo FRONT_ROOT ?>Admin/signUp" method="post" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT ?>User/signUp" method="post" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Nombre</label>
-                                   <input type="text" name="adminName" value="" class="form-control">
+                                   <input type="text" name="userName" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Dirección</label>
-                                   <input type="text" name="cinemaAdress" value="" class="form-control">
+                                   <label for="">Email</label>
+                                   <input type="text" name="userEmail" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Capacidad total</label>
-                                   <input type="num" name="cinemaTotalCapacity" value="" class="form-control">
+                                   <label for="">Ingrese Contraseña</label>
+                                   <input type="password" name="userPass" value="" class="form-control">
                               </div>
                          </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Precio de la entrada</label>
-                                   <input type="num" name="cinemaTicketPrice" value="" class="form-control">
-                              </div>
-                         </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Disponibilidad</label>
-                                   <input type="num" name="cinemaAvailability" value="" class="form-control">
-                              </div>
-                         </div>
+               
                     </div>
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Registrar</button>
                </form>
           </div>
      </section>
