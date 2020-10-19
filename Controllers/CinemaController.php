@@ -24,13 +24,14 @@ class CinemaController{
     }
     public function ShowEditView()
     {
+        $cinemaList = $this->cinemaDAO->getAll();
         require_once(VIEWS_PATH."cinema-edit.php");
     }
 
-    public function Add(/*$cinemaId,*/ $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity)
+    public function Add($cinemaID, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity)
     {
         $cinema = new Cinema();
-       // $cinema->setCinemaId($cinemaId);
+        $cinema->setCinemaId($cinemaID);
         $cinema->setCinemaName($cinemaName);
         $cinema->setCinemaTotalCapacity($cinemaTotalCapacity);
         $cinema->setCinemaTicketPrice($cinemaTicketPrice);
@@ -43,28 +44,35 @@ class CinemaController{
 
         $this->ShowAddView(); //we should see if we keep this
     }
-    public function EditCinema($cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity)
+    public function Edit($id, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity)
     {
         $modify = new Cinema();
-        $modify->setCinemaName($cinemaName);
-        $modify->setCinemaTotalCapacity($cinemaTotalCapacity);
-        $modify->setCinemaTicketPrice($cinemaTicketPrice);
-        $modify->setCinemaAddress($cinemaAddress);
-        $modify->setCinemaAvailability($cinemaAvailabiity);
+        if ($cinemaName != "")
+        {
+            $modify->setCinemaName($cinemaName);
+        }
+        if ($cinemaAddress != "")
+        {
+            $modify->setCinemaAddress($cinemaAddress);
+        }
+        if ($cinemaTotalCapacity != "")
+        {
+            $modify->setCinemaTotalCapacity($cinemaTotalCapacity);
+        }
+        if ($cinemaTicketPrice != "")
+        {
+            $modify->setCinemaTicketPrice($cinemaTicketPrice);
+        }
+        if ($cinemaAvailabiity != "")
+        {
+            $modify->setCinemaAvailability($cinemaAvailabiity);
+        }
 
-        $this->cinemaDAO->Add($modify);
+        $this->cinemaDAO->Edit($id, $modify);
         $message = "El cine fue editado con exito!";
 
         $this->ShowListView();
     }
-    public function DeleteCinema()
-    {
-        $cinema = new Cinema();
-        $cinema->setcinemaAvailabilit(false);
-
-        $this->cinemaDAO->add($cinema);
-    }
-
 }
 
 

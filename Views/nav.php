@@ -9,6 +9,9 @@
           </li>
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Modificar Cines</a>
-          </li>          
+          </li>    
+          <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Agregar Cines</a>
+          </li>      
      </ul>
 </nav>

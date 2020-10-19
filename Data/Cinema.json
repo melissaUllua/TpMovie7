@@ -2,9 +2,41 @@
     {
         "cinemaId": null,
         "cinemaName": "asdas",
+        "cinemaTotalCapacity": "21",
+        "cinemaTicketPrice": "19",
+        "cinemaAddress": "holiwi",
+        "cinemaAvailability": "true"
+    },
+    {
+        "cinemaId": null,
+        "cinemaName": "cinecito",
+        "cinemaTotalCapacity": null,
+        "cinemaTicketPrice": null,
+        "cinemaAddress": null,
+        "cinemaAvailability": "true"
+    },
+    {
+        "cinemaId": null,
+        "cinemaName": "cinecito",
+        "cinemaTotalCapacity": null,
+        "cinemaTicketPrice": null,
+        "cinemaAddress": null,
+        "cinemaAvailability": "true"
+    },
+    {
+        "cinemaId": null,
+        "cinemaName": "asdas",
+        "cinemaTotalCapacity": "21",
+        "cinemaTicketPrice": "19",
+        "cinemaAddress": "holiwi",
+        "cinemaAvailability": "false"
+    },
+    {
+        "cinemaId": "4",
+        "cinemaName": "nuevo",
         "cinemaTotalCapacity": "878",
-        "cinemaTicketPrice": "1231",
-        "cinemaAddress": "asdas",
-        "cinemaAvailability": "45"
+        "cinemaTicketPrice": "120",
+        "cinemaAddress": "holi",
+        "cinemaAvailability": "false"
     }
 ]

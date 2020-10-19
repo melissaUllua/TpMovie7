@@ -12,35 +12,46 @@
           ?>
                <h2 class="mb-4">Agregar cine</h2>
                <form action="<?php echo FRONT_ROOT ?>Cinema/Add" method="post" class="bg-light-alpha p-5">
-                    <div class="row">                         
+                    <div class="row">                 
+                    <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for="">ID</label>
+                                   <input type="number" name="cinemaID"  min=0 class="form-control" required>
+                              </div>
+                         </div>        
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Nombre</label>
-                                   <input type="text" name="cinemaName" value="" class="form-control">
+                                   <input type="text" name="cinemaName"  class="form-control"required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Dirección</label>
-                                   <input type="text" name="cinemaAdress" value="" class="form-control">
+                                   <input type="text" name="cinemaAdress"  class="form-control"required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Capacidad total</label>
-                                   <input type="num" name="cinemaTotalCapacity" value="" class="form-control">
+                                   <input type="number" name="cinemaTotalCapacity" min=0  class="form-control"required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Precio de la entrada</label>
-                                   <input type="num" name="cinemaTicketPrice" value="" class="form-control">
+                                   <input type="number" name="cinemaTicketPrice"  min=0  class="form-control"required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Disponibilidad</label>
-                                   <input type="num" name="cinemaAvailability" value="" class="form-control">
+                                   <select name="cinemaAvailabiity" id="" class="form-control"required>
+                                   <option value="">-</option>
+                                   <option value="true">Disponible</option>
+                                   <option value="false">No disponible</option>
+                                   </select>
+
                               </div>
                          </div>
                     </div>
