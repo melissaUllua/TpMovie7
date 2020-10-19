@@ -11,7 +11,7 @@ class Movie{
 	private $adult;
 	private $original_language;
 	private $original_title;
-	private $genre_ids;
+	private $genre_ids = array();
 	private $title;
 	private $vote_average;
 	private $overview;

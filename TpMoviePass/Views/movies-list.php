@@ -1,42 +1,44 @@
 <?php
-   // require_once('nav.php');
-    //require "Config/Autoload.php";
-    
 
-   /* use Models\Movie as Movie; 
+    require_once('nav.php');
+    //require "Config/Autoload.php";
+
+    use Models\Movie as Movie; 
     use DAO\MovieDAO as MovieDAO; 
     
-    $movieDao = new MovieDAO();
-   
-    $movieList =  $movieDao->retrieveDataFromAPI();
-    */
+    $movieDao = new MovieDAO;
+    $movieList =  $movieDao->getAll();
+    
 ?>
 <main class="py-5">
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Listado de cines</h2>
+               <h2 class="mb-4">Movie List</h2>
                <table class="table bg-light-alpha">
                     <thead>
-                         <th>Nombre</th>
-                         <th>Precio de la entrada</th>
-                         <th>Capacidad total</th>
-                         <th>Direccion </th>
-                         <th>Modificar</th>
-                         <th>Eliminar</th>
+                         <th>Title</th>
+                         <th>Release date</th>
+                         <th>Language </th>
+                         <th>Overview</th>
+                         <th>Poster</th>
                     </thead>
                     <tbody>
                          <?php 
-                         var_dump($movieList);
-                              /*foreach($movieList as $id => $movie)
+                         if(!empty($movieList)){
+                              foreach($movieList as $movie)
                               {
                                    ?>
                                         <tr>
-                                             <td><?php echo $movie->getOriginal_title() ?></td>
-                                        </tr> 
+                                             <td><?php echo $movie->getTitle() ?></td>
+                                             <td><?php echo $movie->getRelease_date() ?></td>
+                                             <td><?php echo $movie->getOriginal_language() ?></td>
+                                             <td><?php echo $movie->getOverview() ?></td>                                        
+                                             <td><img src = "<?php echo ('https://image.tmdb.org/t/p/w500' . $movie->getPoster_path()) ?>" height="200" width="135"/></td>                                        </tr> 
+</tr> 
                                    <?php
                               }
-                              */
+                         }     
                          ?>
                          </tr>
                     </tbody>
