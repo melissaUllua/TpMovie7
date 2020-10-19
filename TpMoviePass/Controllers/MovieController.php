@@ -20,7 +20,7 @@ class MovieController{
     public function ShowListView()
     {
         //$movieList = $this->MovieDao->getAll();
-        $movieList = $this->MovieDao->retrieveDataFromAPI();
+        $movieList = $this->MovieDao->getAll();
         require_once(VIEWS_PATH."movies-list.php");
     }
     public function ShowEditView()

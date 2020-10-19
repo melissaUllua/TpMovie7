@@ -63,7 +63,37 @@ class MovieDAO implements IDAO{
          
     }
 
+
     public function retrieveDataFromAPI(){
+        $this->movieList = array();
+
+            $jsonContent = file_get_contents('https://api.themoviedb.org/3/movie/now_playing?api_key=cbd53a3628e9ef7454e5890f33b974d8'); //guarda en jsoncontent un string con lo que te tira cada pagina
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();  //convierte ese string en un arreglo asociativo
+
+            if (!empty($arrayToDecode['results'])){                                       //si la api funciona, hay algo en el arreglo en posicion "results". si no funciona la api, esto deberia estar vacio o no existir
+                foreach ($arrayToDecode['results'] as $valueArray){                       //dentro de la posicion results hay un arreglo de movies. por eso el for each, para recorrerlo entero
+                    $movie = new Movie();                                                 //creamos el objeto movie y le damos los datos
+                    $movie->setPopularity($valueArray['popularity']);
+                    $movie->setVote_count($valueArray['vote_count']);
+                    $movie->setVideo($valueArray['video']);
+                    $movie->setPoster_path($valueArray['poster_path']);
+                    $movie->setId($valueArray['id']);                                     //este id va a ser la key en el arreglo asociativo, y tambien va a estar en value POR LAS DUDAS
+                    $movie->setAdult($valueArray['adult']);
+                    $movie->setOriginal_Language($valueArray['original_language']);
+                    $movie->setOriginal_title($valueArray['original_title']);
+                    $movie->setGenre_ids($valueArray['genre_ids']);
+                    $movie->setTitle($valueArray['title']);
+                    $movie->setVote_average($valueArray['vote_average']);
+                    $movie->setOverview($valueArray['overview']);
+                    $movie->setRelease_date($valueArray['release_date']);
+                    
+                    $this->movieList[$movie->getId()] = $movie;                                 //guardamos cada movie en la lista de movies, key = id, value = objeto movie
+                }
+            }
+    }
+
+
+    public function retrieveDataFromAPIComplete(){
         $this->movieList = array();
         $page = 1;
         $totalPages = 0;
