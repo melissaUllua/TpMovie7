@@ -5,6 +5,7 @@ class Admin{
     private $adminPass;
     private $adminId;
     private $isActive;
+    private $adminEmail;
 
 
 
@@ -84,6 +85,26 @@ class Admin{
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of adminEmail
+     */ 
+    public function getAdminEmail()
+    {
+        return $this->adminEmail;
+    }
+
+    /**
+     * Set the value of adminEmail
+     *
+     * @return  self
+     */ 
+    public function setAdminEmail($adminEmail)
+    {
+        $this->adminEmail = $adminEmail;
 
         return $this;
     }

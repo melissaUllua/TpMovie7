@@ -40,6 +40,7 @@ class AdminDAO implements IDAO{
                     $admin->setAdminPass($valueArray['adminPass']);
                     $admin->setAdminId($valueArray['adminId']);
                     $admin->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
+                    $admin->setAdminEmail($valueArray['adminEmail']);
                     array_push($this->adminList, $admin);
                 }
             }
@@ -55,6 +56,7 @@ class AdminDAO implements IDAO{
             $valueArray['adminPass']= $admin->getAdminPass();
             $valueArray['adminId'] = $admin->getAdminId();
             $valueArray['isActive'] = $admin->getIsActive();
+            $valueArray['adminEmail'] = $admin->getAdminEmail();
             array_push($arrayToEncode, $valueArray);
         }
         $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
