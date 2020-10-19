@@ -74,8 +74,9 @@ class UserController{
                 foreach ($users as $user){ //recorro el listado
                     if(($user_aux->getuserEmail() == $user->getuserEmail()) && ($user_aux->getuserPass() == $user->getuserPass()))
                     {
-                        $_SESSION['userName'] = $user_aux->getuserName();
-                        $_SESSION['isAdmin'] = $user_aux->getIsAdmin();
+                        $_SESSION['userName'] = $user->getuserName();
+                        $_SESSION['userEmail'] = $user->getuserEmail();
+                        $_SESSION['isAdmin'] = $user->getIsAdmin();
             
                        $this->ShowProfileView();
         

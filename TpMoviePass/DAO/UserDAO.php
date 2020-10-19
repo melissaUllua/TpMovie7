@@ -24,9 +24,18 @@ class UserDAO implements IDAO{
 
     public function Add($user){
         $this->retrieveData();
-        if(!array_search($user, $this->userList)){
-            array_push($this->userList, $user);
+        $flag;
+        if($this->userList){
+            foreach ($this->userList as $user_aux){
+                if(($user_aux->getuserEmail() == $user->getuserEmail()) || ($user_aux->getuserName() == $user->getuserName()))
+                    {
+                        $flag = "El usuario ya existe";
+                    }
+            }
         }
+        if (!isset($flag)){
+            array_push($this->userList, $user);
+        }    
         
         $this->saveData();
     }
