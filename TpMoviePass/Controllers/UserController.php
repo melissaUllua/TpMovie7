@@ -25,7 +25,7 @@ class UserController{
 
     public function ShowLogOutView(){
         $this->LogOut();
-        require_once(VIEWS_PATH."index.php");
+       $this->ShowLogInView();
     }
 
     public function ShowSignUpView($message = ""){
@@ -113,7 +113,7 @@ class UserController{
     public function LogOut(){
         //session_start();
         session_destroy();
-    
+
     }
 
 
