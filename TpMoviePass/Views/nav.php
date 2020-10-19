@@ -7,6 +7,9 @@
           <li class="nav-item ">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Show Cinemas</a>
           </li>
+          <li class="nav-item ">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Add Cinemas</a>
+          </li>
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Modify Cinemas</a>
           </li>   
