@@ -82,11 +82,9 @@ class AdminController{
 }
 
     public function LogOut(){
-        session_start();
-
+        //session_start();
         session_destroy();
     
-        $this->ShowLogOutView();
     }
 
     public function signUp(){

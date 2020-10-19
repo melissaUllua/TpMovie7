@@ -9,7 +9,7 @@ class MovieDAO implements IDAO{
     private $movieList = array();
     private $fileName;
 
-    public function __contruct(){
+    public function __construct(){
         $this->fileName = str_replace("\\", "/", dirname(__DIR__)) . "/Data/Movie.json";
     }
 
@@ -71,7 +71,7 @@ class MovieDAO implements IDAO{
             $jsonContent = file_get_contents('https://api.themoviedb.org/3/movie/now_playing?api_key=cbd53a3628e9ef7454e5890f33b974d8&page=' . $page); //guarda en jsoncontent un string con lo que te tira cada pagina
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();  //convierte ese string en un arreglo asociativo
             $totalPages = $arrayToDecode['total_pages'];                                  //tomamos el dato de totalpages para recorrer todas las paginas en el do while
-            
+
             if (!empty($arrayToDecode['results'])){                                       //si la api funciona, hay algo en el arreglo en posicion "results". si no funciona la api, esto deberia estar vacio o no existir
                 foreach ($arrayToDecode['results'] as $valueArray){                       //dentro de la posicion results hay un arreglo de movies. por eso el for each, para recorrerlo entero
                     $movie = new Movie();                                                 //creamos el objeto movie y le damos los datos
@@ -90,12 +90,13 @@ class MovieDAO implements IDAO{
                     $movie->setRelease_date($valueArray['release_date']);
                     
                     $this->movieList[$movie->getId()] = $movie;                                 //guardamos cada movie en la lista de movies, key = id, value = objeto movie
-                    $page++;                                                              //contador, para que en la proxima iteracion vaya a la pag siguiente
                 }
             }
+            $page++;                                                              //contador, para que en la proxima iteracion vaya a la pag siguiente
         }while($page <= $totalPages);                                                     //recorre hasta la ultima pagina
 
-        //var_dump($movieList);
+        $this->saveData();
+        var_dump($this->movieList);
     }
 
     
@@ -109,16 +110,15 @@ class MovieDAO implements IDAO{
                 if(!$oldMovieList[$currentNewMovie->getId()]){
                     $oldmovieList[$currentNewMovie->getId()] = $currentNewMovie; //si no existe la pelicula, la agrega en key id
                 }else{                                                           //si existe, actualiza los campos
-                    $$oldMovieList[$currentNewMovie->getId()]->setPopularity($currentNewMovie['popularity']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setVote_count($currentNewMovie['vote_count']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setVideo($currentNewMovie['video']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setPoster_path($currentNewMovie['poster_path']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setAdult($currentNewMovie['adult']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setGenre_ids($currentNewMovie['genre_ids']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setTitle($currentNewMovie['title']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setVote_average($currentNewMovie['vote_average']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setOverview($currentNewMovie['overview']);
-                    $$oldMovieList[$currentNewMovie->getId()]->setRelease_date($currentNewMovie['release_date']);
+                    $oldMovieList[$currentNewMovie->getId()]->setPopularity($currentNewMovie['popularity']);
+                    $oldMovieList[$currentNewMovie->getId()]->setVote_count($currentNewMovie['vote_count']);
+                    $oldMovieList[$currentNewMovie->getId()]->setVideo($currentNewMovie['video']);
+                    $oldMovieList[$currentNewMovie->getId()]->setPoster_path($currentNewMovie['poster_path']);
+                    $oldMovieList[$currentNewMovie->getId()]->setAdult($currentNewMovie['adult']);
+                    $oldMovieList[$currentNewMovie->getId()]->setGenre_ids($currentNewMovie['genre_ids']);
+                    $oldMovieList[$currentNewMovie->getId()]->setTitle($currentNewMovie['title']);
+                    $oldMovieList[$currentNewMovie->getId()]->setVote_average($currentNewMovie['vote_average']);
+                    $oldMovieList[$currentNewMovie->getId()]->setOverview($currentNewMovie['overview']);
                 }
             }
         }
@@ -130,11 +130,22 @@ class MovieDAO implements IDAO{
 
     public function saveData(){    //todavia no toque esta funcion
         $arrayToEncode = array();
+
         foreach($this->movieList as $movie){
             
-            $valueArray['Title'] =  $movie->getOriginalTitle();
-            $valueArray['RleaseDate']= $movie->getRelease_date();
-            $valueArray['OriginalLanguage'] = $movie->getOriginalLanguage();
+            $valueArray['popularity'] = $movie->getPopularity();
+            $valueArray['vote_count'] = $movie->getVote_count();
+            $valueArray['video'] = $movie->getVideo();
+            $valueArray['poster_path'] = $movie->getPoster_path();
+            $valueArray['id'] = $movie->getId();                                     //este id va a ser la key en el arreglo asociativo, y tambien va a estar en value POR LAS DUDAS
+            $valueArray['adult'] = $movie->getAdult();
+            $valueArray['original_language'] = $movie->getOriginal_Language();
+            $valueArray['original_title'] = $movie->getOriginal_title();
+            $valueArray['genre_ids'] = $movie->getGenre_ids();
+            $valueArray['title'] = $movie->getTitle();
+            $valueArray['vote_average'] = $movie->getVote_average();
+            $valueArray['overview'] = $movie->getOverview();
+            $valueArray['release_date'] = $movie->getRelease_date();
             
             array_push($arrayToEncode, $valueArray);
         }

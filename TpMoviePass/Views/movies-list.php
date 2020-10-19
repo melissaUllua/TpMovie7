@@ -15,7 +15,7 @@
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Listado de cines</h2>
+               <h2 class="mb-4">Listado de Películas</h2>
                <table class="table bg-light-alpha">
                     <thead>
                          <th>Nombre</th>
