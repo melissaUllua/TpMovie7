@@ -11,13 +11,16 @@
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Modificar Cines</a>
           </li>   
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Listar Peliculas</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Listar Peliculas</a>
           </li> 
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Admin/ShowLogInView">Iniciar Sesión</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogInView">Iniciar Sesión</a>
           </li>         
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Admin/ShowLogOutView">Cerrar Sesión</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogOutView">Cerrar Sesión</a>
+          </li> 
+          <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowSignUpView">Registrarse</a>
           </li> 
      </ul>
 </nav>
