@@ -28,6 +28,7 @@ class AdminController{
     }
 
     public function LogIn(){
+        if (isset $_POST)
         session_start();
     }
 
