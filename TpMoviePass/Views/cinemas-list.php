@@ -15,8 +15,8 @@
                          <th>Precio de la entrada</th>
                          <th>Capacidad total</th>
                          <th>Direccion </th>
-                         <th>Modificar</th>
-                         <th>Eliminar</th>
+                         <th>Estado de cine</th>
+                         
                     </thead>
                     <tbody>
                          <?php 
@@ -28,26 +28,23 @@
                                              <td><?php echo $cinema->getCinemaTicketPrice() ?></td>
                                              <td><?php echo $cinema->getCinemaTotalCapacity() ?></td>
                                              <td><?php echo $cinema->getCinemaAddress() ?></td>
+                                             <td><?php if($cinema->getCinemaAvailability() == true)
+                                             {
+                                                  echo "Disponible";
+                                             }
+                                             else
+                                             {
+                                                  echo "No disponible";
+                                             }
+                                             ?></td>
+                                            
                                         </tr> 
                                    <?php
                               }
                          ?>
                          </tr>
                     </tbody>
-               </table>
-               <!--<form action="<?php //echo FRONT_ROOT ?>Cinema/EditCinema". method="post" class="bg-light-alpha p-5">
-               <table class="table text-white bg-oscuro"> 
-            
-              <tr>
-                <th>Si desea editar algun cine ingrese su nombre: </th>
-                 <td>
-                  <input type="text" value="modificar" size="30">
-                  <button type="submit" name="button" class="">Modificar</button>
-                </td>
-           
-             </tr>
-             <tr> -->
-               </form>
+               </table> 
           </div>
      </section>
 </main>

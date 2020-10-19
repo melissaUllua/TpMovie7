@@ -25,11 +25,11 @@
     },
     {
         "cinemaId": null,
-        "cinemaName": "asdas",
+        "cinemaName": "Cine 1",
         "cinemaTotalCapacity": "21",
         "cinemaTicketPrice": "19",
         "cinemaAddress": "holiwi",
-        "cinemaAvailability": "false"
+        "cinemaAvailability": "true"
     },
     {
         "cinemaId": "4",

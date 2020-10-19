@@ -58,7 +58,6 @@ class CinemaDAO implements IDAO{
             }
         }
 
-        var_dump($PosOnList);
         if($PosOnList != null || $PosOnList == 0){
             $this->cinemaList[$PosOnList] = $cinemaModify;
         }else
