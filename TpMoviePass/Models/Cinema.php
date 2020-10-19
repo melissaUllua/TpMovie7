@@ -12,7 +12,6 @@ class Cinema{
 
     public function __construct()
     {
-        $this->cinemaAvailability = true;
     }
 
     /**
