@@ -33,6 +33,43 @@ class CinemaDAO implements IDAO{
         array_push($this->cinemaList, $cinema);
         $this->saveData();
     }
+    public function GetOne($CinemaId)
+    {
+        
+            $this->RetrieveData();
+            foreach($this->cinemaList as $cinema){
+                if($cinema->getCinemaId() == $CinemaId){
+                    return $cinema;
+                }
+            }
+
+            return null;
+    }
+
+    public function Edit($CinemaId, Cinema $cinemaModify)
+    {
+        $this->retrieveData();
+
+        $PosOnList = null;
+           
+        foreach($this->cinemaList as $key => $cinema){
+            if($cinema->getCinemaId() == $CinemaId){
+                $PosOnList = $key;
+            }
+        }
+
+        if($PosOnList != null || $PosOnList == 0){
+            $this->cinemaList[$PosOnList] = $cinemaModify;
+        }else
+        {
+            //echo "error";
+        }
+        //var_dump($cinemaModify);
+        $this->SaveData();
+
+        
+    }
+
 
     public function retrieveData(){
         $this->cinemaList = array(); //porque voy a volver a cargarlos

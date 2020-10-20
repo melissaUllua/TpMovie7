@@ -1,24 +1,30 @@
 <?php 
-include('header.php');
+ require_once('nav.php');
 
 ?>
      <main class="d-flex align-items-center justify-content-center height-100" >
           <div class="content">
-               <header class="text-center">
-                    <h2>Inicia sesion</h2>
-               </header>
-
-               <form action="<?php echo FRONT_ROOT ?> user/login " method="POST" class="login-form bg-dark-alpha p-5 bg-light">
-                    <div class="form-group">
+          
+               <h2 class="mb-4">Inicio de Sesión</h2>
+               <form action="<?php echo FRONT_ROOT ?> User/LogIn " method="POST" class="bg-light-alpha p-5">
+               <div class= "row">
+                    <div class="col-lg-4">
                          <label for="">Email</label>
-                         <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario" required>
+                         <input type="text" name="userEmail" class="form-control" placeholder="Ingresar usuario" required>
                     </div>
                     <div class="form-group">
                          <label for="">Contraseña</label>
-                         <input type="password" name="password" class="form-control form-control-lg" placeholder="Ingresar constraseña" required>
+                         <input type="password" name="userPass" class="form-control" placeholder="Ingresar constraseña" required>
                     </div>
-                    <button class="btn btn-primary btn-block btn-lg" type="submit">Iniciar Sesión</button>
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Iniciar Sesión</button>
+               </div>
                </form>
+               <?php 
+               if(isset($message))
+               {
+                    echo $message;
+               }
+          ?>
           </div>
      </main>
 

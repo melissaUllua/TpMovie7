@@ -35,7 +35,7 @@
                                              <td><?php echo $movie->getOriginal_language() ?></td>
                                              <td><?php echo $movie->getOverview() ?></td>                                        
                                              <td><img src = "<?php echo ('https://image.tmdb.org/t/p/w500' . $movie->getPoster_path()) ?>" height="200" width="135"/></td>                                        </tr> 
-</tr> 
+                                        </tr> 
                                    <?php
                               }
                          }     
