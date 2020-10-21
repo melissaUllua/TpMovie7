@@ -4,7 +4,7 @@
         "cinemaName": "Ambassador",
         "cinemaTotalCapacity": "2100",
         "cinemaTicketPrice": "319",
-        "cinemaAddress": "Córdoba 1500",
+        "cinemaAddress": "C\u00f3rdoba 1500",
         "cinemaAvailability": "true"
     },
     {
@@ -25,10 +25,10 @@
     },
     {
         "cinemaId": null,
-        "cinemaName": "Cinemas Del Centro",
-        "cinemaTotalCapacity": "2119",
-        "cinemaTicketPrice": "430",
-        "cinemaAddress": "Entre Ríos 5434",
+        "cinemaName": "Cine 1",
+        "cinemaTotalCapacity": "2100",
+        "cinemaTicketPrice": "319",
+        "cinemaAddress": "C\u00f3rdoba 1500",
         "cinemaAvailability": "true"
     }
 ]
