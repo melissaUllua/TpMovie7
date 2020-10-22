@@ -28,7 +28,7 @@ class CinemaController{
         require_once(VIEWS_PATH."cinema-edit.php");
     }
 
-    public function Add($cinemaID, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity)
+    public function Add($cinemaID, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity/*,$cinemaRooms*/)
     {
         $cinema = new Cinema();
         $cinema->setCinemaId($cinemaID);
@@ -37,12 +37,14 @@ class CinemaController{
         $cinema->setCinemaTicketPrice($cinemaTicketPrice);
         $cinema->setCinemaAddress($cinemaAddress);
         $cinema->setCinemaAvailability($cinemaAvailabiity);
-
+        //$cinema->setCinemaRooms($cinemaRooms)
         $this->cinemaDAO->Add($cinema);
 
         $message = "El cine fue agregado con exito!";
 
-        $this->ShowAddView(); //we should see if we keep this
+        //$this->ShowAddView(); //we should see if we keep this
+        //llevar una variable con la cantidad de rooms que tiene el cine 
+        require_once(VIEWS_PATH."add-room.php")
     }
     public function Edit($id, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity)
     {
