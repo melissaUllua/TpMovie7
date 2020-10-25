@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
      <span class="navbar-text">
-          <strong>TP CINEMA</strong>
+          <strong><a class="nav-link" href="<?php echo FRONT_ROOT ?>index.php">TP CINEMA</a></strong>
           
      </span>
      <ul class="navbar-nav ml-auto">
@@ -26,6 +26,9 @@
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Edit Cinemas</a>
                          </li>   
                <?php    }  ?>
+               <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowProfileView">Profile</a>
+               </li> 
                <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogOutView">Log Out</a>
                </li> 

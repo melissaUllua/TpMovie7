@@ -18,7 +18,7 @@
                     <tbody>
                         
                        <tr>
-                            <td><?php echo $_SESSION['userEmail']; ?></td>
+                            <td><?php echo $_SESSION['userEmail'];?></td>
 
                        </tr> 
                              

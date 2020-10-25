@@ -20,8 +20,10 @@ class UserController{
     }
 
     public function ShowLogOutView(){
-        $this->LogOut();
-       $this->ShowLogInView();
+       $this->LogOut();
+       header("Location: ". FRONT_ROOT . "index.php");
+       //require_once(FRONT_ROOT."index.php");
+
     }
 
     public function ShowSignUpView($message = ""){
@@ -117,7 +119,6 @@ class UserController{
     public function LogOut(){
         //session_start();
         session_destroy();
-
     }
 
        public function AddSuperAdmin(){
@@ -130,6 +131,13 @@ class UserController{
         $user->setIsAdmin(1);
 
         $this->userDAO->Add($user);
+    }
+
+    private function verifyPass($pass){
+        $pass_aux = null;
+        if(strlen($pass)>=3){ //retorna la longitud del string en int- pongo 3 para no trabajar con valores muy grandes
+            $array = str_split($pass);
+        }
     }
 
 }
