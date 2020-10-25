@@ -41,16 +41,15 @@ class UserController{
                 $user_aux->setuserEmail($_POST['userEmail']);   
                 $user_aux->setuserPass($_POST['userPass']);
                 $user_aux->setuserName($_POST['userName']);            
-                $message;
-                foreach ($users as $user){ //recorro el listado
+               /* foreach ($users as $user){ //recorro el listado
                     if(($user_aux->getuserEmail() == $user->getuserEmail()) || ($user_aux->getuserName() == $user->getuserName()))
                     {
                         $message = "El usuario ya existe";
                     }
                 }
-                if (!isset($message)){
-            
-                    $this->userDAO->Add($user_aux);
+                */
+                $message = $this->userDAO->Add($user_aux);
+                if (empty($message)){
                     $this->ShowLogInView();
                 } else {
                     $this->ShowSignUpView($message);
@@ -130,6 +129,7 @@ class UserController{
        public function AddSuperAdmin(){
         $user = new User();
         $user->setuserName("SuperAdmin");
+        $user->setuserEmail("user@user.com");
         $user->setuserPass("123");
         $user->setuserId(0);
         $user->setIsActive(1);

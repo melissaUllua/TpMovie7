@@ -24,23 +24,42 @@ class UserDAO implements IDAO{
 
     public function Add($user){
         $this->retrieveData();
-        $flag;
         if($this->userList){
-            foreach ($this->userList as $user_aux){
-                if(($user_aux->getuserEmail() == $user->getuserEmail()) || ($user_aux->getuserName() == $user->getuserName()))
-                    {
-                        $flag = "El usuario ya existe";
-                    }
-            }
-        }
-        if (!isset($flag)){
+            $flag = $this->existsByName($user->getuserName(), $user->getuserEmail());
+            if (empty($flag)){
+                array_push($this->userList, $user);
+            }  
+        } else {
             array_push($this->userList, $user);
-        }    
-        
+        }
         $this->saveData();
+        if (!empty($flag)){
+            $message = $flag;
+        }
+        else{
+            $message = "";
+        }
+        return $message;
     }
 
-    public function retrieveData(){
+    private function existsByName($name, $email){
+        foreach ($this->userList as $user_aux){
+            if(($user_aux->getuserEmail() == $email) || ($user_aux->getuserName() == $name))
+                {
+                    $message = "El usuario ya existe";
+                }
+        }
+        if (!isset($message)) {
+            $message = "";
+        }
+        return $message;
+    }
+
+    public function searchByName(){
+        
+    }
+
+    private function retrieveData(){
         $this->userList = array(); //porque voy a volver a cargarlos
         if(file_exists($this->fileName)){
             $jsonContent = file_get_contents($this->fileName);
@@ -63,7 +82,7 @@ class UserDAO implements IDAO{
          
     }
 
-    public function saveData(){
+    private function saveData(){
         $arrayToEncode = array();
         foreach($this->userList as $user){
             

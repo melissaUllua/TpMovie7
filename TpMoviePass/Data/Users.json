@@ -4,7 +4,7 @@
         "userPass": "123",
         "userId": 0,
         "isActive": 1,
-        "userEmail": null,
+        "userEmail": "user@user.com",
         "isAdmin": null
     },
     {
@@ -13,22 +13,6 @@
         "userId": null,
         "isActive": null,
         "userEmail": "daiana@mail.com",
-        "isAdmin": null
-    },
-    {
-        "userName": "Lolo",
-        "userPass": "lolo",
-        "userId": null,
-        "isActive": null,
-        "userEmail": "lolo@lolo.com",
-        "isAdmin": null
-    },
-    {
-        "userName": "Jazmin",
-        "userPass": "jaz",
-        "userId": null,
-        "isActive": null,
-        "userEmail": "jaz@min.com",
         "isAdmin": null
     }
 ]

@@ -23,11 +23,12 @@
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowSignUpView">Registrarse</a>
           </li> 
-         <?php } else {?>
+         <?php } else {{?>
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogOutView">Cerrar Sesión</a>
           </li> 
-          <?php } ?>
+          <?php if ($_SESSION['isAdmin'] == true) { } 
+     }?>
           
      </ul>
 </nav>
