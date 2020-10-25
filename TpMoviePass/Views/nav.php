@@ -5,30 +5,30 @@
      </span>
      <ul class="navbar-nav ml-auto">
           <li class="nav-item ">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Listar Cines</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Display Cinemas</a>
           </li>
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Listar Peliculas</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Display Movies</a>
           </li> 
          <?php if(empty($_SESSION)){?>
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogInView">Iniciar Sesión</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogInView">Log In</a>
           </li>         
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowSignUpView">Registrarse</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowSignUpView">Sign Up</a>
           </li> 
          <?php } else { ?>
                 <?php if ($_SESSION['isAdmin'] == true) { ?>
                          <li class="nav-item ">
-                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Agregar Cines</a>
+                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Add Cinemas</a>
                          </li>
                          <li class="nav-item">
-                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Modificar Cines</a>
+                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Edit Cinemas</a>
                          </li>   
                <?php    }  ?>
                <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogOutView">Cerrar Sesión</a>
-          </li> 
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogOutView">Log Out</a>
+               </li> 
     <?php }?>
           
      </ul>

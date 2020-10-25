@@ -5,18 +5,18 @@
      <main class="d-flex align-items-center justify-content-center height-100" >
           <div class="content">
           
-               <h2 class="mb-4">Inicio de Sesión</h2>
+               <h2 class="mb-4">Log In</h2>
                <form action="<?php echo FRONT_ROOT ?> User/LogIn " method="POST" class="bg-light-alpha p-5">
                <div class= "row">
                     <div class="col-lg-4">
-                         <label for="">Email</label>
-                         <input type="text" name="userEmail" class="form-control" placeholder="Ingresar usuario" required>
+                         <label for=""> User Name</label>
+                         <input type="text" name="userName" class="form-control" placeholder="Enter User Name" required>
                     </div>
                     <div class="form-group">
-                         <label for="">Contraseña</label>
-                         <input type="password" name="userPass" class="form-control" placeholder="Ingresar constraseña" required>
+                         <label for="">Password</label>
+                         <input type="password" name="userPass" class="form-control" placeholder="Enter Password" required>
                     </div>
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Iniciar Sesión</button>
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Log In</button>
                </div>
                </form>
                <?php 

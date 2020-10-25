@@ -18,7 +18,17 @@ class UserDAO implements IDAO{
     }
 
     public function getAvailable(){
-        $this->retrieveData();
+        $this->retrieveActiveData();
+        return $this->userList;
+    }
+
+    public function getAdmins(){
+        $this->retrieveAdminData();
+        return $this->userList;
+    }
+
+    public function getNonAdmins(){
+        $this->retrieveNonAdminData();
         return $this->userList;
     }
 
@@ -96,6 +106,87 @@ class UserDAO implements IDAO{
                     $user->setIsAdmin($valueArray['isAdmin']);
                     
                     array_push($this->userList, $user);
+                }
+            }
+        }
+         
+    }
+
+    private function retrieveAdminData(){
+        $this->userList = array(); //porque voy a volver a cargarlos
+        if(file_exists($this->fileName)){
+            $jsonContent = file_get_contents($this->fileName);
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
+            if (!empty($arrayToDecode)){
+                foreach ($arrayToDecode as $valueArray){
+                    if ($valueArray['isAdmin'] == 1) {
+                    $user = new User();
+                    $user->setuserName($valueArray['userName']);
+                    $user->setuserPass($valueArray['userPass']);
+                    $user->setuserId($valueArray['userId']);
+                    $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
+                    $user->setuserEmail($valueArray['userEmail']);
+                    $user->setIsAdmin($valueArray['isAdmin']);
+                    
+                    array_push($this->userList, $user);
+
+                    }
+                    
+                }
+            }
+        }
+         
+    }
+
+    private function retrieveNonAdminData(){
+        $this->userList = array(); //porque voy a volver a cargarlos
+        if(file_exists($this->fileName)){
+            $jsonContent = file_get_contents($this->fileName);
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
+            if (!empty($arrayToDecode)){
+                foreach ($arrayToDecode as $valueArray){
+                    if ($valueArray['isAdmin'] == 0) {
+                    $user = new User();
+                    $user->setuserName($valueArray['userName']);
+                    $user->setuserPass($valueArray['userPass']);
+                    $user->setuserId($valueArray['userId']);
+                    $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
+                    $user->setuserEmail($valueArray['userEmail']);
+                    $user->setIsAdmin($valueArray['isAdmin']);
+                    
+                    array_push($this->userList, $user);
+
+                    }
+                    
+                }
+            }
+        }
+         
+    }
+
+    private function retrieveActiveData(){
+        $this->userList = array(); //porque voy a volver a cargarlos
+        if(file_exists($this->fileName)){
+            $jsonContent = file_get_contents($this->fileName);
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
+            if (!empty($arrayToDecode)){
+                foreach ($arrayToDecode as $valueArray){
+                    if ($valueArray['isActive'] == 1) {
+                    $user = new User();
+                    $user->setuserName($valueArray['userName']);
+                    $user->setuserPass($valueArray['userPass']);
+                    $user->setuserId($valueArray['userId']);
+                    $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
+                    $user->setuserEmail($valueArray['userEmail']);
+                    $user->setIsAdmin($valueArray['isAdmin']);
+                    
+                    array_push($this->userList, $user);
+
+                    }
+                    
                 }
             }
         }

@@ -11,16 +11,8 @@
         "userName": "Daiana",
         "userPass": "lala",
         "userId": null,
-        "isActive": null,
+        "isActive": 1,
         "userEmail": "daiana@mail.com",
-        "isAdmin": null
-    },
-    {
-        "userName": "Carolina",
-        "userPass": "caro",
-        "userId": null,
-        "isActive": null,
-        "userEmail": "caro@mail.com",
-        "isAdmin": null
+        "isAdmin": 0
     }
 ]

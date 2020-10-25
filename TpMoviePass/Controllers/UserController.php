@@ -37,17 +37,13 @@ class UserController{
                 $users = $this->userDAO->getAll();
             }          
 
-                $user_aux = new User();                               //creo un user auxiliar para comparar
+                $user_aux = new User();                               
                 $user_aux->setuserEmail($_POST['userEmail']);   
                 $user_aux->setuserPass($_POST['userPass']);
-                $user_aux->setuserName($_POST['userName']);            
-               /* foreach ($users as $user){ //recorro el listado
-                    if(($user_aux->getuserEmail() == $user->getuserEmail()) || ($user_aux->getuserName() == $user->getuserName()))
-                    {
-                        $message = "El usuario ya existe";
-                    }
-                }
-                */
+                $user_aux->setuserName($_POST['userName']);
+                $user_aux->setIsAdmin(0); //por defecto no va a ser admin- Business rules
+                $user_aux->setIsActive(1); //por defecto no va a estar activo- Business rules             
+              
                 $message = $this->userDAO->Add($user_aux);
                 if (empty($message)){
                     $this->ShowLogInView();
@@ -68,10 +64,9 @@ class UserController{
             $user_aux = new User();                               //creo un user auxiliar para comparar  
             $user_aux->setuserPass($_POST['userPass']);
            
-            $user_aux = $this->userDAO->searchByEmail($_POST['userEmail']);
-            if ($user_aux->getuserName()!= null){
+            $user_aux = $this->userDAO->searchByName($_POST['userName']); //searchbyName retorna un usuario
+            if ($user_aux->getuserEmail()!= null){
                 if ($user_aux->getuserPass() === $_POST['userPass']){
-                
                     
                     $_SESSION['userName'] = $user_aux->getuserName();
                     $_SESSION['userEmail'] = $user_aux->getuserEmail();
