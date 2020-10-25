@@ -35,9 +35,9 @@ use Models\Cinema as Cinema;
                         <br><label for="">Cinema Status</label>
                         <select name="cinemaAvailabiity" id="" class="form-control">
                         <option value="<?= $cinema->getCinemaAvailability();?>"></option>
-                          <option value="true">Available</option>
-                          <option value="false">Not Available</option>
-                          </select>
+                        <option value="true">Available</option>
+                        <option value="false">Not Available</option>
+                        </select>
                           
                        <!-- </select> -->
                         
