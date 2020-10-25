@@ -55,8 +55,28 @@ class UserDAO implements IDAO{
         return $message;
     }
 
-    public function searchByName(){
-        
+    public function searchByName($name){
+        $user = new User();
+        $user->setuserName($name);
+        foreach ($this->userList as $user_aux){
+            if($user_aux->getuserName() == $user->getuserName())
+                {
+                    $user = $user_aux;
+                }
+        }
+        return $user;
+    }
+
+    public function searchByEmail($email){
+        $user = new User();
+        $user->setuserEmail($email);
+        foreach ($this->userList as $user_aux){
+            if($user_aux->getuserEmail() == $user->getuserEmail())
+                {
+                    $user = $user_aux;
+                }
+        }
+        return $user;
     }
 
     private function retrieveData(){

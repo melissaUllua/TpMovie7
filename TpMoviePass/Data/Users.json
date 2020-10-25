@@ -5,7 +5,7 @@
         "userId": 0,
         "isActive": 1,
         "userEmail": "user@user.com",
-        "isAdmin": null
+        "isAdmin": 1
     },
     {
         "userName": "Daiana",
@@ -13,6 +13,14 @@
         "userId": null,
         "isActive": null,
         "userEmail": "daiana@mail.com",
+        "isAdmin": null
+    },
+    {
+        "userName": "Carolina",
+        "userPass": "caro",
+        "userId": null,
+        "isActive": null,
+        "userEmail": "caro@mail.com",
         "isAdmin": null
     }
 ]

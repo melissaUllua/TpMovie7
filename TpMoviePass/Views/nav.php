@@ -7,12 +7,6 @@
           <li class="nav-item ">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Listar Cines</a>
           </li>
-          <li class="nav-item ">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Agregar Cines</a>
-          </li>
-          <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Modificar Cines</a>
-          </li>   
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Listar Peliculas</a>
           </li> 
@@ -23,12 +17,19 @@
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowSignUpView">Registrarse</a>
           </li> 
-         <?php } else {{?>
-          <li class="nav-item">
+         <?php } else { ?>
+                <?php if ($_SESSION['isAdmin'] == true) { ?>
+                         <li class="nav-item ">
+                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Agregar Cines</a>
+                         </li>
+                         <li class="nav-item">
+                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Modificar Cines</a>
+                         </li>   
+               <?php    }  ?>
+               <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogOutView">Cerrar Sesión</a>
           </li> 
-          <?php if ($_SESSION['isAdmin'] == true) { } 
-     }?>
+    <?php }?>
           
      </ul>
 </nav>

@@ -24,6 +24,7 @@
                {
                     echo $message;
                }
+               
           ?>
           </div>
      </main>
