@@ -86,6 +86,7 @@ class CinemaDAO implements IDAO{
                     $cinema->setCinemaTicketPrice($valueArray['cinemaTicketPrice']);
                     $cinema->setCinemaAddress($valueArray['cinemaAddress']);
                     $cinema->setCinemaAvailability($valueArray['cinemaAvailability']);
+                    $cinema->setCinemaTotalRooms($valueArray['cinemaTotalRooms']);
                     array_push($this->cinemaList, $cinema);
                 }
             }
@@ -103,6 +104,7 @@ class CinemaDAO implements IDAO{
             $valueArray['cinemaTicketPrice'] = $cinema->getCinemaTicketPrice();
             $valueArray['cinemaAddress'] = $cinema->getCinemaAddress();
             $valueArray['cinemaAvailability'] = $cinema->getCinemaAvailability();
+            $valueArray['cinemaTotalRooms'] = $cinema->getCinemaTotalRooms();
             array_push($arrayToEncode, $valueArray);
         }
         $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);

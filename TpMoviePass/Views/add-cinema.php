@@ -10,41 +10,54 @@
                     echo $message;
                }
           ?>
-               <h2 class="mb-4">Agregar cine</h2>
+               <h2 class="mb-4">Add Cinema</h2>
                <form action="<?php echo FRONT_ROOT ?>Cinema/Add" method="post" class="bg-light-alpha p-5">
-                    <div class="row">                         
+                    <div class="row"> 
+                    <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for="">ID</label>
+                                   <input type="text" name="cinemaID" value="" class="form-control">
+                              </div>
+                         </div>                        
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Nombre</label>
+                                   <label for="">Name</label>
                                    <input type="text" name="cinemaName" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Dirección</label>
+                                   <label for="">Address</label>
                                    <input type="text" name="cinemaAdress" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Capacidad total</label>
-                                   <input type="num" name="cinemaTotalCapacity" value="" class="form-control">
+                                   <label for="">Total Capacity</label>
+                                   <input type="number" name="cinemaTotalCapacity" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Precio de la entrada</label>
-                                   <input type="num" name="cinemaTicketPrice" value="" class="form-control">
+                                   <label for="">Ticket Price</label>
+                                   <input type="number" name="cinemaTicketPrice" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
+                              <label for="">Tipo</label>
+                                   <select name="cinemaAvailability" id="" class="form-control">
+                                   <option value="true">Available</option>
+                                   <option value="false">Unavailable</option>
+                                   </select>
+                              </div>
+                         <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Disponibilidad</label>
-                                   <input type="num" name="cinemaAvailability" value="" class="form-control">
+                                   <label for="">Amount of rooms</label>
+                                   <input type="number" name="cinemaTotalRooms" value="" class="form-control" min = 1>
                               </div>
                          </div>
                     </div>
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
                </form>
           </div>
      </section>
