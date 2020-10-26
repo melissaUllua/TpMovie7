@@ -5,7 +5,9 @@
         "cinemaTotalCapacity": "2100",
         "cinemaTicketPrice": "319",
         "cinemaAddress": "C\u00f3rdoba 1500",
-        "cinemaAvailability": "true"
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": 0,
+        "cinemaRooms": null
     },
     {
         "cinemaId": null,
@@ -13,7 +15,9 @@
         "cinemaTotalCapacity": 298,
         "cinemaTicketPrice": 300,
         "cinemaAddress": "Belgrano 3200",
-        "cinemaAvailability": "true"
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": 0,
+        "cinemaRooms": null
     },
     {
         "cinemaId": null,
@@ -21,7 +25,9 @@
         "cinemaTotalCapacity": 234,
         "cinemaTicketPrice": 324,
         "cinemaAddress": "Corrientes 3998",
-        "cinemaAvailability": "true"
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": 0,
+        "cinemaRooms": null
     },
     {
         "cinemaId": null,
@@ -29,6 +35,8 @@
         "cinemaTotalCapacity": "2100",
         "cinemaTicketPrice": "319",
         "cinemaAddress": "C\u00f3rdoba 1500",
-        "cinemaAvailability": "false"
+        "cinemaAvailability": "false",
+        "cinemaTotalRooms": 0,
+        "cinemaRooms": null
     }
 ]
