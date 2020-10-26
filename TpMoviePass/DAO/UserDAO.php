@@ -18,29 +18,78 @@ class UserDAO implements IDAO{
     }
 
     public function getAvailable(){
-        $this->retrieveData();
+        $this->retrieveActiveData();
+        return $this->userList;
+    }
+
+    public function getAdmins(){
+        $this->retrieveAdminData();
+        return $this->userList;
+    }
+
+    public function getNonAdmins(){
+        $this->retrieveNonAdminData();
         return $this->userList;
     }
 
     public function Add($user){
         $this->retrieveData();
-        $flag;
         if($this->userList){
-            foreach ($this->userList as $user_aux){
-                if(($user_aux->getuserEmail() == $user->getuserEmail()) || ($user_aux->getuserName() == $user->getuserName()))
-                    {
-                        $flag = "El usuario ya existe";
-                    }
-            }
-        }
-        if (!isset($flag)){
+            $flag = $this->existsByName($user->getuserName(), $user->getuserEmail());
+            if (empty($flag)){
+                array_push($this->userList, $user);
+            }  
+        } else {
             array_push($this->userList, $user);
-        }    
-        
+        }
         $this->saveData();
+        if (!empty($flag)){
+            $message = $flag;
+        }
+        else{
+            $message = "";
+        }
+        return $message;
     }
 
-    public function retrieveData(){
+    private function existsByName($name, $email){
+        foreach ($this->userList as $user_aux){
+            if(($user_aux->getuserEmail() == $email) || ($user_aux->getuserName() == $name))
+                {
+                    $message = "El usuario ya existe";
+                }
+        }
+        if (!isset($message)) {
+            $message = "";
+        }
+        return $message;
+    }
+
+    public function searchByName($name){
+        $user = new User();
+        $user->setuserName($name);
+        foreach ($this->userList as $user_aux){
+            if($user_aux->getuserName() == $user->getuserName())
+                {
+                    $user = $user_aux;
+                }
+        }
+        return $user;
+    }
+
+    public function searchByEmail($email){
+        $user = new User();
+        $user->setuserEmail($email);
+        foreach ($this->userList as $user_aux){
+            if($user_aux->getuserEmail() == $user->getuserEmail())
+                {
+                    $user = $user_aux;
+                }
+        }
+        return $user;
+    }
+
+    private function retrieveData(){
         $this->userList = array(); //porque voy a volver a cargarlos
         if(file_exists($this->fileName)){
             $jsonContent = file_get_contents($this->fileName);
@@ -63,7 +112,88 @@ class UserDAO implements IDAO{
          
     }
 
-    public function saveData(){
+    private function retrieveAdminData(){
+        $this->userList = array(); //porque voy a volver a cargarlos
+        if(file_exists($this->fileName)){
+            $jsonContent = file_get_contents($this->fileName);
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
+            if (!empty($arrayToDecode)){
+                foreach ($arrayToDecode as $valueArray){
+                    if ($valueArray['isAdmin'] == 1) {
+                    $user = new User();
+                    $user->setuserName($valueArray['userName']);
+                    $user->setuserPass($valueArray['userPass']);
+                    $user->setuserId($valueArray['userId']);
+                    $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
+                    $user->setuserEmail($valueArray['userEmail']);
+                    $user->setIsAdmin($valueArray['isAdmin']);
+                    
+                    array_push($this->userList, $user);
+
+                    }
+                    
+                }
+            }
+        }
+         
+    }
+
+    private function retrieveNonAdminData(){
+        $this->userList = array(); //porque voy a volver a cargarlos
+        if(file_exists($this->fileName)){
+            $jsonContent = file_get_contents($this->fileName);
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
+            if (!empty($arrayToDecode)){
+                foreach ($arrayToDecode as $valueArray){
+                    if ($valueArray['isAdmin'] == 0) {
+                    $user = new User();
+                    $user->setuserName($valueArray['userName']);
+                    $user->setuserPass($valueArray['userPass']);
+                    $user->setuserId($valueArray['userId']);
+                    $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
+                    $user->setuserEmail($valueArray['userEmail']);
+                    $user->setIsAdmin($valueArray['isAdmin']);
+                    
+                    array_push($this->userList, $user);
+
+                    }
+                    
+                }
+            }
+        }
+         
+    }
+
+    private function retrieveActiveData(){
+        $this->userList = array(); //porque voy a volver a cargarlos
+        if(file_exists($this->fileName)){
+            $jsonContent = file_get_contents($this->fileName);
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
+
+            if (!empty($arrayToDecode)){
+                foreach ($arrayToDecode as $valueArray){
+                    if ($valueArray['isActive'] == 1) {
+                    $user = new User();
+                    $user->setuserName($valueArray['userName']);
+                    $user->setuserPass($valueArray['userPass']);
+                    $user->setuserId($valueArray['userId']);
+                    $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
+                    $user->setuserEmail($valueArray['userEmail']);
+                    $user->setIsAdmin($valueArray['isAdmin']);
+                    
+                    array_push($this->userList, $user);
+
+                    }
+                    
+                }
+            }
+        }
+         
+    }
+
+    private function saveData(){
         $arrayToEncode = array();
         foreach($this->userList as $user){
             

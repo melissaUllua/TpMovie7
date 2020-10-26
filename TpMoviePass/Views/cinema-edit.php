@@ -13,33 +13,31 @@ use Models\Cinema as Cinema;
      <section id="listado" class="mb-5">
         <div class="container">
         
-        <h2 class="mb-4 text-center text-white "> Editar</h2>
+        <h2 class="mb-4 text-center text-white ">Edit</h2>
          <?php 
             foreach ($cinemaList as $cinema){  ?>
         <form action="<?php echo FRONT_ROOT . "Cinema/edit/".$cinema->getCinemaId(); ?>" method="POST"  >
           <table class="table text-white bg-oscuro"> 
             
               <tr>
-                <th>Cine</th>
+                <th><?php echo $cinema->getCinemaName(); ?></th>
                  <td>
                   <!--<select name="id" id="" class="form-control"> 
                            <option value="">--Selecciona un Cine--</option> -->
-                            
-                            
-                        ?><br>
+                        <br>
                         </select>
                         <input type="hidden" name="id" value="<?php echo $cinema->getCinemaId(); ?>">
-                        <input type="text" value="<?php echo $cinema->getCinemaName(); ?>" name="cinemaName" placeholder = "Nombre del cine">
-                        <input type="text" value="<?php echo $cinema->getCinemaAddress(); ?>" name= "cinemaAddress"  placeholder= "Direccion" class="mt-3">
-                        <input type="number" value="<?php echo $cinema->getCinemaTotalCapacity(); ?>" name = "cinemaTotalCapacity"  placeholder= "Capacidad total" class="mt-3" min="0"> 
-                        <input type="number" value="<?php echo $cinema->getCinemaTicketPrice(); ?>" name="cinemaTicketPrice" placeholder = "Valor de la entrada"min="0" class="mt-3"> 
+                        <input type="text" value="<?php echo $cinema->getCinemaName(); ?>" name="cinemaName" placeholder = "Cinema Name">
+                        <input type="text" value="<?php echo $cinema->getCinemaAddress(); ?>" name= "cinemaAddress"  placeholder= "Address" class="mt-3">
+                        <input type="number" value="<?php echo $cinema->getCinemaTotalCapacity(); ?>" name = "cinemaTotalCapacity"  placeholder= "Total Capacity" class="mt-3" min="0"> 
+                        <input type="number" value="<?php echo $cinema->getCinemaTicketPrice(); ?>" name="cinemaTicketPrice" placeholder = "Ticket Price"min="0" class="mt-3"> 
                         
-                        <br><label for=""> Estado de cine</label>
+                        <br><label for="">Cinema Status</label>
                         <select name="cinemaAvailabiity" id="" class="form-control">
                         <option value="<?= $cinema->getCinemaAvailability();?>"></option>
-                          <option value="true">Disponible</option>
-                          <option value="false">No disponible</option>
-                          </select>
+                        <option value="true">Available</option>
+                        <option value="false">Not Available</option>
+                        </select>
                           
                        <!-- </select> -->
                         
@@ -51,7 +49,7 @@ use Models\Cinema as Cinema;
           <br>
           <div>
           
-            <input type="submit" class="btn btn-primary" value="Modificar" >
+            <input type="submit" class="btn btn-dark ml-auto d-block" value="Save Changes" >
 
           </div>
         </form>

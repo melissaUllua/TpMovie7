@@ -4,31 +4,15 @@
         "userPass": "123",
         "userId": 0,
         "isActive": 1,
-        "userEmail": null,
-        "isAdmin": null
+        "userEmail": "user@user.com",
+        "isAdmin": 1
     },
     {
         "userName": "Daiana",
         "userPass": "lala",
         "userId": null,
-        "isActive": null,
+        "isActive": 1,
         "userEmail": "daiana@mail.com",
-        "isAdmin": null
-    },
-    {
-        "userName": "Lolo",
-        "userPass": "lolo",
-        "userId": null,
-        "isActive": null,
-        "userEmail": "lolo@lolo.com",
-        "isAdmin": null
-    },
-    {
-        "userName": "Jazmin",
-        "userPass": "jaz",
-        "userId": null,
-        "isActive": null,
-        "userEmail": "jaz@min.com",
-        "isAdmin": null
+        "isAdmin": 0
     }
 ]

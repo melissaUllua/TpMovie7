@@ -9,7 +9,7 @@
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Bienvenid@, <?php echo $_SESSION['userName']; ?></h2>
+               <h2 class="mb-4">Welcome, <?php echo $_SESSION['userName']; ?></h2>
                <table class="table bg-light-alpha">
                     <thead>
                          <th>Email</th>
@@ -18,7 +18,7 @@
                     <tbody>
                         
                        <tr>
-                            <td><?php echo $_SESSION['userEmail']; ?></td>
+                            <td><?php echo $_SESSION['userEmail'];?></td>
 
                        </tr> 
                              

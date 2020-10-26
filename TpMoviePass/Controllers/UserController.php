@@ -20,8 +20,8 @@ class UserController{
     }
 
     public function ShowLogOutView(){
-        $this->LogOut();
-       $this->ShowLogInView();
+       $this->LogOut();
+       header("Location: ". FRONT_ROOT . "index.php"); 
     }
 
     public function ShowSignUpView($message = ""){
@@ -37,20 +37,15 @@ class UserController{
                 $users = $this->userDAO->getAll();
             }          
 
-                $user_aux = new User();                               //creo un user auxiliar para comparar
+                $user_aux = new User();                               
                 $user_aux->setuserEmail($_POST['userEmail']);   
                 $user_aux->setuserPass($_POST['userPass']);
-                $user_aux->setuserName($_POST['userName']);            
-                $message;
-                foreach ($users as $user){ //recorro el listado
-                    if(($user_aux->getuserEmail() == $user->getuserEmail()) || ($user_aux->getuserName() == $user->getuserName()))
-                    {
-                        $message = "El usuario ya existe";
-                    }
-                }
-                if (!isset($message)){
-            
-                    $this->userDAO->Add($user_aux);
+                $user_aux->setuserName($_POST['userName']);
+                $user_aux->setIsAdmin(0); //por defecto no va a ser admin- Business rules
+                $user_aux->setIsActive(1); //por defecto no va a estar activo- Business rules             
+              
+                $message = $this->userDAO->Add($user_aux);
+                if (empty($message)){
                     $this->ShowLogInView();
                 } else {
                     $this->ShowSignUpView($message);
@@ -66,29 +61,27 @@ class UserController{
         if($_POST)
         {   $this->AddSuperAdmin();
             $users = $this->userDAO->getAll();
-            $user_aux = new User();                               //creo un user auxiliar para comparar
-            $user_aux->setuserEmail($_POST['userEmail']);   
+            $user_aux = new User();                               //creo un user auxiliar para comparar  
             $user_aux->setuserPass($_POST['userPass']);
            
-            if ($users){ //verifico que haya datos para poder recorrerlo
-                foreach ($users as $user){ //recorro el listado
-                    if(($user_aux->getuserEmail() == $user->getuserEmail()) && ($user_aux->getuserPass() == $user->getuserPass()))
-                    {
-                        $_SESSION['userName'] = $user->getuserName();
-                        $_SESSION['userEmail'] = $user->getuserEmail();
-                        $_SESSION['isAdmin'] = $user->getIsAdmin();
-            
-                       $this->ShowProfileView();
-        
-                    }
-    
+            $user_aux = $this->userDAO->searchByName($_POST['userName']); //searchbyName retorna un usuario
+            if ($user_aux->getuserEmail()!= null){
+                if ($user_aux->getuserPass() === $_POST['userPass']){
+                    
+                    $_SESSION['userName'] = $user_aux->getuserName();
+                    $_SESSION['userEmail'] = $user_aux->getuserEmail();
+                    $_SESSION['isAdmin'] = $user_aux->getIsAdmin();
+                
+                    $this->ShowProfileView();
                 }
-                if (empty($_SESSION)) {
+
+            }
+             if (empty($_SESSION)) {
                     $message = "Usuario no encontrado";
                     $this->ShowLogInView($message);
                 }
 
-            }
+            
                 
         }
     }
@@ -124,17 +117,25 @@ class UserController{
     public function LogOut(){
         //session_start();
         session_destroy();
-
     }
 
        public function AddSuperAdmin(){
         $user = new User();
         $user->setuserName("SuperAdmin");
+        $user->setuserEmail("user@user.com");
         $user->setuserPass("123");
         $user->setuserId(0);
         $user->setIsActive(1);
+        $user->setIsAdmin(1);
 
         $this->userDAO->Add($user);
+    }
+
+    private function verifyPass($pass){
+        $pass_aux = null;
+        if(strlen($pass)>=3){ //retorna la longitud del string en int- pongo 3 para no trabajar con valores muy grandes
+            $array = str_split($pass);
+        }
     }
 
 }

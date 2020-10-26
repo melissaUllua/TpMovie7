@@ -1,0 +1,42 @@
+[
+    {
+        "cinemaId": null,
+        "cinemaName": "Ambassador",
+        "cinemaTotalCapacity": "2100",
+        "cinemaTicketPrice": "319",
+        "cinemaAddress": "C\u00f3rdoba 1500",
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": 0,
+        "cinemaRooms": null
+    },
+    {
+        "cinemaId": null,
+        "cinemaName": "Del Paseo",
+        "cinemaTotalCapacity": 298,
+        "cinemaTicketPrice": 300,
+        "cinemaAddress": "Belgrano 3200",
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": 0,
+        "cinemaRooms": null
+    },
+    {
+        "cinemaId": null,
+        "cinemaName": "Corrientes",
+        "cinemaTotalCapacity": 234,
+        "cinemaTicketPrice": 324,
+        "cinemaAddress": "Corrientes 3998",
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": 0,
+        "cinemaRooms": null
+    },
+    {
+        "cinemaId": null,
+        "cinemaName": "Diagonal",
+        "cinemaTotalCapacity": "2100",
+        "cinemaTicketPrice": "319",
+        "cinemaAddress": "C\u00f3rdoba 1500",
+        "cinemaAvailability": "false",
+        "cinemaTotalRooms": 0,
+        "cinemaRooms": null
+    }
+]

@@ -8,14 +8,14 @@
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Listado de cines</h2>
+               <h2 class="mb-4">Cinemas</h2>
                <table class="table bg-light-alpha">
                     <thead>
-                         <th>Nombre</th>
-                         <th>Precio de la entrada</th>
-                         <th>Capacidad total</th>
-                         <th>Direccion </th>
-                         <th>Estado de cine</th>
+                         <th>Name</th>
+                         <th>Ticket Price</th>
+                         <th>Total Capacity</th>
+                         <th>Address</th>
+                         <th>Availability</th>
                          
                     </thead>
                     <tbody>
@@ -28,7 +28,7 @@
                                              <td><?php echo $cinema->getCinemaTicketPrice() ?></td>
                                              <td><?php echo $cinema->getCinemaTotalCapacity() ?></td>
                                              <td><?php echo $cinema->getCinemaAddress() ?></td>
-                                             <td><?php if($cinema->getCinemaAvailability() == true)
+                                             <td><?php if($cinema->getCinemaAvailability() == "true")
                                              {
                                                   echo "Disponible";
                                              }

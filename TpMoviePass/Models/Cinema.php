@@ -14,7 +14,9 @@ class Cinema{
 
     public function __construct()
     {
-        $this->rooms = array();
+        //$this->rooms = array();
+        $this->cinemaRooms = array();
+
     }
 
     /**

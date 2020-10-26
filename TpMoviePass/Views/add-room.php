@@ -10,7 +10,7 @@
                     echo $message;
                }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
-               <h2 class="mb-4">Agregar salas</h2>
+               <h2 class="mb-4">Add rooms</h2>
                <?php
                var_dump($totalRooms);
                for($i=0 ; $i < $totalRooms ; $i++){ ?>
@@ -24,13 +24,13 @@
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Capacidad</label>
+                                   <label for="">Capacity</label>
                                    <input type="number" name="roomCapacity" value="" class="form-control" min="1">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Tipo</label>
+                                   <label for="">Type</label>
                                    <select name="roomIs3d" id="" class="form-control">
                                    <option value="true">3D</option>
                                    <option value="false">2D</option>
@@ -39,12 +39,12 @@
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Precio</label>
+                                   <label for="">Price</label>
                                    <input type="number" name="roomPrice" value="" class="form-control">
                               </div>
                          </div>
                     </div>
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
                <?php } ?>
                </form>
           </div>
