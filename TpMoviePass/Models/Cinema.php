@@ -8,10 +8,13 @@ class Cinema{
     private $cinemaTicketPrice;
     private $cinemaAddress;
     private $cinemaAvailability;
+    private $cinemaTotalRooms;
+    private $cinemaRooms;
 
 
     public function __construct()
     {
+        $this->rooms = array();
     }
 
     /**
@@ -132,6 +135,15 @@ class Cinema{
         $this->cinemaAvailability = $cinemaAvailability;
 
         return $this;
+    }
+
+    public function getCinemaTotalRooms()
+    {
+        return $this->cinemaTotalRooms;
+    }
+    public function setCinemaTotalRooms($cinemaTotalRooms)
+    {
+        $this->cinemaTotalRooms = $cinemaTotalRooms;
     }
 }
 

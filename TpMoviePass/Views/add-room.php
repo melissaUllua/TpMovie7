@@ -8,38 +8,44 @@
                if(isset($message))
                {
                     echo $message;
-               }
-               //foreach () cantRoom as room (?) y hacer un form p cada room                                                                                                                                                                                                                                                                                                                                                                                                                                
+               }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
-               <h2 class="mb-4">Agregar cine</h2>
+               <h2 class="mb-4">Agregar salas</h2>
+               <?php
+               var_dump($totalRooms);
+               for($i=0 ; $i < $totalRooms ; $i++){ ?>
                <form action="<?php echo FRONT_ROOT."Room/Add" ?>" method="post" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Nombre</label>
-                                   <input type="text" name="cinemaName" value="" class="form-control">
+                                   <input type="text" name="roomName" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Capacidad</label>
-                                   <input type="text" name="cinemaAdress" value="" class="form-control">
+                                   <input type="number" name="roomCapacity" value="" class="form-control" min="1">
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Tipo</label>
-                                   <input type="num" name="cinemaTotalCapacity" value="" class="form-control">
+                                   <select name="roomIs3d" id="" class="form-control">
+                                   <option value="true">3D</option>
+                                   <option value="false">2D</option>
+                                   </select>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Precio</label>
-                                   <input type="num" name="cinemaTicketPrice" value="" class="form-control">
+                                   <input type="number" name="roomPrice" value="" class="form-control">
                               </div>
                          </div>
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
+               <?php } ?>
                </form>
           </div>
      </section>

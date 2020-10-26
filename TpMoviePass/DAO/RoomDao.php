@@ -1,14 +1,14 @@
 <?php
 namespace DAO;
 
-use Models\Rooms as Room; 
+use Models\Room as Room; 
 
-class RoomsDAO implements IDAO{
+class RoomDAO implements IDAO{
     private $roomsList = array();
     private $fileName;
 
     public function __construct(){
-        $this->fileName = dirname(__DIR__) . "/Data/Rooms.json";
+        $this->fileName = dirname(__DIR__) . "/Data/Room.json";
     }
 
     public function getAll(){
@@ -70,19 +70,19 @@ class RoomsDAO implements IDAO{
 
 
     public function retrieveData(){
-        $this->roomsList = array(); //porque voy a volver a cargarlos
+        $this->roomsList = array(); 
         if(file_exists($this->fileName)){
             $jsonContent = file_get_contents($this->fileName);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
             if (!empty($arrayToDecode)){
                 foreach ($arrayToDecode as $valueArray){
-                    $rooms = new Room();
-                    $rooms->setRoomId($valueArray['roomId']);
-                    $rooms->setRoomName($valueArray['roomName']);
-                    $rooms->setRoomCapacity($valueArray['roomCapacity']);
-                    $rooms->setRoom3d($valueArray['roomIs3D']);
-                    $rooms->setRoomPrice($valueArray['roomPrice']);
+                    $room = new Room();
+                   // $room->setRoomId($valueArray['roomId']);
+                    $room->setRoomName($valueArray['roomName']);
+                    $room->setRoomCapacity($valueArray['roomCapacity']);
+                    //$room->setRoomIs3D($valueArray['roomIs3d']);
+                    $room->setRoomPrice($valueArray['roomPrice']);
                     array_push($this->roomsList, $room);
                 }
             }
@@ -97,7 +97,7 @@ class RoomsDAO implements IDAO{
             $valueArray['roomId'] =  $room->getRoomId();
             $valueArray['roomName']= $room->getRoomName();
             $valueArray['roomCapacity'] = $room->getRoomCapacity();
-            $valueArray['roomIs3D'] = $room->getRoom3d();
+            $valueArray['roomIs3D'] = $room->getRoomIs3d();
             $valueArray['roomPrice'] = $room->getRoomPrice();
     
             array_push($arrayToEncode, $valueArray);

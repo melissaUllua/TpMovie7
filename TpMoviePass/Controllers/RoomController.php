@@ -2,9 +2,9 @@
 namespace Controllers;
 
 use DAO\RoomDAO as roomDao;
-use Models\Rooms as Rooms;
+use Models\Room as Room;
 
-class RoomsController{
+class RoomController{
     private $roomDao;
 
     public function __construct()
@@ -35,7 +35,7 @@ class RoomsController{
         $room->setRoomName($roomName);
         $room->setRoomCapacity($roomCapacity);
         $room->setRoomIs3D($roomIs3D);
-        $room->setPrice($roomPrice);
+        $room->setRoomPrice($roomPrice);
 
 
         $this->roomDao->Add($room);
@@ -43,6 +43,8 @@ class RoomsController{
         $message = "El cine fue agregado con exito!";
 
         //$this->ShowAddView(); //we should see if we keep this
+        
+        require_once(VIEWS_PATH."add-cinema.php");
     }
     public function Edit($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice)
     {

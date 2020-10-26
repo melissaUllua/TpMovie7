@@ -1,7 +1,7 @@
 <?php 
 namespace Models;
 
-class Rooms{
+class Room{
     private $id;
     private $name;
     private $capacity;
@@ -12,43 +12,43 @@ class Rooms{
     {
 
     }
-    public function setId($id)
+    public function setRoomId($id)
     {
         $this->id = $id;
     }
-    public function setName($name)
+    public function setRoomName($name)
     {
         $this->name = $name;
     }
-    public function setCapacity($capacity)
+    public function setRoomCapacity($capacity)
     {
         $this->capacity = $capacity;
     }
-    public function setin3D($is3D)
+    public function setRoomIs3D($is3D)
     {
         $this->is3D = $is3D;
     }
-    public function setPrice($price)
+    public function setRoomPrice($price)
     {
         $this->price = $price;
     }
-    public function getId()
+    public function getRoomId()
     {
         return $this->id;
     }
-    public function getName()
+    public function getRoomName()
     {
         return $this->name;
     }
-    public function getCapacity()
+    public function getRoomCapacity()
     {
         return $this->capacity;
     }
-    public function getIs3d()
+    public function getRoomIs3d()
     {
         return $this->is3D;
     }
-    public function getPrice()
+    public function getRoomPrice()
     {
         return $this->price;
     }

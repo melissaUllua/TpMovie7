@@ -28,7 +28,7 @@ class CinemaController{
         require_once(VIEWS_PATH."cinema-edit.php");
     }
 
-    public function Add($cinemaID, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity/*,$cinemaRooms*/)
+    public function Add($cinemaID, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity, $cinemaTotalRooms)
     {
         $cinema = new Cinema();
         $cinema->setCinemaId($cinemaID);
@@ -37,14 +37,31 @@ class CinemaController{
         $cinema->setCinemaTicketPrice($cinemaTicketPrice);
         $cinema->setCinemaAddress($cinemaAddress);
         $cinema->setCinemaAvailability($cinemaAvailabiity);
-        //$cinema->setCinemaRooms($cinemaRooms)
+        $cinema->setCinemaTotalRooms($cinemaTotalRooms); //agregar al dao tambn
         $this->cinemaDAO->Add($cinema);
+
+        $message = "El cine fue agregado con exito!";
+        $totalRooms = $cinemaTotalRooms;
+        var_dump($totalRooms);
+        require_once(VIEWS_PATH."add-room.php");
+    }
+    public function AddRoom($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice)
+    {
+        $room = new Room();
+        $room->setRoomId($roomID);
+        $room->setRoomName($roomName);
+        $room->setRoomCapacity($roomCapacity);
+        $room->setRoomIs3D($roomIs3D);
+        $room->setRoomPrice($roomPrice);
+
+
+        $this->roomDao->Add($room);
 
         $message = "El cine fue agregado con exito!";
 
         //$this->ShowAddView(); //we should see if we keep this
-        //llevar una variable con la cantidad de rooms que tiene el cine 
-        require_once(VIEWS_PATH."add-room.php")
+        
+        require_once(VIEWS_PATH."add-cinema.php");
     }
     public function Edit($id, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity)
     {
