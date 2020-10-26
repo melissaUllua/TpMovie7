@@ -21,9 +21,7 @@ class UserController{
 
     public function ShowLogOutView(){
        $this->LogOut();
-       header("Location: ". FRONT_ROOT . "index.php");
-       //require_once(FRONT_ROOT."index.php");
-
+       header("Location: ". FRONT_ROOT . "index.php"); 
     }
 
     public function ShowSignUpView($message = ""){
