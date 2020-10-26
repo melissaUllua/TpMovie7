@@ -4,7 +4,7 @@ namespace DAO;
 use Models\Room as Room; 
 
 class RoomDAO implements IDAO{
-    private $roomsList = array();
+    private $roomList = array();
     private $fileName;
 
     public function __construct(){
@@ -13,29 +13,57 @@ class RoomDAO implements IDAO{
 
     public function getAll(){
         $this->retrieveData();
-        return $this->roomsList;
+        return $this->roomList;
     }
 
     /**
      * Retrieves all and filters according to availability
      *
-     * @return  availableroomsList
+     * @return  availableroomList
      */ 
     public function getAvailable(){
         $this->retrieveData();
-        return $this->roomsList;
+        return $this->roomList;
     }
 
     public function Add($room){
-        $this->retrieveData();
-        array_push($this->roomsList, $room);
-        $this->saveData();
+        $this->retrieveData(); //obtengo el listado
+        if($this->roomList){ //verifico que tenga datos
+            $flag = $this->existsByName($room->getroomName()); //verifico que no exista
+            if (empty($flag)){ 
+                array_push($this->roomList, $room); //si no existe, lo agrego
+            }  
+        } else {
+            array_push($this->roomList, $room); //si está vacío, lo agrego
+        }
+        $this->saveData(); //de cualquier modo guardo los datos
+        if (!empty($flag)){ //flag no estaría vacía como resultado de la función existsByName, avisando que la sala ya existe
+            $message = $flag;
+        }
+        else{
+            $message = "";
+        }
+        return $message;
     }
+
+    private function existsByName($name){
+        foreach ($this->roomList as $room){
+            if($room->getroomName() == $name) { //no puede haber dos salas con el mismo nombre
+                    $message = "Room already registered";
+                
+            }
+        }
+        if (!isset($message)) { //salvoconducto por si $message no está seteada por fuera del foreach
+            $message = ""; //como sí o sí le asigno un mensaje, por fuera tengo que corroborar con un !empty
+        }
+        return $message;
+    }
+
    /* public function GetOne($roomId)
     {
         
             $this->RetrieveData();
-            foreach($this->roomsList as $room){
+            foreach($this->roomList as $room){
                 if($room->getroomId() == $roomId){
                     return $room;
                 }
@@ -50,14 +78,14 @@ class RoomDAO implements IDAO{
 
         $PosOnList = null;
            
-        foreach($this->roomsList as $key => $room){
+        foreach($this->roomList as $key => $room){
             if($room->getroomId() == $roomId){
                 $PosOnList = $key;
             }
         }
 
         if($PosOnList != null || $PosOnList == 0){
-            $this->roomsList[$PosOnList] = $roomModify;
+            $this->roomList[$PosOnList] = $roomModify;
         }else
         {
             //echo "error";
@@ -70,7 +98,7 @@ class RoomDAO implements IDAO{
 
 
     public function retrieveData(){
-        $this->roomsList = array(); 
+        $this->roomList = array(); 
         if(file_exists($this->fileName)){
             $jsonContent = file_get_contents($this->fileName);
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
@@ -81,9 +109,9 @@ class RoomDAO implements IDAO{
                    // $room->setRoomId($valueArray['roomId']);
                     $room->setRoomName($valueArray['roomName']);
                     $room->setRoomCapacity($valueArray['roomCapacity']);
-                    //$room->setRoomIs3D($valueArray['roomIs3d']);
-                    $room->setRoomPrice($valueArray['roomPrice']);
-                    array_push($this->roomsList, $room);
+                    //$room->setIs3D($valueArray['Is3d']);
+                    $room->setRoomTicketPrice($valueArray['roomTicketPrice']);
+                    array_push($this->roomList, $room);
                 }
             }
         }
@@ -92,13 +120,13 @@ class RoomDAO implements IDAO{
 
     public function saveData(){
         $arrayToEncode = array();
-        foreach($this->roomsList as $room){
+        foreach($this->roomList as $room){
             
             $valueArray['roomId'] =  $room->getRoomId();
             $valueArray['roomName']= $room->getRoomName();
             $valueArray['roomCapacity'] = $room->getRoomCapacity();
-            $valueArray['roomIs3D'] = $room->getRoomIs3d();
-            $valueArray['roomPrice'] = $room->getRoomPrice();
+            $valueArray['Is3D'] = $room->getIs3D();
+            $valueArray['roomTicketPrice'] = $room->getRoomTicketPrice();
     
             array_push($arrayToEncode, $valueArray);
         }

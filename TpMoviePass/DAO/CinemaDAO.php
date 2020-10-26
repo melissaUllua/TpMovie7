@@ -29,10 +29,40 @@ class CinemaDAO implements IDAO{
     }
 
     public function Add($cinema){
-        $this->retrieveData();
-        array_push($this->cinemaList, $cinema);
-        $this->saveData();
+        $this->retrieveData(); //obtengo el listado
+        if($this->cinemaList){ //verifico que tenga datos
+            $flag = $this->existsByName($cinema->getcinemaName(), $cinema->getcinemaAddress()); //verifico que no exista
+            if (empty($flag)){ 
+                array_push($this->cinemaList, $cinema); //si no existe, lo agrego
+            }  
+        } else {
+            array_push($this->cinemaList, $cinema); //si está vacío, lo agrego
+        }
+        $this->saveData(); //de cualquier modo guardo los datos
+        if (!empty($flag)){ //flag no estaría vacía como resultado de la función existsByName, avisando que el Cine ya existe
+            $message = $flag;
+        }
+        else{
+            $message = "";
+        }
+        return $message;
     }
+
+    private function existsByName($name, $address){
+        foreach ($this->cinemaList as $cinema){
+            if($cinema->getcinemaName() == $name) { //puede haber dos cines con el mismo nombre
+                if ($cinema->getcinemaAddress() == $address) //pero no con el mismo nombre Y dirección
+                {
+                    $message = "Cinema already registered";
+                }
+            }
+        }
+        if (!isset($message)) { //salvoconducto por si $message no está seteada por fuera del foreach
+            $message = ""; //como sí o sí le asigno un mensaje, por fuera tengo que corroborar con un !empty
+        }
+        return $message;
+    }
+
     public function GetOne($CinemaId)
     {
         

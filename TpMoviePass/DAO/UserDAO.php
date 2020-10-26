@@ -56,7 +56,7 @@ class UserDAO implements IDAO{
         foreach ($this->userList as $user_aux){
             if(($user_aux->getuserEmail() == $email) || ($user_aux->getuserName() == $name))
                 {
-                    $message = "El usuario ya existe";
+                    $message = "User already exists";
                 }
         }
         if (!isset($message)) {

@@ -1,121 +1,16 @@
 [
     {
         "roomId": null,
-        "roomName": "",
-        "roomCapacity": "false",
-        "roomIs3D": null,
-        "roomPrice": ""
+        "roomName": "Sala 1",
+        "roomCapacity": "300",
+        "Is3D": null,
+        "roomTicketPrice": "500"
     },
     {
         "roomId": null,
-        "roomName": "",
-        "roomCapacity": "false",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": null,
-        "roomName": "",
-        "roomCapacity": "false",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": null,
-        "roomName": "",
-        "roomCapacity": "false",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": null,
-        "roomName": "",
-        "roomCapacity": "true",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": null,
-        "roomName": "",
-        "roomCapacity": "true",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": null,
-        "roomName": "",
-        "roomCapacity": "true",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": null,
-        "roomName": "",
-        "roomCapacity": "true",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": null,
-        "roomName": "",
-        "roomCapacity": "true",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": null,
-        "roomName": "holi",
-        "roomCapacity": "120",
-        "roomIs3D": null,
-        "roomPrice": "45"
-    },
-    {
-        "roomId": null,
-        "roomName": "holi",
-        "roomCapacity": "120",
-        "roomIs3D": null,
-        "roomPrice": "45"
-    },
-    {
-        "roomId": null,
-        "roomName": "asdas",
-        "roomCapacity": "120",
-        "roomIs3D": null,
-        "roomPrice": "45"
-    },
-    {
-        "roomId": null,
-        "roomName": "holi",
-        "roomCapacity": "120",
-        "roomIs3D": null,
-        "roomPrice": "45"
-    },
-    {
-        "roomId": null,
-        "roomName": "holi",
-        "roomCapacity": "120",
-        "roomIs3D": null,
-        "roomPrice": "45"
-    },
-    {
-        "roomId": null,
-        "roomName": "holi",
-        "roomCapacity": "120",
-        "roomIs3D": null,
-        "roomPrice": "45"
-    },
-    {
-        "roomId": null,
-        "roomName": "3",
-        "roomCapacity": "true",
-        "roomIs3D": null,
-        "roomPrice": ""
-    },
-    {
-        "roomId": "a",
-        "roomName": "3",
-        "roomCapacity": "true",
-        "roomIs3D": "12",
-        "roomPrice": ""
+        "roomName": "Sala 2",
+        "roomCapacity": "34566",
+        "Is3D": "true",
+        "roomTicketPrice": "478"
     }
 ]

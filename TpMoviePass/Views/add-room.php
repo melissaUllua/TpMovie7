@@ -12,13 +12,13 @@
           ?>
                <h2 class="mb-4">Add rooms</h2>
                <?php
-               var_dump($totalRooms);
-               for($i=0 ; $i < $totalRooms ; $i++){ ?>
+               //var_dump($totalRooms);
+               //for($i=0 ; $i < $totalRooms ; $i++){ ?>
                <form action="<?php echo FRONT_ROOT."Room/Add" ?>" method="post" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Nombre</label>
+                                   <label for="">Name</label>
                                    <input type="text" name="roomName" value="" class="form-control">
                               </div>
                          </div>
@@ -30,8 +30,8 @@
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Type</label>
-                                   <select name="roomIs3d" id="" class="form-control">
+                                   <label for="">Quality</label>
+                                   <select name="is3D" id="" class="form-control">
                                    <option value="true">3D</option>
                                    <option value="false">2D</option>
                                    </select>
@@ -39,13 +39,13 @@
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Price</label>
-                                   <input type="number" name="roomPrice" value="" class="form-control">
+                                   <label for="">Ticket Price</label>
+                                   <input type="number" name="roomTicketPrice" value="" class="form-control">
                               </div>
                          </div>
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
-               <?php } ?>
+               <?php //} ?>
                </form>
           </div>
      </section>

@@ -32,8 +32,8 @@ class UserController{
         if($_POST)
         {
             $users = $this->userDAO->getAll();
-            if(empty($users)){
-                $this->AddSuperAdmin();
+            if(empty($users)){ //si no hay ningún usuario, al menos necesito un admin
+                $this->AddSuperAdmin(); //lo agrego y vuelvo a llamar a la función
                 $users = $this->userDAO->getAll();
             }          
 
@@ -77,7 +77,7 @@ class UserController{
 
             }
              if (empty($_SESSION)) {
-                    $message = "Usuario no encontrado";
+                    $message = "User not found";
                     $this->ShowLogInView($message);
                 }
 

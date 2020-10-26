@@ -37,13 +37,17 @@ class CinemaController{
         $cinema->setCinemaTicketPrice($cinemaTicketPrice);
         $cinema->setCinemaAddress($cinemaAddress);
         $cinema->setCinemaAvailability($cinemaAvailabiity);
-        $cinema->setCinemaTotalRooms($cinemaTotalRooms); //agregar al dao tambn
-        $this->cinemaDAO->Add($cinema);
+        $cinema->setCinemaTotalRooms($cinemaTotalRooms);
+        $message = $this->cinemaDAO->Add($cinema);
+        if (!empty($message)){
+            $this->ShowAddView($message);
+        }
+        else {
+            $message = "Cinema added successfully";
+            $this->ShowListView();
+        }
 
-        $message = "El cine fue agregado con exito!";
-        $totalRooms = $cinemaTotalRooms;
-        var_dump($totalRooms);
-        require_once(VIEWS_PATH."add-room.php");
+        
     }
     public function AddRoom($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice)
     {
@@ -57,7 +61,7 @@ class CinemaController{
 
         $this->roomDao->Add($room);
 
-        $message = "El cine fue agregado con exito!";
+        $message = "Show Room added successfully";
 
         //$this->ShowAddView(); //we should see if we keep this
         

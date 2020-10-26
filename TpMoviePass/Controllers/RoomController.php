@@ -14,13 +14,13 @@ class RoomController{
 
     public function ShowAddView($message ="")
     {
-        require_once(VIEWS_PATH.".php");
+        require_once(VIEWS_PATH."add-room.php");
     }
 
     public function ShowListView()
     {
         $cinemaList = $this->roomDao->getAll();
-        require_once(VIEWS_PATH.".php");
+        require_once(VIEWS_PATH."movies-list.php");
     }
     public function ShowEditView()
     {
@@ -28,42 +28,50 @@ class RoomController{
         require_once(VIEWS_PATH.".php");
     }
 
-    public function Add($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice)
+    public function ShowCinemasView()
+    {
+        $cinemaList = $this->roomDao->getAll();
+        header("Location: ". FRONT_ROOT . VIEWS_PATH . "cinemas-list.php");
+    }
+    
+    //public function Add($roomID, $roomName, $roomCapacity, $roomIs3D, $roomTicketPrice)
+    public function Add($roomName, $roomCapacity, $roomIs3D, $roomTicketPrice)
     {
         $room = new Room();
-        $room->setRoomId($roomID);
+        //$room->setRoomId($roomID);
         $room->setRoomName($roomName);
         $room->setRoomCapacity($roomCapacity);
-        $room->setRoomIs3D($roomIs3D);
-        $room->setRoomPrice($roomPrice);
-
-
-        $this->roomDao->Add($room);
-
-        $message = "El cine fue agregado con exito!";
-
-        //$this->ShowAddView(); //we should see if we keep this
-        
-        require_once(VIEWS_PATH."add-cinema.php");
+        $room->setIs3D($roomIs3D);
+        $room->setRoomTicketPrice($roomTicketPrice);
+       
+        $message = $this->roomDao->Add($room);
+        if (empty($message)){
+            $message = "Show Room added successfully";
+           // $this->ShowCinemasView(); //se rompe
+           $this->ShowListView();
+            //require_once(VIEWS_PATH."add-cinema.php");
+        } else {
+            $this->ShowAddView($message);
+        }
     }
-    public function Edit($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice)
+    public function Edit($roomID, $roomName, $roomCapacity, $Is3D, $roomTicketPrice)
     {
         $modify = new Room();
         if ($roomName != "")
         {
-            $modify->setCinemaName($roomName);
+            $modify->setroomName($roomName);
         }
         if ($cinemaAddress != "")
         {
-            $modify->setRoomCapacity($roomCapacity);
+            $modify->setroomCapacity($roomCapacity);
         }
         if ($cinemaTotalCapacity != "")
         {
-            $modify->setRoomIs3D($roomIs3D);
+            $modify->setIs3D($Is3D);
         }
         if ($cinemaTicketPrice != "")
         {
-            $modify->setRoomPrice($roomPrice);
+            $modify->setroomTicketPrice($roomTicketPrice);
         }
 
         //$this->roomDao->Edit($roomID, $modify); /*is not working yet*/
