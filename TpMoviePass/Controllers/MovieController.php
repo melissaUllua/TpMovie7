@@ -2,7 +2,6 @@
 namespace Controllers;
 
 use DAO\MovieDAO as MovieDAO;
-use Models\Cinema as Cinema;
 
 class MovieController{
     private $MovieDao;
@@ -12,17 +11,21 @@ class MovieController{
         $this->MovieDao = new MovieDAO();
     }
 
+
     public function ShowAddView($message ="")
     {
-        require_once(VIEWS_PATH."add-movie.php");
+        require_once(VIEWS_PATH."addmoviebygenre.php");
     }
+
 
     public function ShowListView()
     {
-        //$movieList = $this->MovieDao->getAll();
         $movieList = $this->MovieDao->getAll();
-        require_once(VIEWS_PATH."movies-list.php");
+        require_once(VIEWS_PATH."addmoviebygenre.php");
+        
     }
+
+
     public function ShowEditView()
     {
         require_once(VIEWS_PATH."movie-edit.php");

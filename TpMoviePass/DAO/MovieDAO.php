@@ -41,9 +41,6 @@ class MovieDAO implements IDAO{
             if (!empty($arrayToDecode)){
                 foreach ($arrayToDecode as $valueArray){
                     $movie = new Movie();
-                    $movie->setPopularity($valueArray['popularity']);
-                    $movie->setVote_count($valueArray['vote_count']);
-                    $movie->setVideo($valueArray['video']);
                     $movie->setPoster_path($valueArray['poster_path']);
                     $movie->setId($valueArray['id']);                                     //este id va a ser la key en el arreglo asociativo, y tambien va a estar en value POR LAS DUDAS
                     $movie->setAdult($valueArray['adult']);
@@ -51,7 +48,6 @@ class MovieDAO implements IDAO{
                     $movie->setOriginal_title($valueArray['original_title']);
                     $movie->setGenre_ids($valueArray['genre_ids']);
                     $movie->setTitle($valueArray['title']);
-                    $movie->setVote_average($valueArray['vote_average']);
                     $movie->setOverview($valueArray['overview']);
                     $movie->setRelease_date($valueArray['release_date']);
                     
@@ -73,9 +69,6 @@ class MovieDAO implements IDAO{
             if (!empty($arrayToDecode['results'])){                                       //si la api funciona, hay algo en el arreglo en posicion "results". si no funciona la api, esto deberia estar vacio o no existir
                 foreach ($arrayToDecode['results'] as $valueArray){                       //dentro de la posicion results hay un arreglo de movies. por eso el for each, para recorrerlo entero
                     $movie = new Movie();                                                 //creamos el objeto movie y le damos los datos
-                    $movie->setPopularity($valueArray['popularity']);
-                    $movie->setVote_count($valueArray['vote_count']);
-                    $movie->setVideo($valueArray['video']);
                     $movie->setPoster_path($valueArray['poster_path']);
                     $movie->setId($valueArray['id']);                                     //este id va a ser la key en el arreglo asociativo, y tambien va a estar en value POR LAS DUDAS
                     $movie->setAdult($valueArray['adult']);
@@ -83,7 +76,6 @@ class MovieDAO implements IDAO{
                     $movie->setOriginal_title($valueArray['original_title']);
                     $movie->setGenre_ids($valueArray['genre_ids']);
                     $movie->setTitle($valueArray['title']);
-                    $movie->setVote_average($valueArray['vote_average']);
                     $movie->setOverview($valueArray['overview']);
                     $movie->setRelease_date($valueArray['release_date']);
                     
@@ -105,9 +97,6 @@ class MovieDAO implements IDAO{
             if (!empty($arrayToDecode['results'])){                                       //si la api funciona, hay algo en el arreglo en posicion "results". si no funciona la api, esto deberia estar vacio o no existir
                 foreach ($arrayToDecode['results'] as $valueArray){                       //dentro de la posicion results hay un arreglo de movies. por eso el for each, para recorrerlo entero
                     $movie = new Movie();                                                 //creamos el objeto movie y le damos los datos
-                    $movie->setPopularity($valueArray['popularity']);
-                    $movie->setVote_count($valueArray['vote_count']);
-                    $movie->setVideo($valueArray['video']);
                     $movie->setPoster_path($valueArray['poster_path']);
                     $movie->setId($valueArray['id']);                                     //este id va a ser la key en el arreglo asociativo, y tambien va a estar en value POR LAS DUDAS
                     $movie->setAdult($valueArray['adult']);
@@ -115,7 +104,6 @@ class MovieDAO implements IDAO{
                     $movie->setOriginal_title($valueArray['original_title']);
                     $movie->setGenre_ids($valueArray['genre_ids']);
                     $movie->setTitle($valueArray['title']);
-                    $movie->setVote_average($valueArray['vote_average']);
                     $movie->setOverview($valueArray['overview']);
                     $movie->setRelease_date($valueArray['release_date']);
                     
@@ -140,14 +128,10 @@ class MovieDAO implements IDAO{
                 if(!$oldMovieList[$currentNewMovie->getId()]){
                     $oldmovieList[$currentNewMovie->getId()] = $currentNewMovie; //si no existe la pelicula, la agrega en key id
                 }else{                                                           //si existe, actualiza los campos
-                    $oldMovieList[$currentNewMovie->getId()]->setPopularity($currentNewMovie['popularity']);
-                    $oldMovieList[$currentNewMovie->getId()]->setVote_count($currentNewMovie['vote_count']);
-                    $oldMovieList[$currentNewMovie->getId()]->setVideo($currentNewMovie['video']);
                     $oldMovieList[$currentNewMovie->getId()]->setPoster_path($currentNewMovie['poster_path']);
                     $oldMovieList[$currentNewMovie->getId()]->setAdult($currentNewMovie['adult']);
                     $oldMovieList[$currentNewMovie->getId()]->setGenre_ids($currentNewMovie['genre_ids']);
                     $oldMovieList[$currentNewMovie->getId()]->setTitle($currentNewMovie['title']);
-                    $oldMovieList[$currentNewMovie->getId()]->setVote_average($currentNewMovie['vote_average']);
                     $oldMovieList[$currentNewMovie->getId()]->setOverview($currentNewMovie['overview']);
                 }
             }
@@ -162,10 +146,6 @@ class MovieDAO implements IDAO{
         $arrayToEncode = array();
 
         foreach($this->movieList as $movie){
-            
-            $valueArray['popularity'] = $movie->getPopularity();
-            $valueArray['vote_count'] = $movie->getVote_count();
-            $valueArray['video'] = $movie->getVideo();
             $valueArray['poster_path'] = $movie->getPoster_path();
             $valueArray['id'] = $movie->getId();                                     //este id va a ser la key en el arreglo asociativo, y tambien va a estar en value POR LAS DUDAS
             $valueArray['adult'] = $movie->getAdult();
@@ -173,7 +153,6 @@ class MovieDAO implements IDAO{
             $valueArray['original_title'] = $movie->getOriginal_title();
             $valueArray['genre_ids'] = $movie->getGenre_ids();
             $valueArray['title'] = $movie->getTitle();
-            $valueArray['vote_average'] = $movie->getVote_average();
             $valueArray['overview'] = $movie->getOverview();
             $valueArray['release_date'] = $movie->getRelease_date();
             
