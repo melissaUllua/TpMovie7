@@ -104,6 +104,8 @@ class UserDAO implements IDAO{
                     $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
                     $user->setuserEmail($valueArray['userEmail']);
                     $user->setIsAdmin($valueArray['isAdmin']);
+                    $user->setuserFirstName($valueArray['userFirstName']);
+                    $user->setuserLastName($valueArray['userLastName']);
                     
                     array_push($this->userList, $user);
                 }
@@ -128,7 +130,8 @@ class UserDAO implements IDAO{
                     $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
                     $user->setuserEmail($valueArray['userEmail']);
                     $user->setIsAdmin($valueArray['isAdmin']);
-                    
+                    $user->setuserFirstName($valueArray['userFirstName']);
+                    $user->setuserLastName($valueArray['userLastName']);
                     array_push($this->userList, $user);
 
                     }
@@ -155,6 +158,8 @@ class UserDAO implements IDAO{
                     $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
                     $user->setuserEmail($valueArray['userEmail']);
                     $user->setIsAdmin($valueArray['isAdmin']);
+                    $user->setuserFirstName($valueArray['userFirstName']);
+                    $user->setuserLastName($valueArray['userLastName']);
                     
                     array_push($this->userList, $user);
 
@@ -182,6 +187,8 @@ class UserDAO implements IDAO{
                     $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
                     $user->setuserEmail($valueArray['userEmail']);
                     $user->setIsAdmin($valueArray['isAdmin']);
+                    $user->setuserFirstName($valueArray['userFirstName']);
+                    $user->setuserLastName($valueArray['userLastName']);
                     
                     array_push($this->userList, $user);
 
@@ -203,6 +210,8 @@ class UserDAO implements IDAO{
             $valueArray['isActive'] = $user->getIsActive();
             $valueArray['userEmail'] = $user->getuserEmail();
             $valueArray['isAdmin'] = $user->getIsAdmin();
+            $valueArray['userFirstName'] = $user->getuserFirstName();
+            $valueArray['userLastName'] = $user->getuserLastName();
             array_push($arrayToEncode, $valueArray);
         }
         $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);

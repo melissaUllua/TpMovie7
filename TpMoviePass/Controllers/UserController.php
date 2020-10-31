@@ -42,16 +42,25 @@ class UserController{
                 $user_aux->setuserPass($_POST['userPass']);
                 $user_aux->setuserName($_POST['userName']);
                 $user_aux->setIsAdmin(0); //por defecto no va a ser admin- Business rules
-                $user_aux->setIsActive(1); //por defecto no va a estar activo- Business rules             
-              
+                $user_aux->setIsActive(1); //por defecto no va a estar activo- Business rules  
+                $user_aux->setuserFirstName($_POST['userFirstName']);
+                $user_aux->setuserLastName($_POST['userLastName']);           
+              if ((strlen($user_aux->getuserPass()) >= 8) && (strlen($user_aux->getuserPass()) <= 10)) {
                 $message = $this->userDAO->Add($user_aux);
                 if (empty($message)){
                     $this->ShowLogInView();
                 } else {
                     $this->ShowSignUpView($message);
                 }
-
             }
+            else {
+                $message = "Wrong Password Length";
+                $this->ShowSignUpView($message);
+            } 
+
+              }
+
+
                 
         }
     
@@ -123,10 +132,13 @@ class UserController{
         $user = new User();
         $user->setuserName("SuperAdmin");
         $user->setuserEmail("user@user.com");
-        $user->setuserPass("123");
+        $user->setuserPass("superadmin");
         $user->setuserId(0);
         $user->setIsActive(1);
         $user->setIsAdmin(1);
+        $user->setuserFirstName("Super");
+        $user->setuserLastName("Admin");
+
 
         $this->userDAO->Add($user);
     }

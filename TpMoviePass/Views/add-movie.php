@@ -1,39 +1,50 @@
-<?php 
+<?php
+
     require_once('nav.php');
+
+    use Models\Movie as Movie; 
+    use DAO\MovieDAO as MovieDAO; 
+    
+    $movieDao = new MovieDAO;
+    $movieList =  $movieDao->getAll();
+    
 ?>
 <main class="py-5">
+     <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-          <?php 
-               if(isset($message))
-               {
-                    echo $message;
-               }
-          ?>
-               <h2 class="mb-4">Agregar pelicula</h2>
-               <form action="<?php echo FRONT_ROOT ?>Movie/Add" method="post" class="bg-light-alpha p-5">
-                    <div class="row">                         
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Titulo</label>
-                                   <input type="text" name="titulo" value="" class="form-control">
-                              </div>
-                         </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Fecha de estreno</label>
-                                   <input type="text" name="releaseDate" value="" class="form-control">
-                              </div>
-                         </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Lenguaje original</label>
-                                   <input type="num" name="originalLanguage" value="" class="form-control">
-                              </div>
-                         </div>
+               <h2 class="mb-4">Movie List</h2>
+               <table class="table bg-light-alpha">
+                    <thead>
+                         <th>Title</th>
+                         <th>Release date</th>
+                         <th>Language </th>
+                         <th>Overview</th>
+                         <th>Poster</th>
+                         <th>Add</th>
+                    </thead>
+                    <tbody>
+                         <?php 
+                         if(!empty($movieList)){
 
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
-               </form>
+                              foreach($movieList as $movie)
+                              {
+                                   ?>
+                                        <tr>
+                                             <td><?php echo $movie->getTitle() ?></td>
+                                             <td><?php echo $movie->getRelease_date() ?></td>
+                                             <td><?php echo $movie->getOriginal_language() ?></td>
+                                             <td><?php echo $movie->getOverview() ?></td>                                        
+                                             <td><img src = "<?php echo ('https://image.tmdb.org/t/p/w500' . $movie->getPoster_path()) ?>" title = "<?php echo ($movie->getTitle())?>" height="200" width="135"/></td>
+                                             <td><button type="submit" class="btn btn-basic btn-lg" type="hidden" value="<?php echo ($movie->getId())?> (">Add movie to Database</button></tr> 
+                                        </tr> 
+                                   <?php
+                              }
+                         }     
+                         ?>
+                         </tr>
+                    </tbody>
+               </table>
           </div>
      </section>
 </main>
