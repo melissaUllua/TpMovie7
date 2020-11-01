@@ -3,13 +3,16 @@ namespace Controllers;
 
 use DAO\CinemaDAO as CinemaDAO;
 use Models\Cinema as Cinema;
+use DAOBD\CinemaDAOBD as CinemaDAOBD;
 
 class CinemaController{
     private $cinemaDAO;
+    private $cinemaDAOBD;
 
     public function __construct()
     {
         $this->cinemaDAO = new CinemaDAO();
+        $this->cinemaDAOBD = new CinemaDAOBD();
     }
 
     public function ShowAddView($message ="")
@@ -19,7 +22,7 @@ class CinemaController{
 
     public function ShowListView()
     {
-        $cinemaList = $this->cinemaDAO->getAll();
+        $cinemaList = $this->cinemaDAOBD->getAll();
         require_once(VIEWS_PATH."cinemas-list.php");
     }
     public function ShowEditView()
@@ -27,25 +30,29 @@ class CinemaController{
         $cinemaList = $this->cinemaDAO->getAll();
         require_once(VIEWS_PATH."cinema-edit.php");
     }
+    /*public function ShowRoomsList() no debe ser de rooms debe ser de funciones
+    {
+        require_once(VIEWS_PATH."room-list.php");
+    }*/ 
 
-    public function Add($cinemaID, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity, $cinemaTotalRooms)
+    public function Add($cinemaName, $cinemaAddress, /*$cinemaTotalCapacity, $cinemaTicketPrice*/ $cinemaAvailabiity)
     {
         $cinema = new Cinema();
-        $cinema->setCinemaId($cinemaID);
+       // $cinema->setCinemaId($cinemaID); lo agregamos desde el DAO
         $cinema->setCinemaName($cinemaName);
-        $cinema->setCinemaTotalCapacity($cinemaTotalCapacity);
-        $cinema->setCinemaTicketPrice($cinemaTicketPrice);
+        //$cinema->setCinemaTotalCapacity($cinemaTotalCapacity); lo calculamos desde el DAOBD
+        //$cinema->setCinemaTicketPrice($cinemaTicketPrice); va en el room
         $cinema->setCinemaAddress($cinemaAddress);
         $cinema->setCinemaAvailability($cinemaAvailabiity);
-        $cinema->setCinemaTotalRooms($cinemaTotalRooms); //agregar al dao tambn
-        $this->cinemaDAO->Add($cinema);
+       // $cinema->setCinemaTotalRooms($cinemaTotalRooms); //agregar a la bdd tambn
+        //$this->cinemaDAO->Add($cinema);
+        $this->cinemaDAOBD->Add($cinema);
 
         $message = "El cine fue agregado con exito!";
         $totalRooms = $cinemaTotalRooms;
-        var_dump($totalRooms);
         require_once(VIEWS_PATH."add-room.php");
     }
-    public function AddRoom($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice)
+    public function AddRoom($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice, $cinemaID)
     {
         $room = new Room();
         $room->setRoomId($roomID);
@@ -53,10 +60,11 @@ class CinemaController{
         $room->setRoomCapacity($roomCapacity);
         $room->setRoomIs3D($roomIs3D);
         $room->setRoomPrice($roomPrice);
+        $room->setRoomCinemaID($cinemaID);
 
 
         $this->roomDao->Add($room);
-
+        var_dump($room->getRoomCinemaID);
         $message = "El cine fue agregado con exito!";
 
         //$this->ShowAddView(); //we should see if we keep this

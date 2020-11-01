@@ -112,10 +112,17 @@
         "roomPrice": ""
     },
     {
-        "roomId": "a",
+        "roomId": null,
         "roomName": "3",
         "roomCapacity": "true",
-        "roomIs3D": "12",
+        "roomIs3D": null,
         "roomPrice": ""
+    },
+    {
+        "roomId": "",
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": "",
+        "roomPrice": "<br \/>\r\n<font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>\r\n<tr><th align='left' bgcolor='#f57900' colspan="
     }
 ]
