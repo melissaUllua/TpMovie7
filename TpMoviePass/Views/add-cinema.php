@@ -46,8 +46,8 @@
                          <div class="col-lg-4">
                               <label for="">Tipo</label>
                                    <select name="cinemaAvailability" id="" class="form-control">
-                                   <option value="true">Available</option>
-                                   <option value="false">Unavailable</option>
+                                   <option value="1">Available</option>
+                                   <option value="0">Unavailable</option>
                                    </select>
                               </div>
                         <!-- <div class="col-lg-4">
