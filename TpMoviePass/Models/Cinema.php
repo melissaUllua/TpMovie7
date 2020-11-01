@@ -8,8 +8,8 @@ class Cinema{
     private $cinemaTicketPrice;
     private $cinemaAddress;
     private $cinemaAvailability;
-    private $cinemaTotalRooms;
-    private $cinemaRooms;
+    //private $cinemaTotalRooms;
+
 
 
     public function __construct()

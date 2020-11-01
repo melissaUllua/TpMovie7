@@ -18,14 +18,14 @@
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowSignUpView">Sign Up</a>
           </li> 
          <?php } else { ?>
-                <?php if ($_SESSION['isAdmin'] == true) { ?>
+                <?php //if ($_SESSION['isAdmin'] == true) { ?>
                          <li class="nav-item ">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Add Cinemas</a>
                          </li>
                          <li class="nav-item">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Edit Cinemas</a>
                          </li>   
-               <?php    }  ?>
+               <?php  //  }  ?>
                <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowProfileView">Profile</a>
                </li> 

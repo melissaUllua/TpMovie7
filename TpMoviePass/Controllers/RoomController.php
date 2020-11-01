@@ -20,7 +20,7 @@ class RoomController{
     public function ShowListView()
     {
         $cinemaList = $this->roomDao->getAll();
-        require_once(VIEWS_PATH.".php");
+        require_once(VIEWS_PATH."room-list.php");
     }
     public function ShowEditView()
     {
@@ -28,18 +28,20 @@ class RoomController{
         require_once(VIEWS_PATH.".php");
     }
 
-    public function Add($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice)
+    public function Add($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice, $cinemaID)
     {
+        //$cinema = unserialize($cinemaSER);
         $room = new Room();
         $room->setRoomId($roomID);
         $room->setRoomName($roomName);
         $room->setRoomCapacity($roomCapacity);
         $room->setRoomIs3D($roomIs3D);
         $room->setRoomPrice($roomPrice);
+        $room->setRoomCinemaID($cinemaID);
 
 
         $this->roomDao->Add($room);
-
+        var_dump($room->getRoomCinemaID);
         $message = "El cine fue agregado con exito!";
 
         //$this->ShowAddView(); //we should see if we keep this

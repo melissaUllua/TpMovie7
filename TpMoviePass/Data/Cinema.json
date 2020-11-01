@@ -6,8 +6,7 @@
         "cinemaTicketPrice": "319",
         "cinemaAddress": "C\u00f3rdoba 1500",
         "cinemaAvailability": "true",
-        "cinemaTotalRooms": 0,
-        "cinemaRooms": null
+        "cinemaTotalRooms": 0
     },
     {
         "cinemaId": null,
@@ -16,8 +15,7 @@
         "cinemaTicketPrice": 300,
         "cinemaAddress": "Belgrano 3200",
         "cinemaAvailability": "true",
-        "cinemaTotalRooms": 0,
-        "cinemaRooms": null
+        "cinemaTotalRooms": 0
     },
     {
         "cinemaId": null,
@@ -26,8 +24,7 @@
         "cinemaTicketPrice": 324,
         "cinemaAddress": "Corrientes 3998",
         "cinemaAvailability": "true",
-        "cinemaTotalRooms": 0,
-        "cinemaRooms": null
+        "cinemaTotalRooms": 0
     },
     {
         "cinemaId": null,
@@ -36,7 +33,33 @@
         "cinemaTicketPrice": "319",
         "cinemaAddress": "C\u00f3rdoba 1500",
         "cinemaAvailability": "false",
-        "cinemaTotalRooms": 0,
-        "cinemaRooms": null
+        "cinemaTotalRooms": 0
+    },
+    {
+        "cinemaId": "12",
+        "cinemaName": "cinecito",
+        "cinemaTotalCapacity": "120",
+        "cinemaTicketPrice": "1231",
+        "cinemaAddress": "123",
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": "2"
+    },
+    {
+        "cinemaId": "12",
+        "cinemaName": "cinecito",
+        "cinemaTotalCapacity": "120",
+        "cinemaTicketPrice": "1231",
+        "cinemaAddress": "123",
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": "2"
+    },
+    {
+        "cinemaId": "12",
+        "cinemaName": "Melissa Ullua",
+        "cinemaTotalCapacity": "120",
+        "cinemaTicketPrice": "12",
+        "cinemaAddress": "Rawson 6990",
+        "cinemaAvailability": "false",
+        "cinemaTotalRooms": "2"
     }
 ]
