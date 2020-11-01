@@ -28,12 +28,12 @@
     },
     {
         "cinemaId": null,
-        "cinemaName": "Diagonal",
-        "cinemaTotalCapacity": "2100",
+        "cinemaName": "Ambassador",
+        "cinemaTotalCapacity": "2101",
         "cinemaTicketPrice": "319",
         "cinemaAddress": "C\u00f3rdoba 1500",
-        "cinemaAvailability": "false",
-        "cinemaTotalRooms": 0
+        "cinemaAvailability": "true",
+        "cinemaTotalRooms": null
     },
     {
         "cinemaId": "12",

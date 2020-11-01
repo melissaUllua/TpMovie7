@@ -96,5 +96,41 @@
                 throw $ex;
             }
         }
+        public function getOneById($cinemaID)
+        {
+            try
+            {
+                
+
+                $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdCinema =' . "$cinemaID";';
+
+                $oneCinema; = $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $cinema = new Cinema();
+                    //$cinema->setRecordId($row["recordId"]);
+                    $cinema->setCinemaName($row["CinemaName"]);
+                    $cinema->setCinemaAddress($row["CinemaAddress"]);
+                    $cinema->setCinemaAvailability($row["CinemaAvailability"]);
+                    
+
+                    array_push($oneCinema, $cinema);
+                }
+
+                return $cinemaList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+
+        }
+        public function EditCinema($cinema)
+        {
+            ///getOne y luego alter table
+        }
     }
 ?>

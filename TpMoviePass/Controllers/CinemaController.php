@@ -103,7 +103,7 @@ class CinemaController{
 
         $this->ShowListView();
     }
-}
+}0
 
 
 ?>
