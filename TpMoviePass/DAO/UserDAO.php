@@ -184,7 +184,7 @@ class UserDAO implements IDAO{
                     $user->setuserName($valueArray['userName']);
                     $user->setuserPass($valueArray['userPass']);
                     $user->setuserId($valueArray['userId']);
-                    $user->setIsActive($valueArray['isActive']); //We should discuss how are we going to handle this
+                    $user->setIsActive($valueArray['isActive']);
                     $user->setuserEmail($valueArray['userEmail']);
                     $user->setIsAdmin($valueArray['isAdmin']);
                     $user->setuserFirstName($valueArray['userFirstName']);

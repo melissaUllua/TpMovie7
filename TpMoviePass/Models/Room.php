@@ -6,7 +6,8 @@ class Room{
     private $roomName;
     private $roomCapacity;
     private $is3D;
-    private $roomTicketPrice;
+    private $roomPrice;
+    private $cinemaID;
 
     public function __construct()
     {
@@ -99,9 +100,17 @@ class Room{
     /**
      * Get the value of roomTicketPrice
      */ 
-    public function getRoomTicketPrice()
+    public function getroomPrice()
     {
         return $this->roomTicketPrice;
+    }
+    public function setRoomCinemaID($cinemaID)
+    {
+        $this->cinemaID = $cinemaID;
+    }
+   public function getRoomCinemaID()
+    {
+        return $this->cinemaID;
     }
 
     /**
@@ -109,7 +118,7 @@ class Room{
      *
      * @return  self
      */ 
-    public function setRoomTicketPrice($roomTicketPrice)
+    public function setroomPrice($roomTicketPrice)
     {
         $this->roomTicketPrice = $roomTicketPrice;
 

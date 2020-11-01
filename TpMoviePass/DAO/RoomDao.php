@@ -110,7 +110,7 @@ class RoomDAO implements IDAO{
                     $room->setRoomName($valueArray['roomName']);
                     $room->setRoomCapacity($valueArray['roomCapacity']);
                     //$room->setIs3D($valueArray['Is3d']);
-                    $room->setRoomTicketPrice($valueArray['roomTicketPrice']);
+                    $room->setroomPrice($valueArray['roomPrice']);
                     array_push($this->roomList, $room);
                 }
             }
@@ -126,7 +126,7 @@ class RoomDAO implements IDAO{
             $valueArray['roomName']= $room->getRoomName();
             $valueArray['roomCapacity'] = $room->getRoomCapacity();
             $valueArray['Is3D'] = $room->getIs3D();
-            $valueArray['roomTicketPrice'] = $room->getRoomTicketPrice();
+            $valueArray['roomPrice'] = $room->getroomPrice();
     
             array_push($arrayToEncode, $valueArray);
         }

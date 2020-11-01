@@ -4,13 +4,13 @@
         "roomName": "Sala 1",
         "roomCapacity": "300",
         "Is3D": null,
-        "roomTicketPrice": "500"
+        "roomPrice": "500"
     },
     {
         "roomId": null,
         "roomName": "Sala 2",
         "roomCapacity": "34566",
         "Is3D": "true",
-        "roomTicketPrice": "478"
+        "roomPrice": "478"
     }
 ]

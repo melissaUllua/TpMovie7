@@ -2,13 +2,15 @@
 namespace Controllers;
 
 use DAO\UserDAO as UserDAO;
+use DAOBD\UserDAOBD as UserDAOBD;
 use Models\User as User;
 
 class UserController{
     private $userDAO;
 
     public function __construct(){
-        $this->userDAO = new UserDAO();
+      //  $this->userDAO = new UserDAO();
+        $this->userDAO = new UserDAOBD();
     }
 
     public function ShowProfileView(){
@@ -31,49 +33,62 @@ class UserController{
     public function signUp(){
         if($_POST)
         {
-            $users = $this->userDAO->getAll();
-            if(empty($users)){ //si no hay ningún usuario, al menos necesito un admin
-                $this->AddSuperAdmin(); //lo agrego y vuelvo a llamar a la función
+            try{
                 $users = $this->userDAO->getAll();
-            }          
-
-                $user_aux = new User();                               
-                $user_aux->setuserEmail($_POST['userEmail']);   
-                $user_aux->setuserPass($_POST['userPass']);
-                $user_aux->setuserName($_POST['userName']);
-                $user_aux->setIsAdmin(0); //por defecto no va a ser admin- Business rules
-                $user_aux->setIsActive(1); //por defecto no va a estar activo- Business rules  
-                $user_aux->setuserFirstName($_POST['userFirstName']);
-                $user_aux->setuserLastName($_POST['userLastName']);           
-              if ((strlen($user_aux->getuserPass()) >= 8) && (strlen($user_aux->getuserPass()) <= 10)) {
-                $message = $this->userDAO->Add($user_aux);
-                if (empty($message)){
-                    $this->ShowLogInView();
-                } else {
-                    $this->ShowSignUpView($message);
+                if(empty($users)){ //si no hay ningún usuario, al menos necesito un admin
+                    $this->AddSuperAdmin(); //lo agrego y vuelvo a llamar a la función
+                    $users = $this->userDAO->getAll();
+                }          
+    
+                    $user_aux = new User();                               
+                    $user_aux->setuserEmail($_POST['userEmail']);   
+                    $user_aux->setuserPass($_POST['userPass']);
+                    $user_aux->setuserName($_POST['userName']);
+                    $user_aux->setIsAdmin(0); //por defecto no va a ser admin- Business rules
+                    $user_aux->setIsActive(1); //por defecto no va a estar activo- Business rules  
+                    $user_aux->setuserFirstName($_POST['userFirstName']);
+                    $user_aux->setuserLastName($_POST['userLastName']);           
+                  if ((strlen($user_aux->getuserPass()) >= 8) && (strlen($user_aux->getuserPass()) <= 10)) {
+                    $message = $this->userDAO->Add($user_aux);
+                    if (empty($message)){
+                        $this->ShowLogInView();
+                    } else {
+                        $this->ShowSignUpView($message);
+                    }
                 }
+                else {
+                    $message = "Wrong Password Length";
+                    $this->ShowSignUpView($message);
+                } 
             }
-            else {
-                $message = "Wrong Password Length";
+            catch (Exception $exAdd) {
+                $message = "There has been a problem with the Sign Up";
                 $this->ShowSignUpView($message);
-            } 
+                echo $exAdd->get_Message();
 
-              }
+            }
+            catch (Exception $exGetAll) {
+                $message = "There has been a problem with the data";
+                $this->ShowSignUpView($message);
+                echo $exGetAll->get_Message();
 
+            }
+            
 
                 
         }
-    
+    }
 
 
     public function LogIn(){
         if($_POST)
-        {   $this->AddSuperAdmin();
+        {
             $users = $this->userDAO->getAll();
             $user_aux = new User();                               //creo un user auxiliar para comparar  
             $user_aux->setuserPass($_POST['userPass']);
-           
-            $user_aux = $this->userDAO->searchByName($_POST['userName']); //searchbyName retorna un usuario
+            $user_aux->setuserName($_POST['userName']);
+           if ($this->userDAO instanceof UserDAO) {
+            $user_aux = $this->userDAO->searchByName($user_aux->getuserName()); //searchbyName retorna un usuario
             if ($user_aux->getuserEmail()!= null){
                 if ($user_aux->getuserPass() === $_POST['userPass']){
                     
@@ -83,12 +98,21 @@ class UserController{
                 
                     $this->ShowProfileView();
                 }
-
+           }
+           }
+           else /*($this->userDAO instanceof UserDAOBD)*/{
+            $user_aux = $this->userDAO->getUser2($user_aux);
+            if ($user_aux->getuserName() != NULL){
+             $_SESSION['userName'] = $user_aux->getuserName();
+             $_SESSION['userEmail'] = $user_aux->getuserEmail();
+             $_SESSION['isAdmin'] = $user_aux->getIsAdmin();
+             $this->ShowProfileView();
             }
-             if (empty($_SESSION)) {
-                    $message = "User not found";
-                    $this->ShowLogInView($message);
-                }
+            }
+            if (empty($_SESSION)) {
+                $message = "User not found";
+                $this->ShowLogInView($message);
+            } 
 
             
                 

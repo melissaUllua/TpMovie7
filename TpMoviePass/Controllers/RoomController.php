@@ -20,7 +20,7 @@ class RoomController{
     public function ShowListView()
     {
         $cinemaList = $this->roomDao->getAll();
-        require_once(VIEWS_PATH."movies-list.php");
+        require_once(VIEWS_PATH."room-list.php");
     }
     public function ShowEditView()
     {
@@ -28,15 +28,9 @@ class RoomController{
         require_once(VIEWS_PATH.".php");
     }
 
-    public function ShowCinemasView()
+    public function Add($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice, $cinemaID)
     {
-        $cinemaList = $this->roomDao->getAll();
-        header("Location: ". FRONT_ROOT . VIEWS_PATH . "cinemas-list.php");
-    }
-    
-    //public function Add($roomID, $roomName, $roomCapacity, $roomIs3D, $roomTicketPrice)
-    public function Add($roomName, $roomCapacity, $roomIs3D, $roomTicketPrice)
-    {
+        //$cinema = unserialize($cinemaSER);
         $room = new Room();
         //$room->setRoomId($roomID);
         $room->setRoomName($roomName);
@@ -75,7 +69,7 @@ class RoomController{
         }
 
         //$this->roomDao->Edit($roomID, $modify); /*is not working yet*/
-        $message = "El cine fue editado con exito!";
+        $message = "Cinema modified successfully";
 
         $this->ShowListView();
     }

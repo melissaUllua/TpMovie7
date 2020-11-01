@@ -43,6 +43,12 @@
                                    <input type="number" name="roomTicketPrice" value="" class="form-control">
                               </div>
                          </div>
+                         <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for=""></label>
+                                   <input type="hidden" name="cinema" value="<?php $cinema->getCinemaId; ?>" class="form-control">
+                              </div>
+                         </div>
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
                <?php //} ?>
