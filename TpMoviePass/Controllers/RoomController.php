@@ -36,20 +36,21 @@ class RoomController{
 
     public function Add($cinemaID, $RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice, $RoomAvailability)
     {
-        $cinemaDAO = new CinemaDAOBD();
-        $cinema = $cinemaDAO->getOneCinema($cinemaID);
+       // $cinemaDAO = new CinemaDAOBD();
+        //$cinema = $cinemaDAO->getOneCinema($cinemaID);
+        $cinema = new Cinema();
         $room = new Room();
         $room->setRoomName($RoomName);
         $room->setRoomCapacity($RoomCapacity);
         $is3D = ($RoomIs3D = 1) ? true : false;
-        $room->setRoomIs3D($is3D);
+        $room->setIs3D($is3D);
         $room->setRoomPrice($RoomPrice);
         $availability = ($RoomAvailability = 1) ? true : false;
         $room->setRoomAvailability($availability);
        // $room->setRoomCinemaID($cinemaID);
         
         $this->roomDAOBD->Add($room);
-        $message = "El cine fue agregado con exito!";
+        $message = "Show Room added successfully!";
 
         
         require_once(VIEWS_PATH."add-cinema.php");

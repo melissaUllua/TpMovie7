@@ -56,12 +56,11 @@ use Models\Cinema as Cinema;
           <br>
         </form>
         <td>
-        <?php echo $IdCinema = $cinema->getCinemaId(); ?>
         <form action="<?php echo FRONT_ROOT."Room/ShowAddView/".$IdCinema?>" method="get" class="mb-5">
                             
            <?php//$cinemaSER = serialize($cinema); ?> 
                      <!-- <input type="hidden" name = "cinema", value= "<?php //$cinemaSER ?>"> -->
-                      <input type="hidden" value="<?php $cinema->getCinemaId();?>" name="IdCinema">
+                      <input type="hidden" value="<?php echo $cinema->getCinemaId();?>" name="IdCinema">
            <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add Show Room</button>
            </form>
                           
