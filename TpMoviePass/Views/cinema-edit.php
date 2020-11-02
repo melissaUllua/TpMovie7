@@ -1,7 +1,7 @@
 <?php require_once('nav.php'); 
 use Models\Cinema as Cinema;
 
-    use DAO\CinemaDao as CineDao;
+    use DAOBD\CinemaDAOBD as CineDAOBD;
     //$cineDao = new CineDao();
 
     //$allCinemas = $cineDao->getAll()
@@ -16,7 +16,7 @@ use Models\Cinema as Cinema;
         <h2 class="mb-4 text-center text-white ">Edit</h2>
          <?php 
             foreach ($cinemaList as $cinema){  ?>
-        <form action="<?php echo FRONT_ROOT . "Cinema/edit/".$cinema->getCinemaId(); ?>" method="POST"  >
+        <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST"  >
           <table class="table text-white bg-oscuro"> 
             
               <tr>
@@ -38,7 +38,8 @@ use Models\Cinema as Cinema;
                         <option value="true">Available</option>
                         <option value="false">Not Available</option>
                         </select>
-                          
+                      
+    </div>     
                        <!-- </select> -->
                         
                  </td>
@@ -46,14 +47,26 @@ use Models\Cinema as Cinema;
              </tr>
                 
               </table>
-          <br>
+                       <br>
           <div>
           
             <input type="submit" class="btn btn-dark ml-auto d-block" value="Save Changes" >
 
           </div>
+          <br>
         </form>
+        <td>
+        <form action="<?php echo FRONT_ROOT."Room/ShowAddView/".$IdCinema?>" method="get" class="mb-5">
+                            
+           <?php//$cinemaSER = serialize($cinema); ?> 
+                     <!-- <input type="hidden" name = "cinema", value= "<?php //$cinemaSER ?>"> -->
+                      <input type="hidden" value="<?php echo $cinema->getCinemaId();?>" name="IdCinema">
+           <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add Show Room</button>
+           </form>
+                          
+                           
+           </td>
       <?php  } ?>
-    </div>
+      
      </section>
 </main>

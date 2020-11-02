@@ -1,6 +1,6 @@
-create database if not exists TpMoviePass
+create database if not exists TpMoviePass;
 
-use tpmoviepass;
+use TpMoviePass;
 
 create table if not exists Cinemas (IdCinema int not null auto_increment,
 								  CinemaName varchar(40) not null,

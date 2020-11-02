@@ -15,11 +15,11 @@
                <?php
               // var_dump($cinemaID);
                for($i=0 ; $i < 1 ; $i++){ ?>
-               <form action="<?php echo FRONT_ROOT."Room/Add" ?>" method="post" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT."Room/Add/". $idCinema?>" method="post" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Nombre</label>
+                                   <label for="">Name</label>
                                    <input type="text" name="roomName" value="" class="form-control">
                               </div>
                          </div>
@@ -40,8 +40,8 @@
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Price</label>
-                                   <input type="number" name="roomPrice" value="" class="form-control">
+                                   <label for="">Ticket Price</label>
+                                   <input type="number" name="roomTicketPrice" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">

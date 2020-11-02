@@ -14,7 +14,9 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (cinemaName, cinemaAddress, cinemaAvailability) 
+                $flag = $this->ExistsCinemaByAddress($cinema->getCinemaAddress());
+                if ($flag == false){
+                    $query = "INSERT INTO ".$this->tableName." (cinemaName, cinemaAddress, cinemaAvailability) 
                 VALUES (:CinemaName, :CinemaAddress, :CinemaAvailability);";
                 
                 $parameters["CinemaName"] = $cinema->getCinemaName();
@@ -25,7 +27,14 @@
                 $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
+                $message = "";
 
+                }
+                else {
+                    $message = "There already exists a Cinema in that address";
+                }
+                
+                return $message;
     
             }
             catch(Exception $ex)
@@ -54,7 +63,6 @@
                     $cinema->setCinemaAddress($row["CinemaAddress"]);
                     $cinema->setCinemaAvailability($row["CinemaAvailability"]);
                     
-
                     array_push($cinemaList, $cinema);
                 }
 
@@ -103,9 +111,7 @@
     {
         try
             {
-                $cinemaReturn;
-
-                
+                $cinema = new Cinema();
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdCinema = "'. $Id .'";';
                 
                 $this->connection = Connection::GetInstance();
@@ -114,7 +120,6 @@
                 
                 if($resultSet)
                 {                
-                    $cinema = new Cinema();
                     $cinema->setCinemaId($row["IdCinema"]);
                     $cinema->setCinemaName($row["CinemaName"]);
                     $cinema->setCinemaAddress($row["CinemaAddress"]);
@@ -124,7 +129,32 @@
                    
                 }
 
-                return $cinemaReturn;
+                return $cinema;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function ExistsCinemaByAddress($address)
+    {
+        try
+            {
+                $flag = false;
+                $query = 'SELECT * FROM '.$this->tableName . ' WHERE CinemaAddress = "'. $address .'";';
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                if($resultSet)
+                {                
+                   $flag = true;
+                   
+                }
+
+                return $flag;
             }
             catch(Exception $ex)
             {

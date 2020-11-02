@@ -17,13 +17,13 @@
                 $query = "INSERT INTO ".$this->tableName." (RoomName, RoomCapacity, RoomIs3D, RoomPrice, RoomAvailability) 
                 VALUES ( :RoomName, :RoomCapacity, :RoomIs3D, :RoomPrice, :RoomAvailability );";
                 
-               // $parameters["IdCinema"] = $room->getRoomCinemaID();
+                $parameters["IdCinema"] = $room->getRoomCinemaID();
                 $parameters["RoomName"] = $room->getRoomName();
                 $parameters["RoomCapacity"] = $room->getRoomCapacity();
                 $parameters["RoomIs3D"] = $room->getRoomIs3d();
                 $parameters["RoomPrice"] = $room->getRoomPrice();
                 $parameters["RoomAvailability"] = $room->getRoomAvailability();
-                var_dump($room->getRoomIs3d());
+               
 
                 $this->connection = Connection::GetInstance();
 

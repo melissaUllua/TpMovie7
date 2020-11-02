@@ -1,10 +1,10 @@
 [
     {
         "roomId": null,
-        "roomName": "",
-        "roomCapacity": "false",
-        "roomIs3D": null,
-        "roomPrice": ""
+        "roomName": "Sala 1",
+        "roomCapacity": "300",
+        "Is3D": null,
+        "roomPrice": "500"
     },
     {
         "roomId": null,
