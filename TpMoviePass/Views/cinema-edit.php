@@ -16,7 +16,7 @@ use Models\Cinema as Cinema;
         <h2 class="mb-4 text-center text-white ">Edit</h2>
          <?php 
             foreach ($cinemaList as $cinema){  ?>
-        <form action="<?php echo FRONT_ROOT . "Cinema/edit/".$cinema->getCinemaId(); ?>" method="POST"  >
+        <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST"  >
           <table class="table text-white bg-oscuro"> 
             
               <tr>
@@ -56,7 +56,8 @@ use Models\Cinema as Cinema;
           <br>
         </form>
         <td>
-        <form action="<?php echo FRONT_ROOT."Room/ShowAddView/".$cinema->getCinemaId();?>" method="get" class="mb-5">
+        <?php echo $IdCinema = $cinema->getCinemaId(); ?>
+        <form action="<?php echo FRONT_ROOT."Room/ShowAddView/".$IdCinema?>" method="get" class="mb-5">
                             
            <?php//$cinemaSER = serialize($cinema); ?> 
                      <!-- <input type="hidden" name = "cinema", value= "<?php //$cinemaSER ?>"> -->

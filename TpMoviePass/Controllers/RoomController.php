@@ -1,20 +1,20 @@
 <?php
 namespace Controllers;
 
-use DAO\RoomDAO as roomDao;
+use DAO\RoomDAO as roomDAO;
 use Models\Room as Room;
 use Models\Cinema as Cinema;
 use DAOBD\RoomDAOBD as RoomDAOBD;
 use DAOBD\CinemaDAOBD as CinemaDAOBD;
 
 class RoomController{
-    private $roomDao;
+    private $roomDAO;
     private $roomDAOBD;
 
     public function __construct()
     {
-        $this->roomDao = new RoomDao();
-        $this->roomDAOBD= new RoomDAOBD();
+       // $this->roomDAO = new RoomDAO();
+        $this->roomDAO= new RoomDAOBD();
     }
 
     public function ShowAddView($idCinema, $message ="")
@@ -25,19 +25,19 @@ class RoomController{
 
     public function ShowListView()
     {
-        $cinemaList = $this->roomDao->getAll();
+        $cinemaList = $this->roomDAO->getAll();
         require_once(VIEWS_PATH."room-list.php");
     }
     public function ShowEditView()
     {
-        $cinemaList = $this->roomDao->getAll();
+        $cinemaList = $this->roomDAO->getAll();
         require_once(VIEWS_PATH.".php");
     }
 
     public function Add($cinemaID, $RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice, $RoomAvailability)
     {
-        $cinemaDao = new CinemaDAOBD();
-        $cinema = $cinemaDao->getOneCinema($cinemaID);
+        $cinemaDAO = new CinemaDAOBD();
+        $cinema = $cinemaDAO->getOneCinema($cinemaID);
         $room = new Room();
         $room->setRoomName($RoomName);
         $room->setRoomCapacity($RoomCapacity);
@@ -74,7 +74,7 @@ class RoomController{
             $modify->setroomTicketPrice($roomTicketPrice);
         }
 
-        //$this->roomDao->Edit($roomID, $modify); /*is not working yet*/
+        //$this->roomDAO->Edit($roomID, $modify); /*is not working yet*/
         $message = "Cinema modified successfully";
 
         $this->ShowListView();
