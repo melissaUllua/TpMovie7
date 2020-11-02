@@ -67,8 +67,8 @@ class CinemaController{
 
 
         $this->roomDao->Add($room);
-        var_dump($room->getRoomCinemaID);
-        $message = "El cine fue agregado con exito!";
+
+        $message = "Show Room added successfully";
 
         //$this->ShowAddView(); //we should see if we keep this
         

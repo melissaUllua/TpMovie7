@@ -60,7 +60,7 @@
         public function searchById($idGenre)  //busca un genero por su ID y lo devuelve como objeto
         {
 
-            $query = "SELECT * FROM " . $this->tableName " WHERE IdGenre=:$IdGenre";
+            $query = "SELECT * FROM " . $this->tableName ." WHERE IdGenre=:$IdGenre";
     
             $parameters["IdGenre"] = $idGenre;
 

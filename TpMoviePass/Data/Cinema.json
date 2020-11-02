@@ -36,30 +36,12 @@
         "cinemaTotalRooms": null
     },
     {
-        "cinemaId": "12",
-        "cinemaName": "cinecito",
-        "cinemaTotalCapacity": "120",
-        "cinemaTicketPrice": "1231",
-        "cinemaAddress": "123",
+        "cinemaId": "",
+        "cinemaName": "Teatro Auditorium",
+        "cinemaTotalCapacity": "500",
+        "cinemaTicketPrice": "300",
+        "cinemaAddress": "Bv. Maritimo Patricio Peralta Ramos 2280",
         "cinemaAvailability": "true",
-        "cinemaTotalRooms": "2"
-    },
-    {
-        "cinemaId": "12",
-        "cinemaName": "cinecito",
-        "cinemaTotalCapacity": "120",
-        "cinemaTicketPrice": "1231",
-        "cinemaAddress": "123",
-        "cinemaAvailability": "true",
-        "cinemaTotalRooms": "2"
-    },
-    {
-        "cinemaId": "12",
-        "cinemaName": "Melissa Ullua",
-        "cinemaTotalCapacity": "120",
-        "cinemaTicketPrice": "12",
-        "cinemaAddress": "Rawson 6990",
-        "cinemaAvailability": "false",
-        "cinemaTotalRooms": "2"
+        "cinemaTotalRooms": "1"
     }
 ]

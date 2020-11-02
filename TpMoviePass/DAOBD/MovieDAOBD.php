@@ -75,8 +75,6 @@
     
         public function getAll()
         {
-    
-    
             $this->moviesList = array();
             $query = "SELECT * FROM" . ' ' . $this->tableName . " " . "order by (MovieReleaseDate) desc";
             try {
@@ -131,7 +129,7 @@
                     $movie->setReleaseDate($resultSet[0]["release_date"]);
                     $movie->setAdult($resultSet[0]["adult"]);
                     $movie->setPosterPath($resultSet[0]["poster_path"]);
-                    $movie->setGenresArray(addGenresToMovies($movie->getId()))
+                    $movie->setGenresArray(addGenresToMovies($movie->getId()));
     
                     return $movie;
                 } else {

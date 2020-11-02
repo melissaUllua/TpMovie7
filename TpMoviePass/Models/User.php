@@ -7,6 +7,8 @@ class User{
     private $isActive;
     private $userEmail;
     private $isAdmin;
+    private $userFirstName;
+    private $userLastName;
 
 
 
@@ -126,6 +128,46 @@ class User{
     public function setIsAdmin($isAdmin)
     {
         $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of userFirstName
+     */ 
+    public function getuserFirstName()
+    {
+        return $this->userFirstName;
+    }
+
+    /**
+     * Set the value of userFirstName
+     *
+     * @return  self
+     */ 
+    public function setuserFirstName($userFirstName)
+    {
+        $this->userFirstName = $userFirstName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of userLastName
+     */ 
+    public function getuserLastName()
+    {
+        return $this->userLastName;
+    }
+
+    /**
+     * Set the value of userLastName
+     *
+     * @return  self
+     */ 
+    public function setuserLastName($userLastName)
+    {
+        $this->userLastName = $userLastName;
 
         return $this;
     }
