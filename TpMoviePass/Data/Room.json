@@ -8,9 +8,191 @@
     },
     {
         "roomId": null,
-        "roomName": "Sala 2",
-        "roomCapacity": "34566",
-        "Is3D": "true",
-        "roomPrice": "478"
+        "roomName": "",
+        "roomCapacity": "false",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "false",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "false",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "holi",
+        "roomCapacity": "120",
+        "roomIs3D": null,
+        "roomPrice": "45"
+    },
+    {
+        "roomId": null,
+        "roomName": "holi",
+        "roomCapacity": "120",
+        "roomIs3D": null,
+        "roomPrice": "45"
+    },
+    {
+        "roomId": null,
+        "roomName": "asdas",
+        "roomCapacity": "120",
+        "roomIs3D": null,
+        "roomPrice": "45"
+    },
+    {
+        "roomId": null,
+        "roomName": "holi",
+        "roomCapacity": "120",
+        "roomIs3D": null,
+        "roomPrice": "45"
+    },
+    {
+        "roomId": null,
+        "roomName": "holi",
+        "roomCapacity": "120",
+        "roomIs3D": null,
+        "roomPrice": "45"
+    },
+    {
+        "roomId": null,
+        "roomName": "holi",
+        "roomCapacity": "120",
+        "roomIs3D": null,
+        "roomPrice": "45"
+    },
+    {
+        "roomId": null,
+        "roomName": "3",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "3",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": "<br \/>\r\n<font size='1'><table class='xdebug-error xe-notice' dir='ltr' border='1' cellspacing='0' cellpadding='1'>\r\n<tr><th align='left' bgcolor='#f57900' colspan="
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "true",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "",
+        "roomCapacity": "",
+        "roomIs3D": null,
+        "roomPrice": ""
+    },
+    {
+        "roomId": null,
+        "roomName": "1",
+        "roomCapacity": "1",
+        "roomIs3D": "true",
+        "roomPrice": "1"
     }
 ]

@@ -119,6 +119,9 @@
             }
 
         }
+
+        
+
         public function Editshow($show)
         {
             ///getOne y luego alter table

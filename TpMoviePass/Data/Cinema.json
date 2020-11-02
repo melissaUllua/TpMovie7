@@ -36,12 +36,12 @@
         "cinemaTotalRooms": null
     },
     {
-        "cinemaId": "",
-        "cinemaName": "Teatro Auditorium",
-        "cinemaTotalCapacity": "500",
-        "cinemaTicketPrice": "300",
-        "cinemaAddress": "Bv. Maritimo Patricio Peralta Ramos 2280",
+        "cinemaId": null,
+        "cinemaName": "Ambassador",
+        "cinemaTotalCapacity": "2100",
+        "cinemaTicketPrice": "319",
+        "cinemaAddress": "C\u00f3rdoba 1500",
         "cinemaAvailability": "true",
-        "cinemaTotalRooms": "1"
+        "cinemaTotalRooms": null
     }
 ]

@@ -8,7 +8,7 @@ class Cinema{
     private $cinemaTicketPrice;
     private $cinemaAddress;
     private $cinemaAvailability;
-    //private $cinemaTotalRooms;
+    private $cinemaTotalRooms;
 
 
 
@@ -147,6 +147,7 @@ class Cinema{
     {
         $this->cinemaTotalRooms = $cinemaTotalRooms;
     }
+    
 }
 
 ?>

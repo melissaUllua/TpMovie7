@@ -3,19 +3,25 @@ namespace Controllers;
 
 use DAO\RoomDAO as roomDao;
 use Models\Room as Room;
+use Models\Cinema as Cinema;
+use DAOBD\RoomDAOBD as RoomDAOBD;
+use DAOBD\CinemaDAOBD as CinemaDAOBD;
 
 class RoomController{
     private $roomDao;
+    private $roomDAOBD;
 
     public function __construct()
     {
         $this->roomDao = new RoomDao();
+        $this->roomDAOBD= new RoomDAOBD();
     }
 
-    public function ShowAddView($message ="")
-    {
+    public function ShowAddView($idCinema, $message ="")
+    {   var_dump($idCinema);
         require_once(VIEWS_PATH."add-room.php");
     }
+   
 
     public function ShowListView()
     {
@@ -28,25 +34,25 @@ class RoomController{
         require_once(VIEWS_PATH.".php");
     }
 
-    public function Add($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice, $cinemaID)
+    public function Add($cinemaID, $RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice, $RoomAvailability)
     {
-        //$cinema = unserialize($cinemaSER);
+        $cinemaDao = new CinemaDAOBD();
+        $cinema = $cinemaDao->getOneCinema($cinemaID);
         $room = new Room();
-        //$room->setRoomId($roomID);
-        $room->setRoomName($roomName);
-        $room->setRoomCapacity($roomCapacity);
-        $room->setIs3D($roomIs3D);
-        $room->setRoomTicketPrice($roomTicketPrice);
-       
-        $message = $this->roomDao->Add($room);
-        if (empty($message)){
-            $message = "Show Room added successfully";
-           // $this->ShowCinemasView(); //se rompe
-           $this->ShowListView();
-            //require_once(VIEWS_PATH."add-cinema.php");
-        } else {
-            $this->ShowAddView($message);
-        }
+        $room->setRoomName($RoomName);
+        $room->setRoomCapacity($RoomCapacity);
+        $is3D = ($RoomIs3D = 1) ? true : false;
+        $room->setRoomIs3D($is3D);
+        $room->setRoomPrice($RoomPrice);
+        $availability = ($RoomAvailability = 1) ? true : false;
+        $room->setRoomAvailability($availability);
+       // $room->setRoomCinemaID($cinemaID);
+        
+        $this->roomDAOBD->Add($room);
+        $message = "El cine fue agregado con exito!";
+
+        
+        require_once(VIEWS_PATH."add-cinema.php");
     }
     public function Edit($roomID, $roomName, $roomCapacity, $Is3D, $roomTicketPrice)
     {
