@@ -8,6 +8,7 @@ class Room{
     private $is3D;
     private $price;
     private $cinemaID;
+    private $availability;
 
     public function __construct()
     {
@@ -60,6 +61,14 @@ class Room{
    public function getRoomCinemaID()
     {
         return $this->cinemaID;
+    }
+    public function setRoomAvailability($roomAvailability)
+    {
+        $this->availability = $roomAvailability;
+    }
+   public function getRoomAvailability()
+    {
+        return $this->availability;
     }
 
 

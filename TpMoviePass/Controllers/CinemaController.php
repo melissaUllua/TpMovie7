@@ -22,7 +22,8 @@ class CinemaController{
 
     public function ShowListView()
     {
-        $cinemaList = $this->cinemaDAOBD->getAvailable();
+        $cinemaList = $this->cinemaDAOBD->getOneCinema(9);
+       
         require_once(VIEWS_PATH."cinemas-list.php");
     }
     public function ShowEditView()
@@ -35,7 +36,7 @@ class CinemaController{
         require_once(VIEWS_PATH."room-list.php");
     }*/ 
 
-    public function Add($cinemaName, $cinemaAddress, /*$cinemaTotalCapacity, $cinemaTicketPrice*/ $cinemaAvailability)
+    public function Add($cinemaName, $cinemaAddress, /*$cinemaTotalCapacity, $cinemaTicketPrice*/ $cinemaAvailability, $cinemaTotalRooms)
     {
         $cinema = new Cinema();
        // $cinema->setCinemaId($cinemaID); lo agregamos desde el DAO
@@ -52,7 +53,8 @@ class CinemaController{
         
 
         $message = "El cine fue agregado con exito!";
-       //$totalRooms = $cinemaTotalRooms;
+        //$cinemaID = $thisCinemaDAOBD->get
+        $totalRooms = $cinemaTotalRooms;
         require_once(VIEWS_PATH."add-room.php");
     }
     public function AddRoom($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice, $cinemaID)
@@ -103,7 +105,7 @@ class CinemaController{
 
         $this->ShowListView();
     }
-}0
+}
 
 
 ?>

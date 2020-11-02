@@ -3,18 +3,22 @@ namespace Controllers;
 
 use DAO\RoomDAO as roomDao;
 use Models\Room as Room;
+use Models\Cinema as Cinema;
+use DAOBD\RoomDAOBD as RoomDAOBD;
 
 class RoomController{
     private $roomDao;
+    private $roomDAOBD;
 
     public function __construct()
     {
         $this->roomDao = new RoomDao();
+        $this->roomDAOBD= new RoomDAOBD();
     }
 
     public function ShowAddView($message ="")
     {
-        require_once(VIEWS_PATH.".php");
+        require_once(VIEWS_PATH."add-room.php");
     }
 
     public function ShowListView()
@@ -28,23 +32,21 @@ class RoomController{
         require_once(VIEWS_PATH.".php");
     }
 
-    public function Add($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice, $cinemaID)
+    public function Add($RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice, $RoomAvailability /*$cinemaID*/)
     {
-        //$cinema = unserialize($cinemaSER);
         $room = new Room();
-        $room->setRoomId($roomID);
-        $room->setRoomName($roomName);
-        $room->setRoomCapacity($roomCapacity);
-        $room->setRoomIs3D($roomIs3D);
-        $room->setRoomPrice($roomPrice);
-        $room->setRoomCinemaID($cinemaID);
-
-
-        $this->roomDao->Add($room);
-        var_dump($room->getRoomCinemaID);
+        $room->setRoomName($RoomName);
+        $room->setRoomCapacity($RoomCapacity);
+        $is3D = ($RoomIs3D = 1) ? true : false;
+        $room->setRoomIs3D($is3D);
+        $room->setRoomPrice($RoomPrice);
+        $availability = ($RoomAvailability = 1) ? true : false;
+        $room->setRoomAvailability($availability);
+       // $room->setRoomCinemaID($cinemaID);
+        
+        $this->roomDAOBD->Add($room);
         $message = "El cine fue agregado con exito!";
 
-        //$this->ShowAddView(); //we should see if we keep this
         
         require_once(VIEWS_PATH."add-cinema.php");
     }

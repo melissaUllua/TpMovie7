@@ -50,12 +50,12 @@
                                    <option value="0">Unavailable</option>
                                    </select>
                               </div>
-                        <!-- <div class="col-lg-4">
+                         <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Amount of rooms</label>
                                    <input type="number" name="cinemaTotalRooms" value="" class="form-control" min = 1>
                               </div>
-                         </div> -->
+                         </div> 
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
                </form>
