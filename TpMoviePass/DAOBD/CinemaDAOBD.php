@@ -102,9 +102,9 @@
             {
                 
 
-                $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdCinema =' . "$cinemaID";';
+                $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdCinema =' . "$cinemaID";
 
-                $oneCinema; = $this->connection = Connection::GetInstance();
+                $oneCinema = $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                 

@@ -9,24 +9,23 @@ class Movie{
 	private $adult;
 	private $original_language;
 	private $original_title;
-	private $genre_ids = array();
+	private $genresArray = array();
 	private $title;
 	private $overview;
 	private $release_date;
 
-	function __construct($poster_path = "", $id = "", $adult = "", $original_language = "", $original_title = "", $genre_ids = "", $title = "", $overview = "", $release_date = ""){
+	function __construct($poster_path = "", $id = "", $adult = "", $original_language = "", $original_title = "", $genresArray = "", $title = "", $overview = "", $release_date = ""){
 
 		$this->poster_path = $poster_path;
 		$this->id = $id;
 		$this->adult = $adult;
 		$this->original_language = $original_language;
 		$this->original_title = $original_title;
-		$this->genre_ids = $genre_ids;
+		$this->genresArray = $genresArray;
 		$this->title = $title;
 		$this->overview = $overview;
 		$this->release_date = $release_date;
-		
-		
+	
 	}
 
 	public function getPoster_path(){
@@ -69,12 +68,12 @@ class Movie{
 		$this->original_title = $original_title;
 	}
 
-	public function getGenre_ids(){
-		return $this->genre_ids;
+	public function getGenresArray(){
+		return $this->genresArray;
 	}
 
-	public function setGenre_ids($genre_ids){
-		$this->genre_ids = $genre_ids;
+	public function setGenresArray($genresArray){
+		$this->genresArray = $genresArray;
 	}
 
 	public function getTitle(){

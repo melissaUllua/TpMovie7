@@ -21,7 +21,7 @@
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo ($genre->getName());?></h5>
                                 <a href="#" class="btn btn-info">Select</a>
-                                <input type="hidden" name=<?php echo ($genre->getId)?>>
+                                <input type="hidden" name=<?php echo ($genre->getId())?>>
                             </div>
                         </div>
                 <?php } ?>
