@@ -4,9 +4,11 @@
 
     use Models\Genre as Genre; 
     use DAO\GenreDAO as GenreDAO; 
+    use DAO\GenreDAOBD as GenreDAOBD; 
+
     
-    $genreDao = new GenreDAO;
-    $genreList =  $genreDao->getAll();
+    $genreDaoBD = new GenreDAOBD;
+    $genreList =  $genreDaoBD->getAll();
 
 ?>
 <main class="py-5">
@@ -20,7 +22,7 @@
                     <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo ($genre->getName());?></h5>
-                                <a href="#" class="btn btn-info">Select</a>
+                                <a href="#" class="btn btn-info">Select genre</a>
                                 <input type="hidden" name=<?php echo ($genre->getId())?>>
                             </div>
                         </div>

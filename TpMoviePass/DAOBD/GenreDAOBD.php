@@ -4,6 +4,7 @@
     use \Exception as Exception;
     use Models\Movie as Movie;    
     use DAOBD\Connection as Connection;
+    use DAOBD\MovieDAOBD as MovieDAOBD;
 
     class GenreDAOBD
     {
@@ -18,7 +19,7 @@
 
 
 
-        public function add(Genre $genre)   //agrega una pelicula a la base de datos
+        public function add(Genre $genre)   //agrega un genero a la base de datos
         {
     
             $query = "INSERT INTO " . " " . $this->tableName . " " .
@@ -37,7 +38,7 @@
             }
         }
 
-        public function getAll()
+        public function getAll()    ///devuelve una lista de todos los generos
         {
     
             $query = "SELECT * FROM" . ' ' . $this->tableName;
@@ -60,7 +61,7 @@
         public function searchById($idGenre)  //busca un genero por su ID y lo devuelve como objeto
         {
 
-            $query = "SELECT * FROM " . $this->tableName " WHERE IdGenre=:$IdGenre";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre=:$IdGenre";
     
             $parameters["IdGenre"] = $idGenre;
 
@@ -83,6 +84,45 @@
             }
         }
 
+
+        public function getMoviesByIdGenre($idGenre)  //busca peliculas que coincidan con el ID de genero que le pasemos
+        {
+            $movieList = array();
+            $IdMovie = null;
+            $movieDAOBD = new MovieDAOBD;
+
+            $query = "SELECT * FROM Genres_by_movies WHERE IdGenre=:$IdGenre ORDER BY (MovieReleaseDate) DESC";
+            $parameters["IdGenre"] = $idGenre;
+
+
+            try {
+                $this->connection = Connection::GetInstance();
+    
+                $resultSet = $this->connection->Execute($query, $parameters);
+                $resultSet = $resultSet->fetchAll();
+
+
+                if ($resultSet != null) {
+                    foreach($resultSet as $row){
+                        $movie = new Movie();
+                        $movieID = $row['IdMovie'];
+                        $movie = $movieDAOBD->searchById($movieID);
+
+                        array_push($movieList, $movie);
+                    }
+
+
+                    return $genre;
+                } else {
+                    return null;
+                }
+
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+
+
+        }
 
 
 
