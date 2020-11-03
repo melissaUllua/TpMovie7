@@ -5,7 +5,7 @@
     use Models\Movie as Movie; 
     use DAO\MovieDAOBD as MovieDAOBD; 
     use Models\Genre as Genre; 
-    use DAO\GenreDAOBD as GenreDAOBD; 
+    use DAOBD\GenreDAOBD as GenreDAOBD; 
     
     $idGenreShown = $_GET;
  
@@ -13,7 +13,7 @@
     $movieList =  $genreDaoBD->getMoviesByIdGenre($idGenreShown);
 
 
-    getMoviesByIdGenre($idGenre)
+    //getMoviesByIdGenre($idGenre)
 
 ?>
 <main class="py-5">

@@ -9,10 +9,12 @@ use DAOBD\GenreDAOBD as GenreDAOBD;
 
 class MovieController{
     private $MovieDao;
+    private $MovieDaoBD;
 
     public function __construct()
     {
         $this->MovieDao = new MovieDAO();
+        $this->MovieDaoBD = new MovieDAOBD();
     }
 
 
@@ -24,6 +26,7 @@ class MovieController{
 
     public function ShowListView()    //va a ser para listar peliculas por género
     {
+        $movieList = $this->MovieDaoBD->updateDatabaseMovies();
         require_once(VIEWS_PATH."select-genre.php");
         require_once(VIEWS_PATH."movies-list-by-genre.php");
 

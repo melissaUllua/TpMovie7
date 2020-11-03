@@ -5,6 +5,7 @@
     use Models\Movie as Movie;    
     use DAOBD\Connection as Connection;
     use DAOBD\MovieDAOBD as MovieDAOBD;
+    
 
     class GenreDAOBD
     {
@@ -91,7 +92,8 @@
             $IdMovie = null;
             $movieDAOBD = new MovieDAOBD;
 
-            $query = "SELECT * FROM Genres_by_movies WHERE IdGenre=:$IdGenre ORDER BY (MovieReleaseDate) DESC";
+           $query = 'SELECT * FROM Genres_by_movies WHERE IdGenre = "' . $idGenre .'";';
+           var_dump($query);
             $parameters["IdGenre"] = $idGenre;
 
 
@@ -99,7 +101,7 @@
                 $this->connection = Connection::GetInstance();
     
                 $resultSet = $this->connection->Execute($query, $parameters);
-                $resultSet = $resultSet->fetchAll();
+               // $resultSet = $resultSet->fetchAll();
 
 
                 if ($resultSet != null) {
@@ -124,7 +126,67 @@
 
         }
 
+        public function exists(Genre $genre)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
+    {
 
+        $query = "SELECT * FROM " . " " . $this->tableName . " WHERE IdGenre=:IdGenre";
+
+        $parameters["IdGenre"] = $genre->getId();
+
+        try {
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (!empty($resultSet)) {
+                $genre = new Genre();
+                $genre->setId($resultSet[0]['IdGenre']);
+                $genre->setName($resultSet[0]['GenreName']);
+
+                return $genre;
+
+            } else {
+                add($genre);
+                return true;
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+
+
+
+
+
+
+    public function updateDatabaseGenres()
+    {
+
+        $jsonContent = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=cbd53a3628e9ef7454e5890f33b974d8'); //guarda en jsoncontent un string con lo que te tira cada pagina
+        $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();  //convierte ese string en un arreglo asociativo
+
+
+
+        try {
+
+            if (!empty($arrayToDecode['genres']))
+            {  //si la api funciona, hay algo en el arreglo en posicion "results". si no funciona la api, esto deberia estar vacio o no existir
+                foreach ($arrayToDecode['genres'] as $valueArray)
+                {  
+                    //dentro de la posicion results hay un arreglo de movies. por eso el for each, para recorrerlo entero
+                    $genre = new Genre(); //creamos el objeto movie y le damos los datos
+                    $genre->setId($valueArray['id']);
+                    $genre->setName($valueArray['name']);                                     
+
+                    exists($genre); //mandamos a chequear si existe en DB. Si no existe, la agrega.
+                }
+            }
+        
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 
 
     }

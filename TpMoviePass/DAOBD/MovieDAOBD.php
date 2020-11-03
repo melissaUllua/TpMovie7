@@ -7,7 +7,7 @@
     use DAOBD\GenreDAOBD as GenreDAOBD;
 
 
-    class MoviesDAOBD
+    class MovieDAOBD
     {
         private $moviesList  = array();
         private $connection;
@@ -93,7 +93,7 @@
     
     
             $this->moviesList = array();
-            $query = "SELECT * FROM " . $this->tableName . " order by (MovieReleaseDate) desc";
+            $query = "SELECT * FROM " . $this->tableName . " ;";
             try {
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->Execute($query);
@@ -203,7 +203,7 @@
             }
         }
 
-        public function updateDatabaseMovies($movie)  //devuelve un arreglo de objetos Genre para añadir a la pelicula
+        public function updateDatabaseMovies()  
         {
     
             $jsonContent = file_get_contents('https://api.themoviedb.org/3/movie/now_playing?api_key=cbd53a3628e9ef7454e5890f33b974d8'); //guarda en jsoncontent un string con lo que te tira cada pagina
@@ -225,7 +225,8 @@
                         $movie->setTitle($valueArray['title']);
                         $movie->setOverview($valueArray['overview']);
                         $movie->setRelease_date($valueArray['release_date']);
-                        $movie->setDuration(getMovieDuration($valueArray['id']));
+                        $movie->setDuration($this->getMovieDuration($valueArray['id']));
+                        //$movie->setDuration(getMovieDuration($valueArray['id']));
 
                         exists($movie);                                //mandamos a chequear si existe en DB. Si no existe, la agrega.
                     }

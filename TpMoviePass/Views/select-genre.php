@@ -4,10 +4,10 @@
 
     use Models\Genre as Genre; 
     use DAO\GenreDAO as GenreDAO; 
-    use DAO\GenreDAOBD as GenreDAOBD; 
+    use DAOBD\GenreDAOBD as GenreDAOBD;
 
     
-    $genreDaoBD = new GenreDAOBD;
+    $genreDaoBD = new GenreDAOBD();
     $genreList =  $genreDaoBD->getAll();
 
 ?>

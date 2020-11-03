@@ -12,7 +12,7 @@
           ?>
                <h2 class="mb-4">Add rooms</h2>
                <?php
-               var_dump($totalRooms);
+              // var_dump($totalRooms);
                for($i=0 ; $i < $totalRooms ; $i++){ ?>
                <form action="<?php echo FRONT_ROOT."Room/Add" ?>" method="post" class="bg-light-alpha p-5">
                     <div class="row">                         
