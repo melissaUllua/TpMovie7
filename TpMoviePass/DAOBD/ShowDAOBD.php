@@ -9,8 +9,8 @@
 
    /*create table if not exists  Shows(
         IdShow int auto_increment,
-        IdMovie smallint not null,
-	    IdRoom smallint not null,
+        IdMovie int not null,
+	    IdRoom int not null,
         ShowDate varchar(10) not null,
         ShowTime varchar(5) not null,
         constraint pk_show PRIMARY KEY(IdShow),
@@ -20,27 +20,31 @@
     );
      //siendo ShowDate "d.m.y" y ShowTime "00:00"
 */
-    class ShowDAOBD 
+    class ShowDAOBD implements IDAOBD
     {
         private $connection;
         private $tableName = "Shows";
 
-        public function Add(show $show)
+        public function Add($show)
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (IdShow, ShowDate, IdRoom, IdMovie) 
-                VALUES (:idShow, :showDate, :idRoom, :idMovie,);";
+                $query = "INSERT INTO ".$this->tableName." (ShowDate, ShowTime, IdRoom, IdMovie) 
+                VALUES (:showDate,:showTime, :idRoom, :idMovie);";
                 
-                $parameters["IdShow"] = $show->getShowId();
                 $parameters["showDate"] = $show->getShowDate();
+                $parameters["showTime"] = $show->getShowTime();
                 $parameters["idRoom"] = $show->getShowRoom()->getroomId();
-                $parameters["idMovie"] = $show->getShowMovie()->getId();
+                $movie = $show->getShowMovie();
+                $id = $movie->getId();
+
+                $parameters["idMovie"] = $id;
                 
 
                 $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
+                return $message = "Show added successfully";
             }
             catch(Exception $ex)
             {
@@ -83,11 +87,10 @@
             }
         }
        
-        public function getOneById($showID)
+        public function GetOneById($showID)
         {
             try
             {
-                
 
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE Idshow =' . "$showID";
 
@@ -100,10 +103,10 @@
                 if ($resultSet)
                 {                
                     $row = $resultSet['0'];
-                    $show = new show();
+                    $show = new Show();
                     $show->setShowId($row["IdShow"]);
                     $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
-                    //$show->setShowRoom($room_aux->searchById($row["IdRoom"]));
+                    //$show->setShowRoom($room_aux->getOneById($row["IdRoom"]));
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
                     

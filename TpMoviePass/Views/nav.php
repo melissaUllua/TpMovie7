@@ -23,9 +23,15 @@
                          <li class="nav-item ">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Add Cinemas</a>
                          </li>
-                         <li class="nav-item ">
+                        <!-- <li class="nav-item ">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Room/ShowAddView">Add Show Room</a>
                          </li>
+                         LAS SALAS SE AGREGAN DESDE EDITAR CINES 
+                         -->
+                         <li class="nav-item ">
+                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Show/ShowAddView">Add Show</a>
+                         </li>
+                        
                          <li class="nav-item">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Edit Cinemas</a>
                          </li>   

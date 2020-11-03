@@ -74,7 +74,7 @@ class MovieDAO implements IDAO{
                     $movie->setAdult($valueArray['adult']);
                     $movie->setOriginal_Language($valueArray['original_language']);
                     $movie->setOriginal_title($valueArray['original_title']);
-                    $movie->setGenre_ids($valueArray['genre_ids']);
+                  //  $movie->setGenre_ids($valueArray['genre_ids']);
                     $movie->setTitle($valueArray['title']);
                     $movie->setOverview($valueArray['overview']);
                     $movie->setRelease_date($valueArray['release_date']);

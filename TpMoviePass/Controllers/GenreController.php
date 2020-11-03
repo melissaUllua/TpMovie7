@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use DAO\GenreDAO as GenreDAO;
+use DAOBD\GenreDAOBD as GenreDAOBD;
 
 class GenreController{
     private $GenreDao;

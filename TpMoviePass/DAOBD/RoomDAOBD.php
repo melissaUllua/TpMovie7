@@ -55,7 +55,7 @@
                     $room = new Room();
                     $room->setRoomName($row["RoomName"]);
                     $room->setRoomCapacity($row["RoomCapacity"]);
-                    $room->setRoomIs3d($row["RoomIs3D"]);
+                    $room->setIs3d($row["RoomIs3D"]);
                     $room->setRoomPrice($row["RoomPrice"]);
                     $room->setRoomAvailability($row["RoomAvailability"]);
 

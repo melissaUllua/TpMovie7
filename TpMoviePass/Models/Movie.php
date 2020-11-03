@@ -13,8 +13,10 @@ class Movie{
 	private $title;
 	private $overview;
 	private $release_date;
+	private $duration;
 
-	function __construct($poster_path = "", $id = "", $adult = "", $original_language = "", $original_title = "", $genresArray = "", $title = "", $overview = "", $release_date = ""){
+
+	function __construct($poster_path = "", $id = "", $adult = "", $original_language = "", $original_title = "", $genresArray = "", $title = "", $overview = "", $release_date = "", $duration = ""){
 
 		$this->poster_path = $poster_path;
 		$this->id = $id;
@@ -25,6 +27,8 @@ class Movie{
 		$this->title = $title;
 		$this->overview = $overview;
 		$this->release_date = $release_date;
+		$this->duration = $duration;
+
 	
 	}
 
@@ -99,6 +103,14 @@ class Movie{
 
 	public function setRelease_date($release_date){
 		$this->release_date = $release_date;
+	}
+
+	public function getDuration(){
+		return $this->duration;
+	}
+
+	public function setDuration($duration){
+		$this->duration = $duration;
 	}
 }
  ?>

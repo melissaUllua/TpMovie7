@@ -23,7 +23,7 @@ class CinemaController{
     public function ShowListView()
     {
        // $cinemaList = $this->cinemaDAOBD->getOneCinema(9);
-       $cinemaList = $this->cinemaDAOBD->GetAll();
+       $cinemaList = $this->cinemaDAO->GetAll();
         require_once(VIEWS_PATH."cinemas-list.php");
     }
     public function ShowEditView()
