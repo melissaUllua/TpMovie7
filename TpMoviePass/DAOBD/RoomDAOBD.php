@@ -10,17 +10,17 @@
         private $connection;
         private $tableName = "Rooms";
 
-        public function Add(Room $room)
+        public function Add($room)
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (RoomName, RoomCapacity, RoomIs3D, RoomPrice, RoomAvailability) 
-                VALUES ( :RoomName, :RoomCapacity, :RoomIs3D, :RoomPrice, :RoomAvailability );";
+                $query = "INSERT INTO ".$this->tableName." (IdCinema, RoomName, RoomCapacity, RoomIs3D, RoomPrice, RoomAvailability) 
+                VALUES (:IdCinema, :RoomName, :RoomCapacity, :RoomIs3D, :RoomPrice, :RoomAvailability );";
                 
-                $parameters["IdCinema"] = $room->getRoomCinemaID();
+                $parameters["IdCinema"] = $room->getRoomCinema()->getCinemaId();
                 $parameters["RoomName"] = $room->getRoomName();
                 $parameters["RoomCapacity"] = $room->getRoomCapacity();
-                $parameters["RoomIs3D"] = $room->getRoomIs3d();
+                $parameters["RoomIs3D"] = $room->getIs3d();
                 $parameters["RoomPrice"] = $room->getRoomPrice();
                 $parameters["RoomAvailability"] = $room->getRoomAvailability();
                

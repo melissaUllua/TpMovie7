@@ -7,7 +7,7 @@ class Room{
     private $roomCapacity;
     private $is3D;
     private $roomPrice;
-    private $cinemaID;
+    private $cinema;
     private $availability;
 
     public function __construct()
@@ -105,13 +105,13 @@ class Room{
     {
         return $this->roomTicketPrice;
     }
-    public function setRoomCinemaID($cinemaID)
+    public function setRoomCinema($cinema)
     {
-        $this->cinemaID = $cinemaID;
+        $this->cinema = $cinema;
     }
-   public function getRoomCinemaID()
+   public function getRoomCinema()
     {
-        return $this->cinemaID;
+        return $this->cinema;
     }
     public function setRoomAvailability($roomAvailability)
     {

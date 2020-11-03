@@ -14,11 +14,11 @@ class RoomController{
     public function __construct()
     {
        // $this->roomDAO = new RoomDAO();
-        $this->roomDAO= new RoomDAOBD();
+        $this->roomDAO = new RoomDAOBD();
     }
 
     public function ShowAddView($idCinema, $message ="")
-    {   var_dump($idCinema);
+    {  
         require_once(VIEWS_PATH."add-room.php");
     }
    
@@ -34,11 +34,13 @@ class RoomController{
         require_once(VIEWS_PATH.".php");
     }
 
+
     public function Add($cinemaID, $RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice, $RoomAvailability)
     {
        // $cinemaDAO = new CinemaDAOBD();
         //$cinema = $cinemaDAO->getOneCinema($cinemaID);
         $cinema = new Cinema();
+        $cinema->setCinemaId($cinemaID);
         $room = new Room();
         $room->setRoomName($RoomName);
         $room->setRoomCapacity($RoomCapacity);
@@ -47,9 +49,8 @@ class RoomController{
         $room->setRoomPrice($RoomPrice);
         $availability = ($RoomAvailability = 1) ? true : false;
         $room->setRoomAvailability($availability);
-       // $room->setRoomCinemaID($cinemaID);
-        
-        $this->roomDAOBD->Add($room);
+        $room->setRoomCinema($cinema);
+        $this->roomDAO->Add($room);
         $message = "Show Room added successfully!";
 
         

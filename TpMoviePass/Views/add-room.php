@@ -15,7 +15,7 @@
                <?php
               // var_dump($cinemaID);
                for($i=0 ; $i < 1 ; $i++){ ?>
-               <form action="<?php echo FRONT_ROOT."Room/Add/". $idCinema?>" method="post" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT."Room/Add/"?>" method="post" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
@@ -45,7 +45,7 @@
                               </div>
                          </div>
                          <div class="col-lg-4">
-                              <label for="">Tipo</label>
+                              <label for="">Availability</label>
                                    <select name="availability" id="" class="form-control">
                                    <option value="1">Available</option>
                                    <option value="0">Unavailable</option>
@@ -54,7 +54,7 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for=""></label>
-                                   <input type="hidden" name="cinemaID" value="<?php $cinemaID; ?>" class="form-control">
+                                   <input type="hidden" name="cinemaID" value="<?php echo $idCinema; ?>" class="form-control">
                               </div>
                          </div>
                     </div>
