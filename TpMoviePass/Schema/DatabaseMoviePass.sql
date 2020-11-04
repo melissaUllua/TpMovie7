@@ -1,6 +1,6 @@
-create database if not exists TpMoviePass
+create database if not exists TpMoviePass;
 
-use tpmoviepass;
+use TpMoviePass;
 
 create table if not exists Cinemas (IdCinema int not null auto_increment,
 								  CinemaName varchar(40) not null,
@@ -13,7 +13,7 @@ create table if not exists Rooms (IdRoom int not null auto_increment,
 								IdCinema int not null,
 								RoomName varchar(20) not null,
                                 RoomCapacity int not null,
-                                RoomIs3D boolean not null default false,
+                                RoomIs3D boolean not null default true,
                                 RoomPrice int not null,
                                 RoomAvailability boolean not null,
                                 CONSTRAINT pk_IdRoom primary key(IdRoom),
