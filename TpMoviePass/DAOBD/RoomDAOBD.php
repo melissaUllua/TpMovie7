@@ -14,6 +14,7 @@
         {
             try
             {
+                var_dump($room);
                 $query = "INSERT INTO ".$this->tableName." (IdCinema, RoomName, RoomCapacity, RoomIs3D, RoomPrice, RoomAvailability) 
                 VALUES (:IdCinema, :RoomName, :RoomCapacity, :RoomIs3D, :RoomPrice, :RoomAvailability );";
                 
