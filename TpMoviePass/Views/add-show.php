@@ -12,23 +12,24 @@
                }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
                <h2 class="mb-4">Add Movie Show</h2>
-               <?php
-               for($i=0 ; $i < 1 ; $i++){ ?>
+
+               
                <form action="<?php echo FRONT_ROOT."Show/Add/"?>" method="get" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Movie ID</label>
-                                   <input type="number" name="movieId" value="" class="form-control" required>
+                                   <label for="">Movies</label>
+                                   <!-- agregar el foreach con las peliculas -->
+                                   <select name="movieID" id="" class="form-control">
+                                   <?php foreach ($movieList as $movie){ ?>
+                                   <option value="<?php echo $movie->getId(); ?>"><?php echo $movie->getTitle();?></option>
+                                   <?php } ?>
+                                   </select>
+                              </div>
                               </div>
                          </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                              <label for="">Room ID</label>
-                              <input type="number" name="roomId" value="" class="form-control"required>
-                                   
-                              </div>
-                         </div>
+               
+                        
                          <div class="col-lg-4">
                               <div class="form-group">
                               <label for="">Date</label>
@@ -42,10 +43,15 @@
                                    <input type="dateTime" name="showTime" value="" class="form-control" required>
                               </div>
                          </div>
+                         <div class="col-lg-4">
+                              <input type="hidden" name="roomID" value="<?php echo $room->getRoomId(); ?>" class="form-control"required>
+                                   
+                              </div>
+                         </div>
                     
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
-               <?php } ?>
+               
                </form>
           </div>
      </section>

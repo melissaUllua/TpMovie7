@@ -54,11 +54,13 @@
                 {                
                    
                     $room = new Room();
+                    $room->setRoomId($row["IdRoom"]);
                     $room->setRoomName($row["RoomName"]);
                     $room->setRoomCapacity($row["RoomCapacity"]);
                     $room->setIs3d($row["RoomIs3D"]);
                     $room->setRoomPrice($row["RoomPrice"]);
                     $room->setRoomAvailability($row["RoomAvailability"]);
+                    ///falta agregar el cine
 
 
                     array_push($roomList, $room);
@@ -71,39 +73,7 @@
                 throw $ex;
             }
         }
-        public function getAvailable()
-        {
-            try
-            {
-                $roomList = array();
-
-                
-                $query = 'SELECT * FROM '.$this->tableName . ' WHERE cinemaAvailability = "1";';
-                
-                $this->connection = Connection::GetInstance();
-
-                $resultSet = $this->connection->Execute($query);
-                
-                foreach ($resultSet as $row)
-                {                
-                   
-                    $room = new Room();
-                    $room->setRoomName($row["RoomName"]);
-                    $room->setRoomCapacity($row["RoomCapacity"]);
-                    $room->setRoomIs3d($row["RoomIs3D"]);
-                    $room->setRoomPrice($row["RoomPrice"]);
-                    $room->setRoomAvailability($row["RoomAvailability"]);
-
-                    array_push($roomList, $room);
-                }
-
-                return $roomList;
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
-        }
+    
         public function GetRoomByCinemas($cinemaID)
         {
            
@@ -122,6 +92,7 @@
                 {                
                    
                     $room = new Room();
+                    $room->setRoomId($row["IdRoom"]);
                     $room->setRoomName($row["RoomName"]);
                     $room->setRoomCapacity($row["RoomCapacity"]);
                     $room->setIs3D($row["RoomIs3D"]);
@@ -139,7 +110,7 @@
             }
         }
 
-        public function getAvailable($cinemaID)
+       public function getAvailable($cinemaID)
         {
             try
             {
@@ -155,6 +126,7 @@
                 foreach ($resultSet as $row)
                 {                
                     $room = new Room();
+                    $room->setRoomId($row["IdRoom"]);
                     $room->setRoomName($row["RoomName"]);
                     $room->setRoomCapacity($row["RoomCapacity"]);
                     $room->setIs3D($row["RoomIs3D"]);
