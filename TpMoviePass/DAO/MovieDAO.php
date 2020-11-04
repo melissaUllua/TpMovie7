@@ -74,7 +74,11 @@ class MovieDAO implements IDAO{
                     $movie->setAdult($valueArray['adult']);
                     $movie->setOriginal_Language($valueArray['original_language']);
                     $movie->setOriginal_title($valueArray['original_title']);
+<<<<<<< HEAD
+                    $movie->setGenresArray($valueArray['genre_ids']);
+=======
                   //  $movie->setGenre_ids($valueArray['genre_ids']);
+>>>>>>> 5f107241a75b1ad6edc217fd60bf4c8606cf70bd
                     $movie->setTitle($valueArray['title']);
                     $movie->setOverview($valueArray['overview']);
                     $movie->setRelease_date($valueArray['release_date']);
@@ -102,7 +106,7 @@ class MovieDAO implements IDAO{
                     $movie->setAdult($valueArray['adult']);
                     $movie->setOriginal_Language($valueArray['original_language']);
                     $movie->setOriginal_title($valueArray['original_title']);
-                    $movie->setGenre_ids($valueArray['genre_ids']);
+                    $movie->setGenresArray($valueArray['genre_ids']);
                     $movie->setTitle($valueArray['title']);
                     $movie->setOverview($valueArray['overview']);
                     $movie->setRelease_date($valueArray['release_date']);
@@ -130,7 +134,7 @@ class MovieDAO implements IDAO{
                 }else{                                                           //si existe, actualiza los campos
                     $oldMovieList[$currentNewMovie->getId()]->setPoster_path($currentNewMovie['poster_path']);
                     $oldMovieList[$currentNewMovie->getId()]->setAdult($currentNewMovie['adult']);
-                    $oldMovieList[$currentNewMovie->getId()]->setGenre_ids($currentNewMovie['genre_ids']);
+                    $oldMovieList[$currentNewMovie->getId()]->setGenresArray($currentNewMovie['genre_ids']);
                     $oldMovieList[$currentNewMovie->getId()]->setTitle($currentNewMovie['title']);
                     $oldMovieList[$currentNewMovie->getId()]->setOverview($currentNewMovie['overview']);
                 }
@@ -151,7 +155,7 @@ class MovieDAO implements IDAO{
             $valueArray['adult'] = $movie->getAdult();
             $valueArray['original_language'] = $movie->getOriginal_Language();
             $valueArray['original_title'] = $movie->getOriginal_title();
-            $valueArray['genre_ids'] = $movie->getGenre_ids();
+            $valueArray['genre_ids'] = $movie->getGenresArray();
             $valueArray['title'] = $movie->getTitle();
             $valueArray['overview'] = $movie->getOverview();
             $valueArray['release_date'] = $movie->getRelease_date();

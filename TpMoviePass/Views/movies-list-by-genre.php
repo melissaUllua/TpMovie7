@@ -5,7 +5,7 @@
     use Models\Movie as Movie; 
     use DAO\MovieDAOBD as MovieDAOBD; 
     use Models\Genre as Genre; 
-    use DAOBD\GenreDAOBD as GenreDAOBD; 
+    use DAO\GenreDAOBD as GenreDAOBD; 
     
     $idGenreShown = $_GET;
  

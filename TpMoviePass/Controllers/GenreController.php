@@ -2,14 +2,18 @@
 namespace Controllers;
 
 use DAO\GenreDAO as GenreDAO;
+use DAOBD\MovieDAOBD as MovieDAOBD;
 use DAOBD\GenreDAOBD as GenreDAOBD;
+
 
 class GenreController{
     private $GenreDao;
 
     public function __construct()
     {
-        $this->GenreDao = new GenreDAO();
+        // $this->GenreDao = new GenreDAO();
+        $this->GenreDao = new GenreDAOBD();
+
     }
 
     public function ShowAddView($message ="")

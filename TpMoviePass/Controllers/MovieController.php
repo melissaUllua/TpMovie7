@@ -11,6 +11,7 @@ use DAOBD\GenreDAOBD as GenreDAOBD;
 
 class MovieController{
     private $MovieDao;
+    private $MovieDaoBD;
 
     public function __construct()
     {
