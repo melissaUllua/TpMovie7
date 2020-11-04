@@ -17,7 +17,9 @@ class CinemaController{
 
     public function ShowAddView($message ="")
     {
+        
         require_once(VIEWS_PATH."add-cinema.php");
+        
     }
 
     public function ShowListView()
@@ -46,7 +48,7 @@ class CinemaController{
         $cinema->setCinemaAddress($cinemaAddress);
         $availability = ($cinemaAvailability = 1) ? true : false;
         $cinema->setCinemaAvailability($availability);
-       // $cinema->setCinemaTotalRooms($cinemaTotalRooms); //agregar a la bdd tambn
+        $cinema->setCinemaTotalRooms($cinemaTotalRooms); //agregar a la bdd tambn
         //$this->cinemaDAO->Add($cinema);
         $message =  $this->cinemaDAO->Add($cinema);
         if (empty($message)){

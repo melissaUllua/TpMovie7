@@ -35,7 +35,7 @@ class RoomController{
     }
 
 
-    public function Add($cinemaID, $RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice, $RoomAvailability)
+    public function Add($RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice, $RoomAvailability,$cinemaID)
     {
        // $cinemaDAO = new CinemaDAOBD();
         //$cinema = $cinemaDAO->getOneCinema($cinemaID);
