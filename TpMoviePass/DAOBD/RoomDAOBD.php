@@ -104,6 +104,75 @@
                 throw $ex;
             }
         }
-    }
+        public function GetRoomByCinemas($cinemaID)
+        {
+           
+            try
+            {
+                $roomList = array();
+
+                
+                $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdCinema = "' . $cinemaID . '";';
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                   
+                    $room = new Room();
+                    $room->setRoomName($row["RoomName"]);
+                    $room->setRoomCapacity($row["RoomCapacity"]);
+                    $room->setIs3D($row["RoomIs3D"]);
+                    $room->setroomPrice($row["RoomPrice"]);
+                    $room->setRoomAvailability($row["RoomAvailability"]);
+
+                    array_push($roomList, $room);
+                }
+
+                return $roomList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function getAvailable($cinemaID)
+        {
+            try
+            {
+                $roomList = array();
+
+                
+                $query = 'SELECT * FROM '.$this->tableName . ' WHERE RoomAvailability = "1" AND IdRoom = "' . $cinemaID .'";';
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $room = new Room();
+                    $room->setRoomName($row["RoomName"]);
+                    $room->setRoomCapacity($row["RoomCapacity"]);
+                    $room->setIs3D($row["RoomIs3D"]);
+                    $room->setroomPrice($row["RoomPrice"]);
+                    $room->setRoomAvailability($row["RoomAvailability"]);
+
+                    array_push($roomList, $room);
+                    
+                }
+
+                return $roomList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+        }
+    
     
     

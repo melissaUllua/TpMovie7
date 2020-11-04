@@ -64,26 +64,8 @@ class CinemaController{
         
         
     }
-    public function AddRoom($roomID, $roomName, $roomCapacity, $roomIs3D, $roomPrice, $cinemaID)
-    {
-        $room = new Room();
-        $room->setRoomId($roomID);
-        $room->setRoomName($roomName);
-        $room->setRoomCapacity($roomCapacity);
-        $room->setRoomIs3D($roomIs3D);
-        $room->setRoomPrice($roomPrice);
-        $room->setRoomCinemaID($cinemaID);
 
-
-        $this->roomDao->Add($room);
-
-        $message = "Show Room added successfully";
-
-        //$this->ShowAddView(); //we should see if we keep this
-        
-        require_once(VIEWS_PATH."add-cinema.php");
-    }
-    public function Edit($id, $cinemaName, $cinemaAddress, $cinemaTotalCapacity, $cinemaTicketPrice, $cinemaAvailabiity)
+    public function Edit($id, $cinemaName, $cinemaAddress, $cinemaAvailabiity)
     {
         $modify = new Cinema();
         if ($cinemaName != "")
@@ -93,25 +75,19 @@ class CinemaController{
         if ($cinemaAddress != "")
         {
             $modify->setCinemaAddress($cinemaAddress);
-        }
-        if ($cinemaTotalCapacity != "")
-        {
-            $modify->setCinemaTotalCapacity($cinemaTotalCapacity);
-        }
-        if ($cinemaTicketPrice != "")
-        {
-            $modify->setCinemaTicketPrice($cinemaTicketPrice);
-        }
+        
         if ($cinemaAvailabiity != "")
         {
-            $modify->setCinemaAvailability($cinemaAvailabiity);
+            $availability = ($cinemaAvailability = 1) ? true : false;
+            $modify->setCinemaAvailability($availability);
         }
 
-        $this->cinemaDAO->Edit($id, $modify);
+        $this->cinemaDAO->EditCinema($modify, $id);
         $message = "El cine fue editado con exito!";
 
         $this->ShowListView();
     }
+}
 }
 
 

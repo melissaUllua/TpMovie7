@@ -4,6 +4,7 @@
           
      </span>
      <ul class="navbar-nav ml-auto">
+     
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Display Movies</a>
           </li> 
