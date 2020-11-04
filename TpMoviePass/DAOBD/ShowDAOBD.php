@@ -29,13 +29,13 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (ShowDate, ShowTime, IdRoom) 
+                $query = "INSERT INTO ".$this->tableName." (movieId, ShowDate, ShowTime, IdRoom) 
                 VALUES (:showDate,:showTime, :idRoom);";
                 
                 $parameters["showDate"] = $show->getShowDate();
                 $parameters["showTime"] = $show->getShowTime();
                 $parameters["idRoom"] = $show->getShowRoom()->getroomId();
-               // $movie = $show->getShowMovie();
+                // $movie = $show->getShowMovie();
                 //$id = $movie->getId();
 
                 $parameters["idMovie"] = 1;

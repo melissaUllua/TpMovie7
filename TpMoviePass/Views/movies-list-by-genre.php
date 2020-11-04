@@ -24,8 +24,8 @@
                <table class="table bg-light-alpha">
                     <thead>
                          <th>Title</th>
-                         <th>Release date</th>
-                         <th>Language </th>
+                        <!-- <th>Release date</th>
+                         <th>Language </th> -->
                          <th>Overview</th>
                          <th>Duration</th>
                          <th>Poster</th>
@@ -40,8 +40,8 @@
                                    ?>
                                         <tr>
                                              <td><?php echo $movie->getTitle() ?></td>
-                                             <td><?php echo $movie->getRelease_date() ?></td>
-                                             <td><?php echo $movie->getOriginal_language() ?></td>
+                                             <!--<td><?php// echo $movie->getRelease_date() ?></td>
+                                             <td><?php //echo $movie->getOriginal_language() ?></td> -->
                                              <td><?php echo $movie->getOverview() ?></td>                                        
                                              <td><?php echo $movie->getDuration() ?></td>                                        
                                              <td><img src = "<?php echo ('https://image.tmdb.org/t/p/w500' . $movie->getPoster_path()) ?>" title = "<?php echo ($movie->getTitle())?>" height="200" width="135"/></td>

@@ -59,7 +59,7 @@ use Models\Cinema as Cinema;
            <?php//$cinemaSER = serialize($cinema); ?> 
                      <!-- <input type="hidden" name = "cinema", value= "<?php //$cinemaSER ?>"> -->
                       <input type="hidden" value="<?php echo $cinema->getCinemaId();?>" name="IdCinema">
-           <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add Show Room</button>
+           <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add Room</button>
            </form>
                           
                            

@@ -12,22 +12,23 @@
                }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
                <h2 class="mb-4">Add Movie Show</h2>
-               <?php
-               var_dump($room);
-               for($i=0 ; $i < 1 ; $i++){ ?>
+
+               
                <form action="<?php echo FRONT_ROOT."Show/Add/"?>" method="get" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Movie ID</label>
+                                   <label for="">Movies</label>
                                    <!-- agregar el foreach con las peliculas -->
-                                   <select name="Movies" id="" class="form-control">
-                                   <option value="1">Movie1</option>
-                                   <option value="0">Movie2</option>
+                                   <select name="movieID" id="" class="form-control">
+                                   <?php foreach ($movieList as $movie){ ?>
+                                   <option value="<?php echo $movie->getId(); ?>"><?php echo $movie->getTitle();?></option>
+                                   <?php } ?>
                                    </select>
                               </div>
                               </div>
                          </div>
+               
                         
                          <div class="col-lg-4">
                               <div class="form-group">
@@ -50,7 +51,7 @@
                     
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
-               <?php } ?>
+               
                </form>
           </div>
      </section>

@@ -40,7 +40,7 @@
                                        
                                         <input type="hidden" class="btn btn-dark" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
                                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
-                                        <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowListView/'?>"class="btn btn-dark">Add room</button>
+                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowAddView/'?>"class="btn btn-dark">Add room</button> -->
                                         </form>
                                             
                                              

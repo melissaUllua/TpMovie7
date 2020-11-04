@@ -45,7 +45,7 @@ use Models\Room as Room;
                                    
                                    <td><form action="<?php echo FRONT_ROOT."Show/ShowAddView/"?>" method="POST" class="bg-light-alpha p-5">
                                    <input type="hidden" name = "roomID", value= "<?php echo $room->getRoomId() ?>">
-                                       <?php var_dump($room); ?>
+                                       <?php// var_dump($room); ?>
                                        <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add movie show </button>
                                        </form>
                                    </tr> 

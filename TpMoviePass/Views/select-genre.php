@@ -9,7 +9,7 @@
     
     $genreDaoBD = new GenreDAOBD;
     $genreList =  $genreDaoBD->getAll();
-    var_dump($genreDaoBD);
+    //var_dump($genreDaoBD);
     if (!isset($_GET['IdGenre'])){
 
 ?>

@@ -22,8 +22,8 @@ class ShowController{
 
     public function ShowAddView($roomID)
     {
-        //$movieDao = new MovieDAOBD();
-        //$movieList = $movieDao->getAll();
+        $movieDao = new MovieDAOBD();
+        $movieList = $movieDao->getAll();
         $room = new Room();
         $room->setRoomId($roomID);
         require_once(VIEWS_PATH."add-show.php");
@@ -40,7 +40,7 @@ class ShowController{
         require_once(VIEWS_PATH."show-edit.php");
     }
 
-    public function Add( $roomId, $showDate, $showTime)
+    public function Add($movieId, $showDate, $showTime, $roomID)
     {//ACÁ FALTAN TODOS LOS CHECKEOS!
         $today = date("Y-m-d");
         if (strcmp($showDate, $today)> 0){
@@ -52,7 +52,7 @@ class ShowController{
             $movie->setId(50);
     
             $room = new Room();
-            $room->setRoomId($roomId);
+            $room->setRoomId($roomID);
     
             $show->setShowMovie($movie);
             $show->setShowRoom($room);
