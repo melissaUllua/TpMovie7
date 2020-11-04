@@ -7,7 +7,7 @@ use DAOBD\CinemaDAOBD as CinemaDAOBD;
 
 class CinemaController{
     private $cinemaDAO;
-    private $cinemaDAOBD;
+    //private $cinemaDAO; 
 
     public function __construct()
     {
@@ -48,7 +48,7 @@ class CinemaController{
         $cinema->setCinemaAvailability($availability);
        // $cinema->setCinemaTotalRooms($cinemaTotalRooms); //agregar a la bdd tambn
         //$this->cinemaDAO->Add($cinema);
-        $message =  $this->cinemaDAOBD->Add($cinema);
+        $message =  $this->cinemaDAO->Add($cinema);
         if (empty($message)){
             $message = "Cinema added successfully";
             //$cinemaID = $thisCinemaDAOBD->get
