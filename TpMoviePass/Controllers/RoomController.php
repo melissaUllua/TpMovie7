@@ -23,11 +23,19 @@ class RoomController{
     }
    
 
-    public function ShowListView()
+    public function ShowListView($cinemaID)
     {
-        $cinemaList = $this->roomDAO->getAll();
-        require_once(VIEWS_PATH."room-list.php");
+
+        $roomList = $this->roomDAO->GetRoomByCinemas($cinemaID);
+        require_once(VIEWS_PATH."rooms-list.php");
     }
+
+    /*public function ShowAvailableView($cinemaID) ///no funciona, idk why
+    {
+         $roomList = $this->roomDAO->getAvailable($cinemaID);
+        require_once(VIEWS_PATH."rooms-list.php");
+    }*/
+
     public function ShowEditView()
     {
         $cinemaList = $this->roomDAO->getAll();
