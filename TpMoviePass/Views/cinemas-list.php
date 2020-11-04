@@ -38,8 +38,9 @@
                                         ?></td>
                                         <td><form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST" class="bg-light-alpha p-5">
                                        
-                                        <input type="hidden" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
+                                        <input type="hidden" class="btn btn-dark" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
                                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
+                                        <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowListView/'?>"class="btn btn-dark">Add room</button>
                                         </form>
                                             
                                              

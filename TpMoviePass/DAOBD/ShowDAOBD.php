@@ -29,16 +29,16 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (ShowDate, ShowTime, IdRoom, IdMovie) 
-                VALUES (:showDate,:showTime, :idRoom, :idMovie);";
+                $query = "INSERT INTO ".$this->tableName." (ShowDate, ShowTime, IdRoom) 
+                VALUES (:showDate,:showTime, :idRoom);";
                 
                 $parameters["showDate"] = $show->getShowDate();
                 $parameters["showTime"] = $show->getShowTime();
                 $parameters["idRoom"] = $show->getShowRoom()->getroomId();
-                $movie = $show->getShowMovie();
-                $id = $movie->getId();
+               // $movie = $show->getShowMovie();
+                //$id = $movie->getId();
 
-                $parameters["idMovie"] = $id;
+                $parameters["idMovie"] = 1;
                 
 
                 $this->connection = Connection::GetInstance();
@@ -71,7 +71,7 @@
                 {                
                     $show = new show();
                     $show->setShowId($row["IdShow"]);
-                    $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
+                    //$show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
                     //$show->setShowRoom($room_aux->searchById($row["IdRoom"]));
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
@@ -125,9 +125,6 @@
 
         
 
-        public function Editshow($show)
-        {
-            ///getOne y luego alter table
-        }
+      
     }
 ?>

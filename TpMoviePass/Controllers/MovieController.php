@@ -28,15 +28,22 @@ class MovieController{
     }
 
 
-    public function ShowListView()    //va a ser para listar peliculas por género
+    /*public function ShowListView()    //va a ser para listar peliculas por género
     {
+        $movieList =  $genreDaoBD->getMoviesByIdGenre($idGenreShown);
         $this->MovieDao->updateDatabaseMovies();
-        require_once(VIEWS_PATH."select-genre.php");
+       // require_once(VIEWS_PATH."select-genre.php");
+        require_once(VIEWS_PATH."movies-list-by-genre.php");
+
+    }*/
+
+    public function ShowListView()    
+    {
+        //$this->MovieDao->updateDatabaseMovies();
+        $movieList = $this->MovieDao->getAll();
         require_once(VIEWS_PATH."movies-list-by-genre.php");
 
     }
-
-
     public function ShowEditView()
     {
         require_once(VIEWS_PATH."movie-edit.php");

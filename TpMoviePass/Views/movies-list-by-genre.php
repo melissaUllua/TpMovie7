@@ -3,17 +3,16 @@
     require_once('nav.php');
 
     use Models\Movie as Movie; 
-    use DAO\MovieDAOBD as MovieDAOBD; 
+    //use DAO\MovieDAOBD as MovieDAOBD; 
     use Models\Genre as Genre; 
-    use DAO\GenreDAOBD as GenreDAOBD; 
+    //use DAO\GenreDAOBD as GenreDAOBD; 
     
-    $idGenreShown = $_GET;
+   // $idGenreShown = $_GET;
  
-    $genreDaoBD = new GenreDAOBD;
-    $movieList =  $genreDaoBD->getMoviesByIdGenre($idGenreShown);
+   
 
 
-    getMoviesByIdGenre($idGenre)
+    //getMoviesByIdGenre($idGenre)
 
 ?>
 <main class="py-5">

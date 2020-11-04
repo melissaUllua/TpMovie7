@@ -13,22 +13,22 @@
           ?>
                <h2 class="mb-4">Add Movie Show</h2>
                <?php
+               var_dump($room);
                for($i=0 ; $i < 1 ; $i++){ ?>
                <form action="<?php echo FRONT_ROOT."Show/Add/"?>" method="get" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Movie ID</label>
-                                   <input type="number" name="movieId" value="" class="form-control" required>
+                                   <!-- agregar el foreach con las peliculas -->
+                                   <select name="Movies" id="" class="form-control">
+                                   <option value="1">Movie1</option>
+                                   <option value="0">Movie2</option>
+                                   </select>
+                              </div>
                               </div>
                          </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                              <label for="">Room ID</label>
-                              <input type="number" name="roomId" value="" class="form-control"required>
-                                   
-                              </div>
-                         </div>
+                        
                          <div class="col-lg-4">
                               <div class="form-group">
                               <label for="">Date</label>
@@ -40,6 +40,11 @@
                               <div class="form-group">
                                    <label for="">Time</label>
                                    <input type="dateTime" name="showTime" value="" class="form-control" required>
+                              </div>
+                         </div>
+                         <div class="col-lg-4">
+                              <input type="hidden" name="roomID" value="<?php echo $room->getRoomId(); ?>" class="form-control"required>
+                                   
                               </div>
                          </div>
                     
