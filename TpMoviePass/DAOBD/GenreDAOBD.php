@@ -3,6 +3,8 @@
 
     use \Exception as Exception;
     use Models\Movie as Movie;    
+    use Models\Genre as Genre;    
+
     use DAOBD\Connection as Connection;
     use DAOBD\MovieDAOBD as MovieDAOBD;
     
@@ -48,7 +50,7 @@
                 $resultSet = $this->connection->Execute($query);
                 foreach ($resultSet as $row) {
                     $genre = new Genre();
-                    $genre->setId($row['id']);
+                    $genre->setId($row['IdGenre']);
                     $genre->setName($row['GenreName']);
                     array_push($this->genreList, $genre);
                 }
@@ -62,14 +64,14 @@
         public function searchById($idGenre)  //busca un genero por su ID y lo devuelve como objeto
         {
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre=:$IdGenre";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre= $idGenre";
     
-            $parameters["IdGenre"] = $idGenre;
+            //$parameters["IdGenre"] = $idGenre;
 
             try {
                 $this->connection = Connection::GetInstance();
     
-                $resultSet = $this->connection->Execute($query, $parameters);
+                $resultSet = $this->connection->Execute($query);
 
                 if ($resultSet != null) {
                     $genre = new Genre();
@@ -92,8 +94,8 @@
             $IdMovie = null;
             $movieDAOBD = new MovieDAOBD;
 
-           $query = 'SELECT * FROM Genres_by_movies WHERE IdGenre = "' . $idGenre .'";';
-           var_dump($query);
+            $query = 'SELECT * FROM Genres_by_movies WHERE IdGenre = "' . $idGenre .'";';
+
             $parameters["IdGenre"] = $idGenre;
 
 
@@ -129,7 +131,7 @@
         public function exists(Genre $genre)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
     {
 
-        $query = "SELECT * FROM " . " " . $this->tableName . " WHERE IdGenre=:IdGenre"; ///cambiar
+        $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre = " . $genre->getId() . ";"; ///cambiar
 
         $parameters["IdGenre"] = $genre->getId();
 
@@ -146,7 +148,7 @@
                 return $genre;
 
             } else {
-                add($genre);
+                $this->add($genre);
                 return true;
             }
         } catch (\Throwable $th) {
@@ -179,7 +181,7 @@
                     $genre->setId($valueArray['id']);
                     $genre->setName($valueArray['name']);                                     
 
-                    exists($genre); //mandamos a chequear si existe en DB. Si no existe, la agrega.
+                    $this->exists($genre); //mandamos a chequear si existe en DB. Si no existe, la agrega.
                 }
             }
         
@@ -187,6 +189,7 @@
             throw $th;
         }
     }
+
 
 
     }

@@ -38,14 +38,13 @@ create table if not exists Movies (IdMovie int not null,
 								  MovieTitle varchar(50) not null,
                                   MovieOverview varchar(500),
                                   MovieOriginalTitle varchar (50),
-                                  MovieOriginalLanguage int not null,
+                                  MovieOriginalLanguage varchar (4),
                                   MovieIsAdult boolean default true,
                                   MovieDuration int not null,
                                   MoviePosterPath varchar (30),
                                   MovieReleaseDate date,
                                   constraint unq_IdMovie UNIQUE (IdMovie),
                                   constraint pk_IdMovie PRIMARY KEY (IdMovie),
-                                  constraint fk_OriginalLanguage FOREIGN KEY (MovieOriginalLanguage) REFERENCES Languages(IdLanguage) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create table if not exists  Genres (
@@ -62,11 +61,4 @@ create table if not exists  Genres_by_movies(
 							constraint pk_genres_by_movies_id_movie_id_genre PRIMARY KEY (IdMovie, IdGenre),
 							constraint fk_genres_by_movies_id_movie FOREIGN KEY (IdMovie) REFERENCES movies(IdMovie) ON DELETE CASCADE ON UPDATE CASCADE,
 							constraint fk_genres_by_movies_id_genre FOREIGN KEY (IdGenre) REFERENCES genres(IdGenre) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-create table if not exists  Languages(
-							IdLanguage int auto_increment,
-							LanguageName varchar(5) not null,
-							constraint pk_language PRIMARY KEY(IdLanguage),
-							constraint unq_name_language UNIQUE(LanguageName)
 );

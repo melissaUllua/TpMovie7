@@ -10,6 +10,9 @@
         {
             $movies = new MovieDAOBD();
             $genres = new GenreDAOBD();
+            
+            $movies->updateDatabaseMovies();
+            $genres->updateDatabaseGenres();
 
             $movieList = $movies->getAll();
             $genreList = $genres->getAll();

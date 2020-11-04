@@ -3,6 +3,7 @@
 
     use \Exception as Exception;
     use Models\Movie as Movie;    
+    use Models\Genre as Genre; 
     use DAOBD\Connection as Connection;
     use DAOBD\GenreDAOBD as GenreDAOBD;
 
@@ -17,17 +18,18 @@
         {
     
             $query = "INSERT INTO " . " " . $this->tableName . " " . 
-                " (IdMovie, MovieTitle, MovieOriginalTitle, MovieDuration,MovieOverview,MovieReleaseDate,MovieIsAdult,MoviePosterPath) VALUES
-                    (:IdMovie,:MovieTitle,:MovieOriginalTitle,:MovieDuration,:MovieOverview,:MovieReleaseDate,:MovieIsAdult,:MoviePosterPath);";
+                " (IdMovie, MovieTitle, MovieOriginalTitle, MovieDuration,MovieOverview,MovieReleaseDate,MovieIsAdult,MoviePosterPath, MovieOriginalLanguage) VALUES
+                    (:IdMovie,:MovieTitle,:MovieOriginalTitle,:MovieDuration,:MovieOverview,:MovieReleaseDate,:MovieIsAdult,:MoviePosterPath,:MovieOriginalLanguage);";
     
             
             $parameters["IdMovie"] = $movie->getId();
             $parameters["MovieTitle"] = $movie->getTitle();
             $parameters["MovieOriginalTitle"] = $movie->getOriginal_title();
             $parameters["MovieDuration"] = $movie->getDuration();
-            //$parameters["MovieOriginalLanguage"] = $movie->getOriginal_language();
+            $parameters["MovieOriginalLanguage"] = $movie->getOriginal_language();
            
             $parameters["MovieOverview"] = $movie->getOverview();
+
             $parameters["MovieReleaseDate"] = $movie->getRelease_date();
             if ($movie->getAdult()) {
                 $parameters["MovieIsAdult"] = 1;
@@ -35,6 +37,9 @@
                 $parameters["MovieIsAdult"] = 0;
             }
             $parameters["MoviePosterPath"] = $movie->getPoster_path();
+
+            $this->addGenresByMovies($movie);
+
             try {
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
@@ -48,22 +53,22 @@
         public function exists(Movie $movie)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
         {
     
-            $query = 'SELECT * FROM '.$this->tableName . ' WHERE  IdMovie = ' . $movie->getId() . ';';
-            var_dump($query); 
+            $query = 'SELECT * FROM '. $this->tableName . ' WHERE  IdMovie = ' . $movie->getId() . ';';
+            //var_dump($query); 
     
-            //$parameters["IdMovie"] = $movie->getId();
+            $parameters["IdMovie"] = $movie->getId();
 
             try {
                 $this->connection = Connection::GetInstance();
     
-                $resultSet = $this->connection->Execute($query, $parameters);
+                $resultSet = $this->connection->Execute($query);
     
                 if (!empty($resultSet)) { 
                     $movie = new Movie();
                     $movie->setId($resultSet[0]['IdMovie']);
                     $movie->setTitle($resultSet[0]['MovieTitle']);
                     $movie->setDuration($resultSet[0]['MovieDuration']);
-                   // $movie->setOriginal_language($resultSet[0]['MovieOriginalLanguage']);
+                    $movie->setOriginal_language($resultSet[0]['MovieOriginalLanguage']);
                     $movie->setOriginal_title($resultSet[0]['MovieOriginalTitle']);
                     $movie->setOverview($resultSet[0]['MovieOverview']);
                     $movie->setRelease_date($resultSet[0]['MovieReleaseDate']);
@@ -176,11 +181,11 @@
         public function addGenresToMovies($idMovie)  //devuelve un arreglo de objetos Genre para añadir a la pelicula
         {
 
-            $arrayGenres = null;
+            $arrayGenres = array();
 
-            $query = "SELECT IdGenre FROM Genres_by_movies WHERE IdMovie = :idMovie";
+            $query = "SELECT IdGenre FROM Genres_by_movies WHERE IdMovie = ". $idMovie . ";";
 
-            $parameters["IdMovie"] = $idMovie;
+            //$parameters["IdMovie"] = $idMovie;
 
             $DAOGenre = new GenreDAOBD();
 
@@ -188,11 +193,12 @@
             try {
                 $this->connection = Connection::GetInstance();
     
-                $resultSet = $this->connection->Execute($query, $parameters);
+                $resultSet = $this->connection->Execute($query);
+
                 if ($resultSet != null) {
                     foreach($resultSet as $row)
                         $genre = new Genre();
-                        $genre = $DAOGenre->searchById($row);
+                        $genre = $DAOGenre->searchById($row['IdGenre']);
                         array_push($arrayGenres, $genre);
     
                 } else {
@@ -223,14 +229,13 @@
                         $movie->setPoster_path($valueArray['poster_path']);
                         $movie->setId($valueArray['id']);                                     
                         $movie->setAdult($valueArray['adult']);
-                        //$movie->setOriginal_Language($valueArray['original_language']);
+                        $movie->setOriginal_Language($valueArray['original_language']);
                         $movie->setOriginal_title($valueArray['original_title']);
-                        //$movie->setGenresArray($valueArray['genre_ids']); 
+                        $movie->setGenresArray($valueArray['genre_ids']); 
                         $movie->setTitle($valueArray['title']);
                         $movie->setOverview($valueArray['overview']); 
                         $movie->setRelease_date($valueArray['release_date']); 
                         $movie->setDuration($this->getMovieDuration($valueArray['id']));
-                        //$movie->setDuration(getMovieDuration($valueArray['id']));
 
                         $this->exists($movie);          //mandamos a chequear si existe en DB. Si no existe, la agrega.
                     }
@@ -249,6 +254,32 @@
 
             return $arrayToDecode['runtime'];
         }
+
+
+        public function addGenresByMovies(Movie $movie)
+        {
+
+            $genresArray = $movie->getGenresArray();
+            var_dump($genresArray);
+
+            foreach($genresArray as $movieGenre)
+            {
+                $query = "INSERT INTO Genres_by_movies (IdMovie, IdGenre) VALUES (:IdMovie,:IdGenre);";
+        
+                $parameters["IdMovie"] = $movie->getId();
+                $parameters["IdGenre"] = $movieGenre;
+
+
+                try {
+                    $this->connection = Connection::GetInstance();
+                    $this->connection->ExecuteNonQuery($query, $parameters);
+                } catch (\Throwable $ex) {
+        
+                    throw $ex;
+                }
+            }
+        }
+
 
 
 
