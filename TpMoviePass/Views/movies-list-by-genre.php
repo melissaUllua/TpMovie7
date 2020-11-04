@@ -43,7 +43,7 @@
                                              <!--<td><?php// echo $movie->getRelease_date() ?></td>
                                              <td><?php //echo $movie->getOriginal_language() ?></td> -->
                                              <td><?php echo $movie->getOverview() ?></td>                                        
-                                             <td><?php echo $movie->getDuration() ?></td>                                        
+                                             <td><?php echo $movie->getDuration() ?></td>             
                                              <td><img src = "<?php echo ('https://image.tmdb.org/t/p/w500' . $movie->getPoster_path()) ?>" title = "<?php echo ($movie->getTitle())?>" height="200" width="135"/></td>
                                              <td><button type="submit" class="btn btn-basic btn-lg" type="hidden" value="<?php echo ($movie->getId())?> (">Add movie to Database</button></tr> 
                                         </tr> 

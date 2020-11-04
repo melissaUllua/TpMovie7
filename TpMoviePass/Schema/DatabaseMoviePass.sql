@@ -41,10 +41,10 @@ create table if not exists Movies (IdMovie int not null,
                                   MovieOriginalLanguage varchar (4),
                                   MovieIsAdult boolean default true,
                                   MovieDuration int not null,
-                                  MoviePosterPath varchar (30),
+                                  MoviePosterPath varchar (50),
                                   MovieReleaseDate date,
                                   constraint unq_IdMovie UNIQUE (IdMovie),
-                                  constraint pk_IdMovie PRIMARY KEY (IdMovie),
+                                  constraint pk_IdMovie PRIMARY KEY (IdMovie)
 );
 
 create table if not exists  Genres (
