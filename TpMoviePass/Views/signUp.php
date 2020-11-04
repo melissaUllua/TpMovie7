@@ -10,30 +10,42 @@
                     echo $message;
                }
           ?>
-               <h2 class="mb-4">Ingrese sus datos</h2>
-               <form action="<?php echo FRONT_ROOT ?>User/signUp" method="post" class="bg-light-alpha p-5">
+               <h2 class="mb-4">Complete the form</h2>
+               <form action="<?php echo FRONT_ROOT ?>User/signUp" method="post" class="bg-light-alpha p-5" required>
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Nombre</label>
-                                   <input type="text" name="userName" value="" class="form-control">
+                                   <label for="">UserName</label>
+                                   <input type="text" name="userName" value="" class="form-control"  placeholder= "This is how you'll be adressed in this web" required>
+                              </div>
+                         </div>
+                         <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for="">First Name</label>
+                                   <input type="text" name="userFirstName" value="" class="form-control" placeholder= "As appears in your ID card" required>
+                              </div>
+                         </div>
+                         <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for="">Last Name</label>
+                                   <input type="text" name="userLastName" value="" class="form-control"placeholder= "As appears in your ID card" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Email</label>
-                                   <input type="text" name="userEmail" value="" class="form-control">
+                                   <input type="text" name="userEmail" value="" class="form-control" placeholder= "example@mail.com"  required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Ingrese Contraseña</label>
-                                   <input type="password" name="userPass" value="" class="form-control">
+                                   <label for="">Password</label>
+                                   <input type="password" name="userPass" value="" class="form-control" placeholder= "Between 8 and 10 characters" required>
                               </div>
                          </div>
                
                     </div>
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Registrar</button>
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Sign up</button>
                </form>
           </div>
      </section>

@@ -12,6 +12,7 @@
                <h2 class="mb-4">Cinemas</h2>
                <table class="table bg-light-alpha">
                     <thead>
+                        <!-- <th>ID</th> -->
                          <th>Name</th>
                          <th>Ticket Price</th>
                          <th>Total Capacity</th>
@@ -25,23 +26,24 @@
                           {
                            ?>
                               <tr>
+                                   <!-- <td><?php echo $cinema->getCinemaId() ?></td> -->
                                    <td><?php echo $cinema->getCinemaName() ?></td>
                                    <td><?php echo $cinema->getCinemaTicketPrice() ?></td>
                                    <td><?php echo $cinema->getCinemaTotalCapacity() ?></td>
                                    <td><?php echo $cinema->getCinemaAddress() ?></td>
                                    <td><?php if($cinema->getCinemaAvailability() == "true")
                                    {
-                                       echo "Disponible";
+                                       echo "Available";
                                    }
                                    else
                                    {
-                                        echo "No disponible";
+                                        echo "Unavailable";
                                    }
                                         ?></td>
-                                        <td><form action="<?php echo FRONT_ROOT."Cinema/ShowRoomsList"?>" method="post" class="bg-light-alpha p-5">
+                                        <td><form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST" class="bg-light-alpha p-5">
                                         <?php $cinemaSER = serialize($cinema); ?>
                                         <input type="hidden" name = "cinema", value= "<?php $cinemaSER ?>">
-                                        <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Ver salas</button>
+                                        <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
                                         </form>
                                             
                                              

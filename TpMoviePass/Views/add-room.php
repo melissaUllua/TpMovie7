@@ -1,5 +1,6 @@
 <?php ///falta modificar
     require_once('nav.php');
+    use Models\Cinema as Cinema;
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
@@ -12,13 +13,13 @@
           ?>
                <h2 class="mb-4">Add rooms</h2>
                <?php
-               var_dump($totalRooms);
-               for($i=0 ; $i < $totalRooms ; $i++){ ?>
-               <form action="<?php echo FRONT_ROOT."Room/Add" ?>" method="post" class="bg-light-alpha p-5">
+              // var_dump($cinemaID); 
+               for($i=0 ; $i < 1 ; $i++){ ?>
+               <form action="<?php echo FRONT_ROOT."Room/Add/"?>" method="post" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Nombre</label>
+                                   <label for="">Name</label>
                                    <input type="text" name="roomName" value="" class="form-control">
                               </div>
                          </div>
@@ -32,21 +33,28 @@
                               <div class="form-group">
                                    <label for="">Type</label>
                                    <select name="roomIs3d" id="" class="form-control">
-                                   <option value="true">3D</option>
-                                   <option value="false">2D</option>
+                                   <option value="1">3D</option>
+                                   <option value="0">2D</option>
                                    </select>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Price</label>
-                                   <input type="number" name="roomPrice" value="" class="form-control">
+                                   <label for="">Ticket Price</label>
+                                   <input type="number" name="roomTicketPrice" value="" class="form-control">
                               </div>
                          </div>
                          <div class="col-lg-4">
+                              <label for="">Availability</label>
+                                   <select name="availability" id="" class="form-control">
+                                   <option value="1">Available</option>
+                                   <option value="0">Unavailable</option>
+                                   </select>
+                              </div>
+                         <div class="col-lg-4">
                               <div class="form-group">
                                    <label for=""></label>
-                                   <input type="hidden" name="cinema" value="<?php $cinema->getCinemaId; ?>" class="form-control">
+                                   <input type="hidden" name="cinemaID" value="<?php echo $idCinema; ?>" class="form-control">
                               </div>
                          </div>
                     </div>

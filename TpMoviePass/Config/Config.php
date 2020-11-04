@@ -10,9 +10,9 @@ define("CINEMA_ROOT", "Controllers/CinemaController/");
 
 define("DB_HOST", "localhost");
 define("DB_NAME", "tpmoviepass");
-define("DB_USER", 'root');
-define("DB_PASS", "MwprAe0mCLTcN4mg");
-//define("DB_PASS", "");
+define("DB_USER", "root");
+//define("DB_PASS", "123");
+define("DB_PASS", "6990");
 
 ?>
 

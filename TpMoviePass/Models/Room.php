@@ -2,65 +2,135 @@
 namespace Models;
 
 class Room{
-    private $id;
-    private $name;
-    private $capacity;
+    private $roomId;
+    private $roomName;
+    private $roomCapacity;
     private $is3D;
-    private $price;
-    private $cinemaID;
+    private $roomPrice;
+    private $cinema;
+    private $availability;
 
     public function __construct()
     {
 
     }
-    public function setRoomId($id)
-    {
-        $this->id = $id;
-    }
-    public function setRoomName($name)
-    {
-        $this->name = $name;
-    }
-    public function setRoomCapacity($capacity)
-    {
-        $this->capacity = $capacity;
-    }
-    public function setRoomIs3D($is3D)
-    {
-        $this->is3D = $is3D;
-    }
-    public function setRoomPrice($price)
-    {
-        $this->price = $price;
-    }
+
+
+
+
+    /**
+     * Get the value of roomId
+     */ 
     public function getRoomId()
     {
-        return $this->id;
+        return $this->roomId;
     }
+
+    /**
+     * Set the value of roomId
+     *
+     * @return  self
+     */ 
+    public function setRoomId($roomId)
+    {
+        $this->roomId = $roomId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of roomName
+     */ 
     public function getRoomName()
     {
-        return $this->name;
+        return $this->roomName;
     }
+
+    /**
+     * Set the value of roomName
+     *
+     * @return  self
+     */ 
+    public function setRoomName($roomName)
+    {
+        $this->roomName = $roomName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of roomCapacity
+     */ 
     public function getRoomCapacity()
     {
-        return $this->capacity;
+        return $this->roomCapacity;
     }
-    public function getRoomIs3d()
+
+    /**
+     * Set the value of roomCapacity
+     *
+     * @return  self
+     */ 
+    public function setRoomCapacity($roomCapacity)
+    {
+        $this->roomCapacity = $roomCapacity;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of is3D
+     */ 
+    public function getIs3D()
     {
         return $this->is3D;
     }
-    public function getRoomPrice()
+
+    /**
+     * Set the value of is3D
+     *
+     * @return  self
+     */ 
+    public function setIs3D($is3D)
     {
-        return $this->price;
-    }
-    public function setRoomCinemaID($cinemaID)
-    {
-        $this->cinemaID = $cinemaID;
-    }
-   public function getRoomCinemaID()
-    {
-        return $this->cinemaID;
+        $this->is3D = $is3D;
+
+        return $this;
     }
 
+    /**
+     * Get the value of roomTicketPrice
+     */ 
+    public function getroomPrice()
+    {
+        return $this->roomTicketPrice;
+    }
+    public function setRoomCinema($cinema)
+    {
+        $this->cinema = $cinema;
+    }
+   public function getRoomCinema()
+    {
+        return $this->cinema;
+    }
+    public function setRoomAvailability($roomAvailability)
+    {
+        $this->availability = $roomAvailability;
+    }
+   public function getRoomAvailability()
+    {
+        return $this->availability;
+    }
 
+    /**
+     * Set the value of roomTicketPrice
+     *
+     * @return  self
+     */ 
+    public function setroomPrice($roomTicketPrice)
+    {
+        $this->roomTicketPrice = $roomTicketPrice;
+
+        return $this;
+    }
 }

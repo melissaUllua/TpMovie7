@@ -1,18 +1,22 @@
 [
     {
         "userName": "SuperAdmin",
-        "userPass": "123",
+        "userPass": "superadmin",
         "userId": 0,
         "isActive": 1,
         "userEmail": "user@user.com",
-        "isAdmin": 1
+        "isAdmin": 1,
+        "userFirstName": "Super",
+        "userLastName": "Admin"
     },
     {
-        "userName": "Daiana",
-        "userPass": "lala",
+        "userName": "DailySunnyOli",
+        "userPass": "daio1234",
         "userId": null,
         "isActive": 1,
         "userEmail": "daiana@mail.com",
-        "isAdmin": 0
+        "isAdmin": 0,
+        "userFirstName": "Daiana",
+        "userLastName": "Olivera"
     }
 ]
