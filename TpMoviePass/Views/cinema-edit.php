@@ -17,7 +17,7 @@ use Models\Cinema as Cinema;
          <?php 
             foreach ($cinemaList as $cinema){  ?>
         <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST"  >
-          <table class="table text-white bg-oscuro"> 
+          <table class="table bg-light-alpha"> 
             
               <tr>
                 <th><?php echo $cinema->getCinemaName(); ?></th>
@@ -29,14 +29,12 @@ use Models\Cinema as Cinema;
                         <input type="hidden" name="id" value="<?php echo $cinema->getCinemaId(); ?>">
                         <input type="text" value="<?php echo $cinema->getCinemaName(); ?>" name="cinemaName" placeholder = "Cinema Name">
                         <input type="text" value="<?php echo $cinema->getCinemaAddress(); ?>" name= "cinemaAddress"  placeholder= "Address" class="mt-3">
-                        <input type="number" value="<?php echo $cinema->getCinemaTotalCapacity(); ?>" name = "cinemaTotalCapacity"  placeholder= "Total Capacity" class="mt-3" min="0"> 
-                        <input type="number" value="<?php echo $cinema->getCinemaTicketPrice(); ?>" name="cinemaTicketPrice" placeholder = "Ticket Price"min="0" class="mt-3"> 
-                        
+                  
                         <br><label for="">Cinema Status</label>
                         <select name="cinemaAvailabiity" id="" class="form-control">
                         <option value="<?= $cinema->getCinemaAvailability();?>"></option>
-                        <option value="true">Available</option>
-                        <option value="false">Not Available</option>
+                        <option value="1">Available</option>
+                        <option value="0">Not Available</option>
                         </select>
                       
     </div>     

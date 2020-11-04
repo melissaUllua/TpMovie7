@@ -119,7 +119,8 @@
                 $resultSet = $this->connection->Execute($query);
                 
                 if($resultSet)
-                {                
+                {         
+                    $row = $resultSet[0];       
                     $cinema->setCinemaId($row["IdCinema"]);
                     $cinema->setCinemaName($row["CinemaName"]);
                     $cinema->setCinemaAddress($row["CinemaAddress"]);
@@ -195,9 +196,30 @@
             }
         }*/
 
-        public function EditCinema($cinema)
+        public function EditCinema(Cinema $cinema, $idCinema)
         {
-            ///getOne y luego alter table
+            try{
+            
+                $modify = $this->getOneCinema($idCinema);
+                if($modify==null){
+                }
+                else{
+    
+                    $modifyIdCinema=$modify->getCinemaId();
+    
+                    $query =  ' UPDATE '.$this->tableName.' SET CinemaName = "'.$cinema->getCinemaName().'", CinemaAddress = "'.$cinema->getCinemaAddress().'", CinemaAvailability = "'.$cinema->getCinemaAvailability().'" WHERE IdCinema= "'.$modifyIdCinema.'";';
+    
+                    $this->connection = Connection::GetInstance();
+                    $this->connection->ExecuteNonQuery($query);
+                    
+                                
+                }
+            }
+    
+            catch(Exception $ex){
+                throw $ex;
+            }  
         }
-    }
+        }
+    
 ?>

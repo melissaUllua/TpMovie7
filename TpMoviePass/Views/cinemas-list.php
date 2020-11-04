@@ -14,8 +14,6 @@
                     <thead>
                         <!-- <th>ID</th> -->
                          <th>Name</th>
-                         <th>Ticket Price</th>
-                         <th>Total Capacity</th>
                          <th>Address</th>
                          <th>Availability</th>
                          
@@ -28,10 +26,8 @@
                               <tr>
                                    <!-- <td><?php echo $cinema->getCinemaId() ?></td> -->
                                    <td><?php echo $cinema->getCinemaName() ?></td>
-                                   <td><?php echo $cinema->getCinemaTicketPrice() ?></td>
-                                   <td><?php echo $cinema->getCinemaTotalCapacity() ?></td>
                                    <td><?php echo $cinema->getCinemaAddress() ?></td>
-                                   <td><?php if($cinema->getCinemaAvailability() == "true")
+                                   <td><?php if($cinema->getCinemaAvailability() == "1")
                                    {
                                        echo "Available";
                                    }
@@ -41,8 +37,8 @@
                                    }
                                         ?></td>
                                         <td><form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST" class="bg-light-alpha p-5">
-                                        <?php $cinemaSER = serialize($cinema); ?>
-                                        <input type="hidden" name = "cinema", value= "<?php $cinemaSER ?>">
+                                       
+                                        <input type="hidden" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
                                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
                                         </form>
                                             
