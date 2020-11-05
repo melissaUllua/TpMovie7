@@ -46,7 +46,7 @@ class MovieController{
        
         $this->MovieDao->updateDatabaseMovies();
         $this->GenreDaoBD->updateDatabaseGenres();
-        $genreList = $this->GenreDao->getAll();
+        $genreList = $this->GenreDaoBD->getAll();
         
         echo ("Base de datos correctamente actualizada");
         require_once(VIEWS_PATH."movies-list.php");
