@@ -138,7 +138,7 @@
                         $movie->setAdult(false);
                     }
 
-                    $movie->setPoster_path($resultSet[0]["poster_path"]);
+                    $movie->setPoster_path($resultSet[0]["MoviePosterPath"]);
                     //$movie->setGenresArray(addGenresToMovies($movie->getId()));
 
                     return $movie;
