@@ -54,6 +54,7 @@
                     $genre->setName($row['GenreName']);
                     array_push($this->genreList, $genre);
                 }
+                //var_dump($this->genreList);
                 return $this->genreList;
             } catch (\Throwable $th) {
                 throw $th;
@@ -131,26 +132,18 @@
         public function exists(Genre $genre)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
     {
 
-        $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre = " . $genre->getId() . ";"; ///cambiar
+      
 
-        $parameters["IdGenre"] = $genre->getId();
+        //$parameters["IdGenre"] = $genre->getId();
 
         try {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre = " . $genre->getId() . ";"; ///cambiar
             $this->connection = Connection::GetInstance();
 
-            $resultSet = $this->connection->Execute($query, $parameters);
+            $resultSet = $this->connection->Execute($query);
 
-            if (!empty($resultSet)) {
-                $genre = new Genre();
-                $genre->setId($resultSet[0]['IdGenre']);
-                $genre->setName($resultSet[0]['GenreName']);
-
-                return $genre;
-
-            } else {
-                $this->add($genre);
-                return true;
-            }
+            
+        
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -167,7 +160,7 @@
 
         $jsonContent = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=cbd53a3628e9ef7454e5890f33b974d8'); //guarda en jsoncontent un string con lo que te tira cada pagina
         $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();  //convierte ese string en un arreglo asociativo
-
+       // exidump($jsonContent);
 
 
         try {
@@ -180,7 +173,7 @@
                     $genre = new Genre(); //creamos el objeto movie y le damos los datos
                     $genre->setId($valueArray['id']);
                     $genre->setName($valueArray['name']);                                     
-
+                   // var_dump($genre);
                     $this->exists($genre); //mandamos a chequear si existe en DB. Si no existe, la agrega.
                 }
             }

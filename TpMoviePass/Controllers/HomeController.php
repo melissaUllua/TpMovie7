@@ -11,13 +11,12 @@
             $movies = new MovieDAOBD();
             $genres = new GenreDAOBD();
 
-            //$movies->updateDatabaseMovies();
-            //$genres->updateDatabaseGenres();
 
             $movieList = $movies->getAll();
             $genreList = $genres->getAll();
+            //var_dump($genreList);
             
-            require_once(VIEWS_PATH."select-genre.php"); 
+            require_once(VIEWS_PATH."movies-list.php"); 
 
         }        
     }
