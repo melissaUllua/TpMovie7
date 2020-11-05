@@ -14,7 +14,7 @@
                <h2 class="mb-4">Add Movie Show</h2>
 
                
-               <form action="<?php echo FRONT_ROOT."Show/Add/"?>" method="get" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT."Show/ShowListView/"?>" method="get" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">
                               <div class="form-group">

@@ -20,7 +20,7 @@
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Select genre to view movies.</h2>
+               <h2 class="mb-4"></h2>
                <br>               <br>               <br>
                
 
