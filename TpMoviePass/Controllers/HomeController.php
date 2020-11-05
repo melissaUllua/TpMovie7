@@ -10,14 +10,14 @@
         {
             $movies = new MovieDAOBD();
             $genres = new GenreDAOBD();
-            
-            $movies->updateDatabaseMovies();
-            $genres->updateDatabaseGenres();
+
+            //$movies->updateDatabaseMovies();
+            //$genres->updateDatabaseGenres();
 
             $movieList = $movies->getAll();
             $genreList = $genres->getAll();
-            //require_once(VIEWS_PATH."select-genre.php");
-            require_once(VIEWS_PATH."movies-list-by-genre.php"); 
+            
+            require_once(VIEWS_PATH."select-genre.php"); 
 
         }        
     }

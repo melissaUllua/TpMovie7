@@ -281,6 +281,37 @@
         }
 
 
+        public function getMoviesByGenre($genreId)   ///trae todas las pelis de la BDD, en orden segun movie release date
+        {
+    
+            $this->moviesList = array();
+            $query = "SELECT IdMovie FROM Genres_by_movies WHERE IdGenre = " . $genreId . ";";
+            try {
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+
+                foreach ($resultSet as $row) {
+
+                    $movie = new Movie();
+
+                    $movie = $this->searchById($row['IdMovie']);
+    
+                    array_push($this->moviesList, $movie);
+                }
+
+                return $this->moviesList;
+
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+
+
+
+
+
+
 
 
 
