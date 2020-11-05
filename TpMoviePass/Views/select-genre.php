@@ -23,8 +23,10 @@
                 foreach($genreList as $genre){ ?>
                    <div class="row" style="width: 18rem;">
                             <div class="card-body">
-                                <a href="#" class="btn btn-info"><?php echo ($genre->getName());?></a>
+                            <select name="Movies" id="">
+                                <option value="<?php echo ($genre->getName());?>"></option>
                                 <input type="hidden" name=<?php echo ($genre->getId())?>>
+                                </select>
                             </div>
                         </div>
                         
