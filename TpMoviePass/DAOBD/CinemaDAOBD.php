@@ -23,7 +23,7 @@
                 $parameters["CinemaAddress"] = $cinema->getCinemaAddress();
                 $parameters["CinemaAvailability"] = $cinema->getCinemaAvailability();
                 //$parameters["cinemaTotalRooms"] = $cinema->getcinemaTotalRooms();
-
+            
                 $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);

@@ -9,12 +9,12 @@
     
     $genreDaoBD = new GenreDAOBD;
     $genreList =  $genreDaoBD->getAll();
-    var_dump($genreDaoBD);
+    //var_dump($genreDaoBD);
     if (!isset($_GET['IdGenre'])){
 
 ?>
 <main class="py-5">
-    <form action="<?php echo FRONT_ROOT ?>Movie/ShowListView" method="get">
+    <form action="<?php echo FRONT_ROOT ?>Movie/ShowListViewByGenre" method="get">
         <section id="listado" class="mb-5">
             <div class="container">
                 <h2 class="mb-4">Select genre</h2>
@@ -23,26 +23,13 @@
                 foreach($genreList as $genre){ ?>
                    <div class="row" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo ($genre->getName());?></h5>
-
-                                <a href="#" class="btn btn-info">Select genre</a>
+                            <select name="Movies" id="">
+                                <option value="<?php echo ($genre->getName());?>"></option>
                                 <input type="hidden" name=<?php echo ($genre->getId())?>>
+                                </select>
                             </div>
                         </div>
                         
-                <?php } ?>
-
-                <h2 class="mb-4">Select desired genre</h2>
-
-                <?php
-                foreach($genreList as $genre){ ?>
-                    <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo ($genre->getName());?></h5>
-                                <a href="#" class="btn btn-info">Select genre</a>
-                                <input type="hidden" name="IdGenre" value="<?php echo ($genre->getId());?>">
-                            </div>
-                        </div>
                 <?php } }?>
 
                 </div>

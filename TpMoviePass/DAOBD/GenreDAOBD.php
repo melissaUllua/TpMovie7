@@ -3,6 +3,8 @@
 
     use \Exception as Exception;
     use Models\Movie as Movie;    
+    use Models\Genre as Genre;    
+
     use DAOBD\Connection as Connection;
     use DAOBD\MovieDAOBD as MovieDAOBD;
     
@@ -48,10 +50,11 @@
                 $resultSet = $this->connection->Execute($query);
                 foreach ($resultSet as $row) {
                     $genre = new Genre();
-                    $genre->setId($row['id']);
+                    $genre->setId($row['IdGenre']);
                     $genre->setName($row['GenreName']);
                     array_push($this->genreList, $genre);
                 }
+                //var_dump($this->genreList);
                 return $this->genreList;
             } catch (\Throwable $th) {
                 throw $th;
@@ -62,14 +65,14 @@
         public function searchById($idGenre)  //busca un genero por su ID y lo devuelve como objeto
         {
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre=:$IdGenre";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre= $idGenre";
     
-            $parameters["IdGenre"] = $idGenre;
+            //$parameters["IdGenre"] = $idGenre;
 
             try {
                 $this->connection = Connection::GetInstance();
     
-                $resultSet = $this->connection->Execute($query, $parameters);
+                $resultSet = $this->connection->Execute($query);
 
                 if ($resultSet != null) {
                     $genre = new Genre();
@@ -92,8 +95,8 @@
             $IdMovie = null;
             $movieDAOBD = new MovieDAOBD;
 
-           $query = 'SELECT * FROM Genres_by_movies WHERE IdGenre = "' . $idGenre .'";';
-           var_dump($query);
+            $query = 'SELECT * FROM Genres_by_movies WHERE IdGenre = "' . $idGenre .'";';
+
             $parameters["IdGenre"] = $idGenre;
 
 
@@ -129,26 +132,18 @@
         public function exists(Genre $genre)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
     {
 
-        $query = "SELECT * FROM " . " " . $this->tableName . " WHERE IdGenre=:IdGenre"; ///cambiar
+      
 
-        $parameters["IdGenre"] = $genre->getId();
+        //$parameters["IdGenre"] = $genre->getId();
 
         try {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre = " . $genre->getId() . ";"; ///cambiar
             $this->connection = Connection::GetInstance();
 
-            $resultSet = $this->connection->Execute($query, $parameters);
+            $resultSet = $this->connection->Execute($query);
 
-            if (!empty($resultSet)) {
-                $genre = new Genre();
-                $genre->setId($resultSet[0]['IdGenre']);
-                $genre->setName($resultSet[0]['GenreName']);
-
-                return $genre;
-
-            } else {
-                add($genre);
-                return true;
-            }
+            
+        
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -165,7 +160,7 @@
 
         $jsonContent = file_get_contents('https://api.themoviedb.org/3/genre/movie/list?api_key=cbd53a3628e9ef7454e5890f33b974d8'); //guarda en jsoncontent un string con lo que te tira cada pagina
         $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();  //convierte ese string en un arreglo asociativo
-
+       // exidump($jsonContent);
 
 
         try {
@@ -178,8 +173,8 @@
                     $genre = new Genre(); //creamos el objeto movie y le damos los datos
                     $genre->setId($valueArray['id']);
                     $genre->setName($valueArray['name']);                                     
-
-                    exists($genre); //mandamos a chequear si existe en DB. Si no existe, la agrega.
+                   // var_dump($genre);
+                    $this->exists($genre); //mandamos a chequear si existe en DB. Si no existe, la agrega.
                 }
             }
         
@@ -187,6 +182,7 @@
             throw $th;
         }
     }
+
 
 
     }
