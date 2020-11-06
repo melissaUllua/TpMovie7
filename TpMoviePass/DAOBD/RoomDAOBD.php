@@ -3,6 +3,7 @@
 
     use \Exception as Exception;
     use Models\Room as Room;    
+    use Models\Cinema as Cinema;    
     use DAOBD\Connection as Connection;
 
     class RoomDAOBD 
@@ -98,6 +99,7 @@
                     $room->setIs3D($row["RoomIs3D"]);
                     $room->setroomPrice($row["RoomPrice"]);
                     $room->setRoomAvailability($row["RoomAvailability"]);
+                    $room->getRoomCinema()->setCinemaId($row["IdCinema"]);
 
                     array_push($roomList, $room);
                 }

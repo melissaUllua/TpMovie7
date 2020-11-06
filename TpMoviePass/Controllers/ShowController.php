@@ -5,6 +5,7 @@ use Models\Show as Show;
 use DAO\ShowDAO as ShowDAO;
 use DAOBD\ShowDAOBD as ShowDAOBD;
 use DAOBD\MovieDAOBD as MovieDAOBD;
+use DAOBD\CinemaDAOBD as CinemaDAOBD;
 
 use Models\Room as Room;
 use Models\Movie as Movie;
@@ -49,25 +50,28 @@ class ShowController{
             $show->setShowTime($showTime);
     
             $movie = new Movie();
-            $movie->setId(50);
+            $movie->setId($movieId);
     
             $room = new Room();
             $room->setRoomId($roomID);
     
             $show->setShowMovie($movie);
             $show->setShowRoom($room);
-            //var_dump("algo!".$show);
-            //var_dump($show);
-            $message =  $this->showDAO->Add($show);
+            
+           // var_dump($show);
+            $message = $this->showDAO->Add($show);
             if (empty($message)){
                 $message = "Show added successfully";
-                   $this->ShowAddView($message);
-                    //require_once(VIEWS_PATH."add-show.php");
-                    var_dump("algo!".$show);
+                  // require_once(VIEWS_PATH."cinemas-list.php");
+                   $this->showListView();
+                    var_dump($show);
             }
             
             else {
-                $this->ShowAddView($message);
+                $cinema = new CinemaDAOBD();
+                $cinemaList = $cinema->GetAll(); 
+                $this->showListView();
+
             }
 
         }

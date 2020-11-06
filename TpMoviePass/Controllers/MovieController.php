@@ -34,25 +34,31 @@ class MovieController{
         $this->MovieDao->updateDatabaseMovies();
        // require_once(VIEWS_PATH."select-genre.php");
         require_once(VIEWS_PATH."movies-list-by-genre.php");
-
     }*/
 
     public function updateDatabases()    
     {
-        $movies = new MovieDAOBD();
-        $genres = new GenreDAOBD();
-
-        $movies->updateDatabaseMovies();
-        $genres->updateDatabaseGenres();
+       // $movies = new MovieDAOBD();
+       // $genres = new GenreDAOBD();
+       
+        $this->MovieDao->updateDatabaseMovies();
+        $this->GenreDao->updateDatabaseGenres();
+        $genreList = $this->GenreDao->getAll();
+        
         echo ("Base de datos correctamente actualizada");
-        require_once(VIEWS_PATH."select-genre.php");
+        require_once(VIEWS_PATH."movies-list.php");
     }
 
-    public function ShowListViewByGenre()    
+    public function ShowListViewByGenre($idGenre)    ///ver de que vista viene
     {
-        $movies = new MovieDAOBD();
-        $movies->getMoviesByGenre();
+       $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
         require_once(VIEWS_PATH."movies-list-by-genre.php");
+    }
+    public function ShowListView()    ///ver de que vista viene
+    {
+        $genreList =$this->GenreDao->getAll();
+
+        require_once(VIEWS_PATH."movies-list.php");
     }
 
     public function ShowEditView()

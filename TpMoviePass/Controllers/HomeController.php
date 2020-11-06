@@ -17,7 +17,7 @@
             $movieList = $movies->getAll();
             $genreList = $genres->getAll();
             
-            require_once(VIEWS_PATH."select-genre.php"); 
+            require_once(VIEWS_PATH."movies-list.php"); 
 
         }        
     }

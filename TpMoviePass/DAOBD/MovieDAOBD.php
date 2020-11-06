@@ -38,13 +38,14 @@
             }
             $parameters["MoviePosterPath"] = $movie->getPoster_path();
 
-            $this->addGenresByMovies($movie);
+           
 
             try {
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
+                $this->addGenresByMovies($movie);
             } catch (\Throwable $ex) {
-    
+               
                 throw $ex;
             }
         }
@@ -53,41 +54,14 @@
         public function exists(Movie $movie)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
         {
     
-            $query = 'SELECT * FROM '. $this->tableName . ' WHERE  IdMovie = ' . $movie->getId() . ';';
-            //var_dump($query); 
-    
-            $parameters["IdMovie"] = $movie->getId();
-
-            try {
+        try {
+                $query = 'SELECT * FROM '. $this->tableName . ' WHERE  IdMovie = ' . $movie->getId() . ';';
                 $this->connection = Connection::GetInstance();
     
                 $resultSet = $this->connection->Execute($query);
-    
-                if (!empty($resultSet)) { 
-                    $movie = new Movie();
-                    $movie->setId($resultSet[0]['IdMovie']);
-                    $movie->setTitle($resultSet[0]['MovieTitle']);
-                    $movie->setDuration($resultSet[0]['MovieDuration']);
-                    $movie->setOriginal_language($resultSet[0]['MovieOriginalLanguage']);
-                    $movie->setOriginal_title($resultSet[0]['MovieOriginalTitle']);
-                    $movie->setOverview($resultSet[0]['MovieOverview']);
-                    $movie->setRelease_date($resultSet[0]['MovieReleaseDate']);
-
-                    if ($resultSet[0]['MovieIsAdult'] == 1) {
-                        $movie->setAdult(true);
-                    } else {
-                        $movie->setAdult(false);
-                    }
-
-                    $movie->setPoster_path($resultSet[0]['MoviePosterPath']);
-                    $movie->setGenresArray($this->addGenresToMovies($movie->getId()));
-
-                    return $movie;
-
-                } else {
-                    $this->add($movie);
-                    return true;
-                }
+                //var_dump($resultSet);
+               
+                return $resultSet;
             } catch (\Throwable $th) {
                 throw $th;
             }
@@ -111,13 +85,13 @@
                     $movie = new Movie();
                     $movie->setId($row['IdMovie']);
                     $movie->setTitle($row['MovieTitle']);
-                    //$movie->setOriginal_language($row['MovieOriginalLanguage']);
+                    $movie->setOriginal_language($row['MovieOriginalLanguage']);
                     $movie->setOriginal_title($row['MovieOriginalTitle']);
                     $movie->setDuration($row['MovieDuration']);
                     $movie->setOverview($row['MovieOverview']);
-                  //  $movie->setReleaseDate($row['MovieReleaseDate']);
+                    $movie->setRelease_date($row['MovieReleaseDate']);
                     $movie->setPoster_path($row['MoviePosterPath']);
-                    //$movie->setGenresArray($this->addGenresToMovies($movie->getId()));
+                    $movie->setGenresArray($this->addGenresToMovies($movie->getId()));
 
 
                     if ($row['MovieIsAdult'] == 1) {
@@ -140,22 +114,23 @@
         public function searchById($id)  //busca una pelicula por su ID
         {
 
-            $query = 'SELECT * FROM Genres_by_movies WHERE IdMovie = "' . $id .'";';
+            $query = 'SELECT * FROM ' . $this->tableName .' WHERE IdMovie = "' . $id .'";';
     
-            $parameters["IdMovie"] = $id;
+            //$parameters["IdMovie"] = $id;
+            //var_dump($query);
             try {
                 $this->connection = Connection::GetInstance();
     
-                $resultSet = $this->connection->Execute($query, $parameters);
+                $resultSet = $this->connection->Execute($query);
                 if ($resultSet != null) {
                     $movie = new Movie();
-                    $movie->setId((int) $resultSet[0]["IdMovie"]);
+                    $movie->setId($resultSet[0]["IdMovie"]);
                     $movie->setTitle($resultSet[0]["MovieTitle"]);
                     $movie->setDuration($resultSet[0]["MovieDuration"]);
-                    //$movie->setOriginalLanguage($resultSet[0]["MovieOriginalLanguage"]);
-                    $movie->setOriginalTitle($resultSet[0]['MovieOriginalTitle']);
+                    $movie->setOriginal_language($resultSet[0]["MovieOriginalLanguage"]);
+                    $movie->setOriginal_title($resultSet[0]['MovieOriginalTitle']);
                     $movie->setOverview($resultSet[0]["MovieOverview"]);
-                    $movie->setReleaseDate($resultSet[0]["MovieReleaseDate"]);
+                    $movie->setRelease_date($resultSet[0]["MovieReleaseDate"]);
 
                     if ($resultSet[0]['MovieIsAdult'] == 1) {
                         $movie->setAdult(true);
@@ -163,8 +138,8 @@
                         $movie->setAdult(false);
                     }
 
-                    $movie->setPosterPath($resultSet[0]["poster_path"]);
-                    $movie->setGenresArray(addGenresToMovies($movie->getId()));
+                    $movie->setPoster_path($resultSet[0]["MoviePosterPath"]);
+                    //$movie->setGenresArray(addGenresToMovies($movie->getId()));
 
                     return $movie;
                 } else {
@@ -231,13 +206,19 @@
                         $movie->setAdult($valueArray['adult']);
                         $movie->setOriginal_Language($valueArray['original_language']);
                         $movie->setOriginal_title($valueArray['original_title']);
-                        $movie->setGenresArray($valueArray['genre_ids']); 
+                       $movie->setGenresArray($valueArray['genre_ids']); 
                         $movie->setTitle($valueArray['title']);
                         $movie->setOverview($valueArray['overview']); 
                         $movie->setRelease_date($valueArray['release_date']); 
                         $movie->setDuration($this->getMovieDuration($valueArray['id']));
 
-                        $this->exists($movie);          //mandamos a chequear si existe en DB. Si no existe, la agrega.
+                        //$this->exists($movie);  
+                        //var_dump($this->exists($movie)); 
+                        if(!$this->exists($movie))
+                        {
+                            $this->add($movie);
+                           // $this->addGenresByMovies($movie);
+                        }        //mandamos a chequear si existe en DB. Si no existe, la agrega.
                     }
                 }
             
