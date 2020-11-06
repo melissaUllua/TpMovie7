@@ -54,9 +54,17 @@ class MovieController{
 
     public function ShowListViewByGenre($idGenre)    ///ver de que vista viene
     {
-       $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
-       $genreSelected = new Genre();
-       $genreSelected = $this->GenreDaoBD->searchById($idGenre);
+        $genreSelected = new Genre();
+        if($idGenre == 0){
+            $movieList = $this->MovieDao->getAll();
+            $genreSelected = null;
+        }else{
+            $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
+            $genreSelected = $this->GenreDaoBD->searchById($idGenre);
+     
+        }
+
+       
         require_once(VIEWS_PATH."movies-list-by-genre.php");
     }
 
