@@ -36,7 +36,6 @@ class MovieController{
         $this->MovieDao->updateDatabaseMovies();
        // require_once(VIEWS_PATH."select-genre.php");
         require_once(VIEWS_PATH."movies-list-by-genre.php");
-
     }*/
 
     public function updateDatabases()    
@@ -45,8 +44,8 @@ class MovieController{
        // $genres = new GenreDAOBD();
        
         $this->MovieDao->updateDatabaseMovies();
-        $this->GenreDaoBD->updateDatabaseGenres();
-        $genreList = $this->GenreDaoBD->getAll();
+        $this->GenreDao->updateDatabaseGenres();
+        $genreList = $this->GenreDao->getAll();
         
         echo ("Base de datos correctamente actualizada");
         require_once(VIEWS_PATH."movies-list.php");
@@ -66,6 +65,12 @@ class MovieController{
 
        
         require_once(VIEWS_PATH."movies-list-by-genre.php");
+    }
+    public function ShowListView()    ///ver de que vista viene
+    {
+        $genreList =$this->GenreDao->getAll();
+
+        require_once(VIEWS_PATH."movies-list.php");
     }
 
     public function ShowListView()    ///ver de que vista viene

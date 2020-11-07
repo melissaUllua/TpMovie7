@@ -11,7 +11,7 @@
                     echo $message;
                }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
-               <h2 class="mb-4">Add rooms</h2>
+               <h2 class="mb-4">Add rooms </h2>
                <?php
               // var_dump($cinemaID); 
                //for($i=0 ; $i < $totalRooms ; $i++){ ?>

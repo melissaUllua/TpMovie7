@@ -27,6 +27,7 @@ class RoomController{
     {
 
         $roomList = $this->roomDAO->GetRoomByCinemas($cinemaID);
+        var_dump($roomList);
         require_once(VIEWS_PATH."rooms-list.php");
     }
 

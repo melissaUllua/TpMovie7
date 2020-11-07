@@ -9,7 +9,7 @@
   
         <section id="listado" class="mb-5">
             <div class="container">
-                <h2 class="mb-4">Select genree</h2>
+                <h2 class="mb-4">Select genre</h2>
 
                
                     <div class="row" style="width: 18rem;">
