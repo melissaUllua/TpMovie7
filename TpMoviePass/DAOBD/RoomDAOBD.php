@@ -183,6 +183,35 @@
                     throw $ex;
                 }
             }
+    /*
+    * Returns true if finds any match, false if not.
+    */
+            public function ExistsRoomByName($roomName, $idCinema)
+        {
+            try
+                {
+                    $room = new Room();
+                    $query = 'SELECT * FROM '. $this->tableName .' WHERE RoomName = "'. $roomName .'" AND IdCinema= '. $idCinema.';';
+                    
+                    $this->connection = Connection::GetInstance();
+    
+                    $resultSet = $this->connection->Execute($query);
+                    
+                    if(!empty($resultSet))
+                    {         
+                        $flag = true;
+                       
+                    } else {
+                        $flag = false;
+                    }
+    
+                    return $flag;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+            }
     
         }
     

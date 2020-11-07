@@ -9,7 +9,6 @@ use DAOBD\MovieDAOBD as MovieDAOBD;
 use DAOBD\GenreDAOBD as GenreDAOBD;
 
 
-
 class MovieController{
     private $MovieDao;
     private $MovieDaoBD;
@@ -20,7 +19,7 @@ class MovieController{
       //  $this->MovieDao = new MovieDAO();
         $this->MovieDao = new MovieDAOBD();
       //  $this->GenreDao = new GenreDAO();
-        $this->GenreDaoBD = new GenreDAOBD();
+        $this->GenreDao = new GenreDAOBD();
     }
 
 
@@ -59,7 +58,7 @@ class MovieController{
             $genreSelected = null;
         }else{
             $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
-            $genreSelected = $this->GenreDaoBD->searchById($idGenre);
+            $genreSelected = $this->GenreDao->searchById($idGenre);
      
         }
 
@@ -73,13 +72,13 @@ class MovieController{
         require_once(VIEWS_PATH."movies-list.php");
     }
 
-    public function ShowListView()    ///ver de que vista viene
+/*    public function ShowListView()    ///ver de que vista viene
     {
         $genreList =$this->GenreDaoBD->getAll();
 
         require_once(VIEWS_PATH."movies-list.php");
     }
-
+*/
     public function ShowEditView()
     {
         require_once(VIEWS_PATH."movie-edit.php");
