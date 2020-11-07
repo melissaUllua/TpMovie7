@@ -1,5 +1,8 @@
 <?php 
 require_once('nav.php');
+use Models\Movie as Movie;
+use Models\Cinema as Cinema;
+
 
 ?>
 <main class="py-5">
@@ -26,8 +29,11 @@ require_once('nav.php');
                               
                                    <?php 
                                    var_dump($show);
-                                   echo $show->getShowMovie()->getTitle(); ?></td> 
-                                   <td><?php echo $show->getShowRoom()->getRoomCinema()->getCinemaName(); ?></td>
+                                   $movie = new Movie();
+                                   $movie = $show->getShowMovie();
+                                   $cinema =  $show->getShowRoom();
+                                   echo $movie->getTitle(); ?></td> 
+                                   <td><?php echo $cinema->getRoomCinema()->getCinemaName(); ?></td>
                                    <td><?php echo $show->getShowRoom()->getRoomName(); ?></td>
                                    <td><?php $room->getShowDate(); ?>
                                    <td><?php $room->getShowTime(); ?>
@@ -37,7 +43,7 @@ require_once('nav.php');
                                        
                                         <input type="hidden" class="btn btn-dark" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
                                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
-                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowAddView/'?>"class="btn btn-dark">Add room</button> -->
+                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowListView/'?>"class="btn btn-dark">Add room</button> -->
                                         </form>
                                             
                                              
