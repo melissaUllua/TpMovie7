@@ -75,10 +75,22 @@ class MovieController{
 /*    public function ShowListView()    ///ver de que vista viene
     {
         $genreList =$this->GenreDaoBD->getAll();
-
         require_once(VIEWS_PATH."movies-list.php");
     }
 */
+
+
+
+
+
+
+
+
+/// FUNCIONES NO USADAS
+
+
+
+
     public function ShowEditView()
     {
         require_once(VIEWS_PATH."movie-edit.php");

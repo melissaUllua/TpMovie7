@@ -85,3 +85,8 @@ body {
      .flex-item + .flex-item {
      margin-left: 2%;
      }
+
+     .message{
+          font-size: 300%;
+          text-align: center;
+     }

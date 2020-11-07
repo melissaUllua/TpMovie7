@@ -9,6 +9,11 @@
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
+               <?php  if(isset($message))
+               {
+                    echo $message;
+               }  
+               ?>
                <h2 class="mb-4">Cinemas</h2>
                <table class="table bg-light-alpha">
                     <thead>
