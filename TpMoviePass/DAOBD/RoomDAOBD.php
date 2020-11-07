@@ -5,6 +5,7 @@
     use Models\Room as Room;    
     use Models\Cinema as Cinema;    
     use DAOBD\Connection as Connection;
+    use DAOBD\CinemaDAOBD as CinemaDAOBD;
 
     class RoomDAOBD 
     {
@@ -81,7 +82,7 @@
             try
             {
                 $roomList = array();
-
+               
                 
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdCinema = "' . $cinemaID . '";';
                 
@@ -99,11 +100,14 @@
                     $room->setIs3D($row["RoomIs3D"]);
                     $room->setroomPrice($row["RoomPrice"]);
                     $room->setRoomAvailability($row["RoomAvailability"]);
-                    $room->getRoomCinema()->setCinemaId($row["IdCinema"]);
-
+                    $cinemaDao = new CinemaDAOBD();
+                    $cinema = $cinemaDao->getOneCinema($row["IdCinema"]);
+                    //var_dump($cinema);
+                    $room->setRoomCinema($cinema);
+                   
                     array_push($roomList, $room);
                 }
-
+                var_dump($roomList);
                 return $roomList;
             }
             catch(Exception $ex)
@@ -146,6 +150,40 @@
                 throw $ex;
             }
         }
+        public function getOneRoom($Id)
+        {
+            try
+                {
+                    $room = new Room();
+                    $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdRoom = "'. $Id .'";';
+                    
+                    $this->connection = Connection::GetInstance();
+    
+                    $resultSet = $this->connection->Execute($query);
+                    
+                    if($resultSet)
+                    {         
+                        $row = $resultSet[0];       
+                        $room->setRoomId($row["IdRoom"]);
+                        $room->setRoomName($row["RoomName"]);
+                        $room->setRoomCapacity($row["RoomCapacity"]);
+                        $room->setRoomAvailability($row["RoomAvailability"]);
+                        $cinemaDao = new CinemaDAOBD();
+                        $cinema = $cinemaDao->getOneCinema($row["IdCinema"]);
+                        $room->setRoomCinema($cinema);
+                        $room->setRoomAvailability($row["RoomAvailability"]);
+                        $room->setroomPrice($row["RoomPrice"]);
+                       
+                    }
+    
+                    return $cinema;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+            }
+    
         }
     
     

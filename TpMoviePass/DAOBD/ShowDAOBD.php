@@ -102,10 +102,14 @@
                     $row = $resultSet['0'];
                     $show = new Show();
                     $show->setShowId($row["IdShow"]);
-                    $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
-                    //$show->setShowRoom($room_aux->getOneById($row["IdRoom"]));
+                    $movieDao = new MovieDAOBD();
+                    $movie = $movieDao->searchById($row["IdMovie"]);
+                    $show->setShowMovie($movie);
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
+                    $cinemaDao = new CinemaDAOBD();
+                    $cinema = $cinemaDao->getOneCinema($rom["IdCinema"]);
+                    $show->setShowCinema($cinema);
                     
 
                     array_push($oneshow, $show);
