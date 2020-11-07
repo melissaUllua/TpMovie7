@@ -5,10 +5,16 @@
 
 ?>
 <main class="py-5">
+<?php  if(isset($message))
+               {
+                    echo $message;
+               }  
+               ?>
     <form action="<?php echo FRONT_ROOT."Movie/ShowListViewByGenre"?>" method="get" class="bg-light-alpha p-5">
-  
+    
         <section id="listado" class="mb-5">
             <div class="container">
+           
                 <h2 class="mb-4">Select genre</h2>
 
                

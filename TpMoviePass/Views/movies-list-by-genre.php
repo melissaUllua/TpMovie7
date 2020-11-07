@@ -16,13 +16,14 @@
 
 ?>
 <main>
-<div style="background-image: https://preview.pixlr.com/images/800wm/100/1/1001435035.jpg">
-     <section id="listado" class="mb-5">
-     <?php  if(isset($message))
+<?php  if(isset($message))
                {
                     echo $message;
                }  
                ?>
+<div style="background-image: https://preview.pixlr.com/images/800wm/100/1/1001435035.jpg">
+     <section id="listado" class="mb-5">
+     
      <h2 class="bg-light-alpha p-5"><?php if ($genreSelected == null) { echo "Displaying all movies";}else{echo $genreSelected->getName();} ?></h2>
           <div class="containerMovies">
                

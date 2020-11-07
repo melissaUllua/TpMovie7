@@ -7,6 +7,7 @@
     
     $movieDao = new MovieDAO;
     $movieList =  $movieDao->getAll();
+    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
     
 ?>
 <main class="py-5">
@@ -46,5 +47,6 @@
                     </tbody>
                </table>
           </div>
+          <?php   } else {  ?> <p class= "message"> You are not authorized to view this section <?php }?>
      </section>
 </main>
