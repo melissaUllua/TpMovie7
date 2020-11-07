@@ -40,6 +40,13 @@ use Models\Cinema as Cinema;
                         <option value="1">Available</option>
                         <option value="0">Not Available</option>
                         </select>
+                        
+                       <!-- <label>Availlability </label>
+          <input type="radio" id="male" value="male" name="user_sex">
+          <label for="male" >Available</label>
+          <input type="radio" id="female" value="female" name="user_sex">
+          <label for="female">Unavailable</label>
+            -->
                       
     </div>     
                        <!-- </select> -->

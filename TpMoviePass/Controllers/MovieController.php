@@ -41,17 +41,23 @@ class MovieController{
     {
        // $movies = new MovieDAOBD();
        // $genres = new GenreDAOBD();
-       
+       if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
         $this->MovieDao->updateDatabaseMovies();
         $this->GenreDao->updateDatabaseGenres();
         $genreList = $this->GenreDao->getAll();
         
-        echo ("Base de datos correctamente actualizada");
-        require_once(VIEWS_PATH."movies-list.php");
+        $message = "Upgraded Database";
+        $this->ShowListViewByGenre($message);
+    }
+    else {
+        $message = "Denied Access";
+        $this->ShowListViewByGenre($message);
+    }
+        
     }
 
-    public function ShowListViewByGenre($idGenre)    ///ver de que vista viene
-    {
+    public function ShowListViewByGenre($idGenre, $message ="")    ///ver de que vista viene
+    {  
         $genreSelected = new Genre();
         if($idGenre == 0){
             $movieList = $this->MovieDao->getAll();
@@ -61,10 +67,9 @@ class MovieController{
             $genreSelected = $this->GenreDao->searchById($idGenre);
      
         }
-
-       
         require_once(VIEWS_PATH."movies-list-by-genre.php");
     }
+
     public function ShowListView()    ///ver de que vista viene
     {
         $genreList =$this->GenreDao->getAll();
