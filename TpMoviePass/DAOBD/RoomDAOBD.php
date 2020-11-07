@@ -107,7 +107,7 @@
                    
                     array_push($roomList, $room);
                 }
-                var_dump($roomList);
+                //var_dump($roomList);
                 return $roomList;
             }
             catch(Exception $ex)

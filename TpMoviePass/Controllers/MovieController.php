@@ -79,6 +79,19 @@ class MovieController{
         require_once(VIEWS_PATH."movies-list.php");
     }
 */
+
+
+
+
+
+
+
+
+/// FUNCIONES NO USADAS
+
+
+
+
     public function ShowEditView()
     {
         require_once(VIEWS_PATH."movie-edit.php");

@@ -81,9 +81,18 @@ class CinemaController{
             $modify->setCinemaAvailability($availability);
         }
 
-        $this->cinemaDAO->EditCinema($modify, $id);
-        $message = "El cine fue editado con exito!";
+        $flag = $this->cinemaDAO->EditCinema($modify, $id);
 
+        if($flag == 0){
+            $message = "Cinema edited successfully!";
+        }else if($flag == 1){
+            $message = "There was an error editing this cinema.";
+
+        }else if($flag == 2){
+            $message = "There is already a cinema with the same address you specified.";
+
+        }
+        
         $this->ShowListView();
     }
 }
