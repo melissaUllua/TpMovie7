@@ -20,7 +20,7 @@
      <h1></h1>
      <section id="listado" class="mb-5">
      <h2 class="bg-light-alpha p-5"><?php if ($genreSelected == null) { echo "Displaying all movies";}else{echo $genreSelected->getName();} ?></h2>
-          <div class="container">
+          <div class="containerMovies">
                
                <br>               <br>               <br>
 

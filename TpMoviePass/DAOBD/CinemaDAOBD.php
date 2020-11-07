@@ -15,7 +15,7 @@
             try
             {
                 $flag = $this->ExistsCinemaByAddress($cinema->getCinemaAddress());
-                if ($flag == false){
+                if ($flag == null){
                     $query = "INSERT INTO ".$this->tableName." (cinemaName, cinemaAddress, cinemaAvailability) 
                 VALUES (:CinemaName, :CinemaAddress, :CinemaAvailability);";
                 
@@ -142,7 +142,6 @@
     {
         try
             {
-                $flag = false;
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE CinemaAddress = "'. $address .'";';
                 
                 $this->connection = Connection::GetInstance();
@@ -153,6 +152,9 @@
                 {                
                    $flag = true;
                    
+                }
+                else {
+                    $flag = null;
                 }
 
                 return $flag;

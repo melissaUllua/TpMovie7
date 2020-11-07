@@ -184,33 +184,28 @@
                 }
             }
     /*
-    * Returns a Room
+    * Returns true if finds any match, false if not.
     */
-            public function getOneRoomByName($roomName)
+            public function ExistsRoomByName($roomName, $idCinema)
         {
             try
                 {
                     $room = new Room();
-                    $query = 'SELECT * FROM '.$this->tableName . ' WHERE RoomName = "'. $roomName .'";';
+                    $query = 'SELECT * FROM '. $this->tableName .' WHERE RoomName = "'. $roomName .'" AND IdCinema= '. $idCinema.';';
                     
                     $this->connection = Connection::GetInstance();
     
                     $resultSet = $this->connection->Execute($query);
                     
-                    if($resultSet)
+                    if(!empty($resultSet))
                     {         
-                        $row = $resultSet[0];       
-                        $room->setRoomId($row["IdRoom"]);
-                        $room->setRoomName($row["RoomName"]);
-                        $room->setRoomCapacity($row["RoomCapacity"]);
-                        $room->setRoomAvailability($row["RoomAvailability"]);
-                        $room->setRoomCinema($cinema);
-                        $room->setRoomAvailability($row["RoomAvailability"]);
-                        $room->setroomPrice($row["RoomPrice"]);
+                        $flag = true;
                        
+                    } else {
+                        $flag = false;
                     }
     
-                    return $room;
+                    return $flag;
                 }
                 catch(Exception $ex)
                 {
