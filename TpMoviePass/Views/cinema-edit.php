@@ -5,7 +5,7 @@ use Models\Cinema as Cinema;
     //$cineDao = new CineDao();
 
     //$allCinemas = $cineDao->getAll()
-    
+    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
 ?>
 
 <main class="py-5">
@@ -64,7 +64,7 @@ use Models\Cinema as Cinema;
                           
                            
            </td>
-      <?php  } ?>
+      <?php  } } else {  ?> <p class= "message"> You are not authorized to view this section <?php }?>
       
      </section>
 </main>

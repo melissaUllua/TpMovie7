@@ -59,7 +59,7 @@
                          </div>
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
-               <?php //} ?>
+               <?php /*} llave del for each*/?>
                </form>
           </div>
      </section>

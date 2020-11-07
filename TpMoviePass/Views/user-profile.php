@@ -22,9 +22,11 @@
 
                        </tr> 
                              
-                         </tr>
+
                     </tbody>
                </table>
+               <?php  if($_SESSION['isAdmin'] == 1){ echo "Coming soon, functions for admins";
+      }?>
                <!--<form action="<?php //echo FRONT_ROOT ?>Cinema/EditCinema". method="post" class="bg-light-alpha p-5">
                <table class="table text-white bg-oscuro"> 
             
