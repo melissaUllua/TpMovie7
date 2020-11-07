@@ -51,7 +51,7 @@ class MovieController{
     }
     else {
         $message = "Denied Access";
-        $this->ShowListViewByGenre($message);
+        $this->ShowListView($message);
     }
         
     }
@@ -70,7 +70,7 @@ class MovieController{
         require_once(VIEWS_PATH."movies-list-by-genre.php");
     }
 
-    public function ShowListView()    ///ver de que vista viene
+    public function ShowListView($message ="")    ///ver de que vista viene
     {
         $genreList =$this->GenreDao->getAll();
 
