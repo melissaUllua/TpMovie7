@@ -183,6 +183,40 @@
                     throw $ex;
                 }
             }
+    /*
+    * Returns a Room
+    */
+            public function getOneRoomByName($roomName)
+        {
+            try
+                {
+                    $room = new Room();
+                    $query = 'SELECT * FROM '.$this->tableName . ' WHERE RoomName = "'. $roomName .'";';
+                    
+                    $this->connection = Connection::GetInstance();
+    
+                    $resultSet = $this->connection->Execute($query);
+                    
+                    if($resultSet)
+                    {         
+                        $row = $resultSet[0];       
+                        $room->setRoomId($row["IdRoom"]);
+                        $room->setRoomName($row["RoomName"]);
+                        $room->setRoomCapacity($row["RoomCapacity"]);
+                        $room->setRoomAvailability($row["RoomAvailability"]);
+                        $room->setRoomCinema($cinema);
+                        $room->setRoomAvailability($row["RoomAvailability"]);
+                        $room->setroomPrice($row["RoomPrice"]);
+                       
+                    }
+    
+                    return $room;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+            }
     
         }
     

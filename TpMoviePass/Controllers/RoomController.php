@@ -48,7 +48,9 @@ class RoomController{
     {
        // $cinemaDAO = new CinemaDAOBD();
         //$cinema = $cinemaDAO->getOneCinema($cinemaID);
-        $cinema = new Cinema();
+      //  $cinema = new Cinema();
+      $room = $this->roomDAO->getOneRoomByName($RoomName);
+      if(!isset($room->getRoomName()){
         $cinema->setCinemaId($cinemaID);
         $room = new Room();
         $room->setRoomName($RoomName);
@@ -61,9 +63,12 @@ class RoomController{
         $room->setRoomCinema($cinema);
         $this->roomDAO->Add($room);
         $message = "Show Room added successfully!";
-
-        
         require_once(VIEWS_PATH."add-cinema.php");
+      }
+      else {
+          $message = "There already exists a Room with that name";
+      }
+        
     }
     public function Edit($roomID, $roomName, $roomCapacity, $Is3D, $roomTicketPrice)
     {
