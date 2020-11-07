@@ -75,7 +75,6 @@ class MovieController{
 /*    public function ShowListView()    ///ver de que vista viene
     {
         $genreList =$this->GenreDaoBD->getAll();
-
         require_once(VIEWS_PATH."movies-list.php");
     }
 */

@@ -11,10 +11,14 @@ use Models\Cinema as Cinema;
 <main class="py-5">
     
      <section id="listado" class="mb-5">
-        <div class="container">
-        
+        <div class="container">    
         <h2 class="mb-4 text-center text-white ">Edit</h2>
          <?php 
+           if(isset($message))
+            {
+                 echo $message;
+            }  
+          
             foreach ($cinemaList as $cinema){  ?>
         <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST"  >
           <table class="table bg-light-alpha"> 

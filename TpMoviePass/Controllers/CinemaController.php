@@ -22,13 +22,13 @@ class CinemaController{
         
     }
 
-    public function ShowListView()
+    public function ShowListView($message = "")
     {
         
        $cinemaList = $this->cinemaDAO->GetAll();
         require_once(VIEWS_PATH."cinemas-list.php");
     }
-    public function ShowEditView()
+    public function ShowEditView($message = "")
     {
         $cinemaList = $this->cinemaDAO->getAll();
         require_once(VIEWS_PATH."cinema-edit.php");
@@ -73,6 +73,7 @@ class CinemaController{
         }
         if ($cinemaAddress != "")
         {
+            
             $modify->setCinemaAddress($cinemaAddress);
         
         if ($cinemaAvailabiity != "")
@@ -85,15 +86,17 @@ class CinemaController{
 
         if($flag == 0){
             $message = "Cinema edited successfully!";
+            $this->ShowListView($message);
         }else if($flag == 1){
             $message = "There was an error editing this cinema.";
-
+            $this->ShowEditView($message);
         }else if($flag == 2){
-            $message = "There is already a cinema with the same address you specified.";
+            $message = "There is already a cinema with the same address you have specified.";
+            $this->ShowEditView($message);
 
         }
         
-        $this->ShowListView();
+        
     }
 }
 }
