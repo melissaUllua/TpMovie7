@@ -29,20 +29,17 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (movieId, ShowDate, ShowTime, IdRoom) 
-                VALUES (:showDate,:showTime, :idRoom);";
+                $query = "INSERT INTO ".$this->tableName." (IdMovie, ShowDate, ShowTime, IdRoom) 
+                VALUES (:IdMovie, :ShowDate, :ShowTime, :IdRoom);";
                 
-                $parameters["showDate"] = $show->getShowDate();
-                $parameters["showTime"] = $show->getShowTime();
-                $parameters["idRoom"] = $show->getShowRoom()->getroomId();
-                // $movie = $show->getShowMovie();
-                //$id = $movie->getId();
-
-                $parameters["idMovie"] = 1;
+                $parameters["ShowDate"] = $show->getShowDate();
+                $parameters["ShowTime"] = $show->getShowTime();
+                $parameters["IdRoom"] = $show->getShowRoom()->getroomId();
+                $parameters["IdMovie"] = $show->getShowMovie()->getId();
                 
 
                 $this->connection = Connection::GetInstance();
-
+                var_dump($parameters);
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 return $message = "Show added successfully";
             }
