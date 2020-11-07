@@ -1,7 +1,8 @@
 <?php
 namespace Controllers;
 
-
+use Models\Movie as Movie;
+use Models\Genre as Genre;
 use DAO\MovieDAO as MovieDAO;
 use DAO\GenreDAO as GenreDAO;
 use DAOBD\MovieDAOBD as MovieDAOBD;
@@ -12,13 +13,14 @@ use DAOBD\GenreDAOBD as GenreDAOBD;
 class MovieController{
     private $MovieDao;
     private $MovieDaoBD;
+    private $GenreDaoBD;
 
     public function __construct()
     {
       //  $this->MovieDao = new MovieDAO();
         $this->MovieDao = new MovieDAOBD();
       //  $this->GenreDao = new GenreDAO();
-        $this->GenreDao = new GenreDAOBD();
+        $this->GenreDaoBD = new GenreDAOBD();
     }
 
 
@@ -51,12 +53,29 @@ class MovieController{
 
     public function ShowListViewByGenre($idGenre)    ///ver de que vista viene
     {
-       $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
+        $genreSelected = new Genre();
+        if($idGenre == 0){
+            $movieList = $this->MovieDao->getAll();
+            $genreSelected = null;
+        }else{
+            $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
+            $genreSelected = $this->GenreDaoBD->searchById($idGenre);
+     
+        }
+
+       
         require_once(VIEWS_PATH."movies-list-by-genre.php");
     }
     public function ShowListView()    ///ver de que vista viene
     {
         $genreList =$this->GenreDao->getAll();
+
+        require_once(VIEWS_PATH."movies-list.php");
+    }
+
+    public function ShowListView()    ///ver de que vista viene
+    {
+        $genreList =$this->GenreDaoBD->getAll();
 
         require_once(VIEWS_PATH."movies-list.php");
     }

@@ -20,7 +20,7 @@
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4"></h2>
+               <h2 class="mb-4"><?php if ($genreSelected == null) { echo ("View All Movies");}else{echo $genreSelected->getName();} ?></h2>
                <br>               <br>               <br>
                
 
@@ -82,11 +82,18 @@
                                              <img src="<?php echo ('https://image.tmdb.org/t/p/w500' . $movie->getPoster_path()) ?>" alt="Avatar" style="width:100%">
                                              <div class="card:hover">
                                              <h4 style="text-align:center;"><b><?php echo $movie->getTitle() ?></b></h4>                <br>
-                                             <p style="text-align:center;"><?php echo ($movie->getTitle()) ?></p>
+                                             <p style="text-align:center;"><?php echo ("Duration: " . $movie->getDuration() . " minutes.") ?></p>
+                                             <p style="text-align:center;"><?php echo ("Language: " . $movie->getOriginal_language()) ?></p>
+                                             <p style="text-align:center;"><?php echo ("Release date: " . $movie->getRelease_date()) ?></p>
+
                                              </div>
                                              </div>
                                    <?php
                               }
+                         }else{
+                              ?>
+                              <h4 style="text-align:center;"><b><?php echo ("Sorry! There are no movies of this genre") ?></b></h4>
+                         <?php
                          }
                          ?>
                          </tr>

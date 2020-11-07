@@ -43,6 +43,7 @@
                                    <input type="password" name="userPass" value="" class="form-control" placeholder= "Between 8 and 10 characters" required>
                               </div>
                          </div>
+                         
                
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Sign up</button>

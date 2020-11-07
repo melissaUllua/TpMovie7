@@ -17,13 +17,14 @@
                              <select name="idGenre" id=""class="form-control">
                              <?php
                         foreach($genreList as $genre){
-                                var_dump($genre); ?>
+                                ?>
                                 <option value="<?php echo $genre->getId(); ?>"><?php echo $genre->getName();?></option>
-                                 <?php }?>
+                                 <?php } ?>
+                                 <option value="0"><?php echo ("View all");?></option>
                                  </select>
                              </div>
                          </div>
-                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Select</button>
+                         <button type="submit" class="btn btn-dark ml-auto d-block">Select</button>
                          
                 
 
