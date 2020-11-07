@@ -9,7 +9,6 @@ use DAOBD\MovieDAOBD as MovieDAOBD;
 use DAOBD\GenreDAOBD as GenreDAOBD;
 
 
-
 class MovieController{
     private $MovieDao;
     private $MovieDaoBD;
@@ -20,7 +19,7 @@ class MovieController{
       //  $this->MovieDao = new MovieDAO();
         $this->MovieDao = new MovieDAOBD();
       //  $this->GenreDao = new GenreDAO();
-        $this->GenreDaoBD = new GenreDAOBD();
+        $this->GenreDao = new GenreDAOBD();
     }
 
 
@@ -44,18 +43,8 @@ class MovieController{
        // $genres = new GenreDAOBD();
        
         $this->MovieDao->updateDatabaseMovies();
-<<<<<<< HEAD
-<<<<<<< HEAD
-        $this->GenreDaoBD->updateDatabaseGenres();
-        $genreList = $this->GenreDaoBD->getAll();
-=======
         $this->GenreDao->updateDatabaseGenres();
         $genreList = $this->GenreDao->getAll();
->>>>>>> 667299feca5fc1de08710bbc5b4ad9d9a9b77473
-=======
-        $this->GenreDao->updateDatabaseGenres();
-        $genreList = $this->GenreDao->getAll();
->>>>>>> c99b6739818ec92344d1a07584a6b8b62175ae59
         
         echo ("Base de datos correctamente actualizada");
         require_once(VIEWS_PATH."movies-list.php");
@@ -63,26 +52,17 @@ class MovieController{
 
     public function ShowListViewByGenre($idGenre)    ///ver de que vista viene
     {
-<<<<<<< HEAD
-       $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
-<<<<<<< HEAD
-       $genreSelected = new Genre();
-       $genreSelected = $this->GenreDaoBD->searchById($idGenre);
-=======
->>>>>>> 667299feca5fc1de08710bbc5b4ad9d9a9b77473
-=======
         $genreSelected = new Genre();
         if($idGenre == 0){
             $movieList = $this->MovieDao->getAll();
             $genreSelected = null;
         }else{
             $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
-            $genreSelected = $this->GenreDaoBD->searchById($idGenre);
+            $genreSelected = $this->GenreDao->searchById($idGenre);
      
         }
 
        
->>>>>>> c99b6739818ec92344d1a07584a6b8b62175ae59
         require_once(VIEWS_PATH."movies-list-by-genre.php");
     }
     public function ShowListView()    ///ver de que vista viene
@@ -92,13 +72,13 @@ class MovieController{
         require_once(VIEWS_PATH."movies-list.php");
     }
 
-    public function ShowListView()    ///ver de que vista viene
+/*    public function ShowListView()    ///ver de que vista viene
     {
         $genreList =$this->GenreDaoBD->getAll();
 
         require_once(VIEWS_PATH."movies-list.php");
     }
-
+*/
     public function ShowEditView()
     {
         require_once(VIEWS_PATH."movie-edit.php");

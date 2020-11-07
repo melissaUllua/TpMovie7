@@ -39,8 +39,8 @@ class UserController{
                     $this->AddSuperAdmin(); //lo agrego y vuelvo a llamar a la función
                     $users = $this->userDAO->getAll();
                 }          
-    
-                    $user_aux = new User();                               
+                    if ($_POST['userPass'] == $_POST['userPassCheck']){
+                        $user_aux = new User();                               
                     $user_aux->setuserEmail($_POST['userEmail']);   
                     $user_aux->setuserPass($_POST['userPass']);
                     $user_aux->setuserName($_POST['userName']);
@@ -59,7 +59,14 @@ class UserController{
                 else {
                     $message = "Wrong Password Length";
                     $this->ShowSignUpView($message);
-                } 
+                }
+
+                    }
+                    else {
+                        $message = "Passwords don't match. Please try again";
+                        $this->ShowSignUpView($message);
+                    }
+                     
             }
             catch (Exception $exAdd) {
                 $message = "There has been a problem with the Sign Up";
@@ -84,6 +91,10 @@ class UserController{
         if($_POST)
         {
             $users = $this->userDAO->getAll();
+            if(empty($users)){ //si no hay ningún usuario, al menos necesito un admin
+                $this->AddSuperAdmin(); //lo agrego y vuelvo a llamar a la función
+                $users = $this->userDAO->getAll();
+            } 
             $user_aux = new User();                               //creo un user auxiliar para comparar  
             $user_aux->setuserPass($_POST['userPass']);
             $user_aux->setuserName($_POST['userName']);

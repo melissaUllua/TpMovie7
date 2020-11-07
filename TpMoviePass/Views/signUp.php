@@ -43,6 +43,12 @@
                                    <input type="password" name="userPass" value="" class="form-control" placeholder= "Between 8 and 10 characters" required>
                               </div>
                          </div>
+                         <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for="">Confirm Password</label>
+                                   <input type="password" name="userPassCheck" value="" class="form-control" placeholder= "Enter your password again" required>
+                              </div>
+                         </div>
                          
                
                     </div>
