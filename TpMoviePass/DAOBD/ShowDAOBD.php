@@ -66,12 +66,11 @@
                 $cinema_aux = new CinemaDAOBD();
 
                 foreach ($resultSet as $row)
-                {                
+                {
                     $show = new Show();
                     $show->setShowId($row["IdShow"]);
                     $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
                     $room = $room_aux->getOneRoom($row["IdRoom"]);
-                    $room->setRoomCinema($cinema_aux->getOneCinema($room->getRoomCinema()->getCinemaId()));
                     $show->setShowRoom($room);
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
@@ -87,38 +86,35 @@
             }
         }
        
-        public function GetOneById($showID)
+        public function GetOneById($showID)    //devuelve una función a partir de su ID
         {
             try
             {
 
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE Idshow =' . "$showID";
 
-                $oneshow = $this->connection = Connection::GetInstance();
+                $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                 
                 $movie_aux = new MovieDAOBD();
                 $room_aux = new RoomDAOBD();
+                $show = new Show();
+
                 if ($resultSet)
                 {                
                     $row = $resultSet['0'];
-                    $show = new Show();
                     $show->setShowId($row["IdShow"]);
-                    $movieDao = new MovieDAOBD();
-                    $movie = $movieDao->searchById($row["IdMovie"]);
+                    $movie = $movie_aux->searchById($row["IdMovie"]);
                     $show->setShowMovie($movie);
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
-                    $cinemaDao = new CinemaDAOBD();
-                    $cinema = $cinemaDao->getOneCinema($rom["IdCinema"]);
-                    $show->setShowCinema($cinema);
-                    
+                    $room = $room_aux->getOneRoom($row["IdRoom"]);
+                    $show->setShowRoom($room);
 
-                    array_push($oneshow, $show);
                 }
 
-                return $showList;
+                return $show;
             }
             catch(Exception $ex)
             {
@@ -126,6 +122,96 @@
             }
 
         }
+
+
+        public function GetBillboard()     //devuelve un array de objetos movie con al menos un show programado
+        {
+            $moviesList = array();
+
+            $query = 'SELECT DISTINCT IdMovie FROM '.$this->tableName . ";";
+
+            try{
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+
+                if($resultSet != null){
+
+                    foreach($resultset as $row){
+                        $movie = new Movie;
+                        $MovieDao = new MovieDAOBD;
+
+                        $movie = $movieDao(searchById($row['IdMovie']));
+                        array_push($moviesList, $movie);
+                    }
+
+                    return $moviesList;
+
+                }else{
+
+                    return null;
+
+                }
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+
+        }
+
+
+        public function getShowsByMovie(Movie $movie)     ///devuelve todos los shows correspondientes a una movie. FALTA AGREGAR LA COMPARACION DE FECHA DE HOY CONTRA FECHA DE INICIO
+        {
+
+            $showList = array()
+            $query = "SELECT * FROM " . $this->tableName . " WHERE IdMovie = " . $movie->getId() . ";";
+
+
+            try{
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+
+                if($resultSet != null){
+
+                    $movie_aux = new MovieDAOBD();
+                    $room_aux = new RoomDAOBD();
+                    $cinema_aux = new CinemaDAOBD();
+    
+                    foreach ($resultSet as $row)
+                    {
+                        if()
+                        $show = new Show();
+                        $show->setShowId($row["IdShow"]);
+                        $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
+                        $room = $room_aux->getOneRoom($row["IdRoom"]);
+                        $show->setShowRoom($room);
+                        $show->setShowDate($row["ShowDate"]);
+                        $show->setShowTime($row["ShowTime"]);  ///COMPARAR ESTO CON FECHA ACTUAL!!!
+    
+                        array_push($showList, $show);
+                    }
+
+                    return $showList;
+
+                }else{
+
+                    return null;
+
+                }
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+
+
+
+
+        }
+
+
 
         
 
