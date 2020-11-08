@@ -66,7 +66,7 @@
                 $cinema_aux = new CinemaDAOBD();
 
                 foreach ($resultSet as $row)
-                {                
+                {
                     $show = new Show();
                     $show->setShowId($row["IdShow"]);
                     $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
@@ -86,38 +86,35 @@
             }
         }
        
-        public function GetOneById($showID)
+        public function GetOneById($showID)    //devuelve una función a partir de su ID
         {
             try
             {
 
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE Idshow =' . "$showID";
 
-                $oneshow = $this->connection = Connection::GetInstance();
+                $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                 
                 $movie_aux = new MovieDAOBD();
                 $room_aux = new RoomDAOBD();
+                $show = new Show();
+
                 if ($resultSet)
                 {                
                     $row = $resultSet['0'];
-                    $show = new Show();
                     $show->setShowId($row["IdShow"]);
-                    $movieDao = new MovieDAOBD();
-                    $movie = $movieDao->searchById($row["IdMovie"]);
+                    $movie = $movie_aux->searchById($row["IdMovie"]);
                     $show->setShowMovie($movie);
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
-                    $cinemaDao = new CinemaDAOBD();
-                    $cinema = $cinemaDao->getOneCinema($room["IdCinema"]);
-                    $show->setShowCinema($cinema);
-                    
+                    $room = $room_aux->getOneRoom($row["IdRoom"]);
+                    $show->setShowRoom($room);
 
-                    array_push($oneshow, $show);
                 }
 
-                return $showList;
+                return $show;
             }
             catch(Exception $ex)
             {
@@ -126,8 +123,204 @@
 
         }
 
-        
+        /*
+        Recibe una fecha, un horario y una sala. Comprueba que no existan funciones para esa sala en el mismo momento
+    * Retorna true si encuentra una coincidencia, o false de no ser así.
+    */
+    public function ExistsShowByDateTime($showDate, $showTime, $IdRoom)
+    {
+        try
+            {
+               // $room = new Room();
+                $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate = " . $showDate ." AND ShowTime = '" .$showTime ."' AND IdRoom = " .$IdRoom .";";
+                
+                $this->connection = Connection::GetInstance();
 
+                $resultSet = $this->connection->Execute($query);
+                
+                if(!empty($resultSet))
+                {         
+                    $flag = true;
+                   
+                } else {
+                    $flag = false;
+                }
+
+                return $flag;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        /* Busca si la película ya está en exhibición en otra sala para ese día
+        Retorna true si encuentra una coincidencia, o false de no ser así.
+        */
+        public function ExistsMovieInRoom($showDate, $IdMovie, $IdRoom)
+        {
+            try
+                {
+                   // $room = new Room();
+                    $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate = " . $showDate ." AND IdMovie = '" .$IdMovie ."' AND IdRoom = " .$IdRoom .";";
+                    
+                    $this->connection = Connection::GetInstance();
+    
+                    $resultSet = $this->connection->Execute($query);
+                    
+                    if(!empty($resultSet))
+                    {         
+                        $flag = true;
+                       
+                    } else {
+                        $flag = false;
+                    }
+    
+                    return $flag;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+            }
+    /* 
+    Recibe una función y compara los horarios con funciones ya programadas para habilitar qque se agregue una nueva función
+    retorna true si la función puede agregarse, o false si los datos coinciden con alguna función
+    */
+        public function checkTime(Show $show){
+         
+            try {
+                $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate = '". $show->getShowDate() ."' AND IdRoom = " .$show->getShowRoom()->getRoomId() .";";
+                //me traigo todas las funciones de la sala para ese día
+                $this->connection = Connection::GetInstance();
+    
+                $resultSet = $this->connection->Execute($query);
       
+                
+                if(!empty($resultSet)) { //si la sala tiene funciones asignadas, establezco los datos para comparar
+                
+                    $movieDao = new MovieDAOBD();
+                    $movieShow = $movieDao->searchById($show->getShowMovie()->getId()); //en base al Id de la función por parámetro, traigo una película
+                    $duration = $movieShow->getDuration(); //esto retorna un int equivalente a los minutos
+                    $duration = $duration + 15; //le sumo 15 minutos
+
+                    $startShow = $show->getShowTime(); //horario de inicio de la función por parámetro
+                    $endShow = date("H:i:s", strtotime('+' . $duration . 'minutes', strtotime($startShow))); //horario final, incluyendo los 15 minutos de la función por parámentro
+
+
+                    foreach ($resultSet as $show_aux){ //recorro y comparo horarios de inicio y finalización
+
+                        $movieShow_aux = $movieDao->searchById($show_aux["IdMovie"]); //en base al Id de la función por parámetro, traigo una película
+                        $duration_aux = $movieShow_aux->getDuration(); //esto retorna un int equivalente a los minutos
+                        $duration_aux = $duration_aux + 15; //le sumo 15 minutos
+
+                        $startShow_aux = $show_aux["ShowTime"];
+                        $endShow_aux = date("H:i:s", strtotime('+' . $duration_aux . 'minutes', strtotime($startShow_aux)));
+                        if (($startShow > $endShow_aux) || ($startShow_aux > $endShow)){
+                            $flag = true; //si el horario en que finaliza 
+
+                        } else {
+                            $flag = false;
+                        }
+
+                    }
+                } else { //si no había funciones
+                    $flag = true; //no hay inconvenientes para agregar la función nueva
+                }
+
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            return $flag;
+        }
+
+
+        public function GetBillboard()     //devuelve un array de objetos movie con al menos un show programado
+        {
+            $moviesList = array();
+
+            $query = 'SELECT DISTINCT IdMovie FROM '.$this->tableName . ";";
+
+            try{
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+
+                if($resultSet != null){
+
+                    foreach($resultset as $row){
+                        $movie = new Movie;
+                        $MovieDao = new MovieDAOBD;
+
+                        $movie = $movieDao(searchById($row['IdMovie']));
+                        array_push($moviesList, $movie);
+                    }
+
+                    return $moviesList;
+
+                }else{
+
+                    return null;
+
+                }
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+
+        }
+
+
+        public function getShowsByMovie(Movie $movie)     ///devuelve todos los shows correspondientes a una movie. FALTA AGREGAR LA COMPARACION DE FECHA DE HOY CONTRA FECHA DE INICIO
+        {
+
+            $showList = array();
+           $query = "SELECT * FROM ' . $this->tableName . ' WHERE IdMovie = ' . $movie->getId() . ';";
+
+
+            try{
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+
+                if($resultSet != null){
+
+                    $movie_aux = new MovieDAOBD();
+                    $room_aux = new RoomDAOBD();
+                    $cinema_aux = new CinemaDAOBD();
+    
+                    foreach ($resultSet as $row)
+                    {
+                        //if()
+                        $show = new Show();
+                        $show->setShowId($row["IdShow"]);
+                        $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
+                        $room = $room_aux->getOneRoom($row["IdRoom"]);
+                        $show->setShowRoom($room);
+                        $show->setShowDate($row["ShowDate"]);
+                        $show->setShowTime($row["ShowTime"]);  ///COMPARAR ESTO CON FECHA ACTUAL!!!
+    
+                        array_push($showList, $show);
+                    }
+
+                    return $showList;
+
+                }else{
+
+                    return null;
+
+                }
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+
+        }
     }
+    
+
 ?>
