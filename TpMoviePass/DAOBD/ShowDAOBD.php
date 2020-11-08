@@ -6,6 +6,7 @@
     use DAOBD\Connection as Connection;
     use DAOBD\MovieDAOBD as MovieDAOBD;
     use DAOBD\RoomDAOBD as RoomDAOBD;
+    use DAOBD\CinemaDAOBD as CinemaDAOBD;
 
    /*create table if not exists  Shows(
         IdShow int auto_increment,
@@ -39,7 +40,6 @@
                 
 
                 $this->connection = Connection::GetInstance();
-                var_dump($parameters);
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 return $message = "Show added successfully";
             }
@@ -63,13 +63,16 @@
                 
                 $movie_aux = new MovieDAOBD();
                 $room_aux = new RoomDAOBD();
+                $cinema_aux = new CinemaDAOBD();
 
                 foreach ($resultSet as $row)
                 {                
-                    $show = new show();
+                    $show = new Show();
                     $show->setShowId($row["IdShow"]);
-                    //$show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
-                    //$show->setShowRoom($room_aux->searchById($row["IdRoom"]));
+                    $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
+                    $room = $room_aux->getOneRoom($row["IdRoom"]);
+                    $room->setRoomCinema($cinema_aux->getOneCinema($room->getRoomCinema()->getCinemaId()));
+                    $show->setShowRoom($room);
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
 

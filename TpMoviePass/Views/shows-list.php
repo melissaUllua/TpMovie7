@@ -27,18 +27,18 @@ use Models\Cinema as Cinema;
                            ?>
                               <tr>
                               
-                                   <?php 
-                                   var_dump($show);
+                                  <td> <?php 
                                    $movie = new Movie();
                                    $movie = $show->getShowMovie();
-                                   $cinema =  $show->getShowRoom();
+                                    $cinema =  $show->getShowRoom()->getRoomCinema();
+
                                    echo $movie->getTitle(); ?></td> 
-                                   <td><?php echo $cinema->getRoomCinema()->getCinemaName(); ?></td>
+                                   <td><?php echo $cinema->getCinemaName(); ?></td>
                                    <td><?php echo $show->getShowRoom()->getRoomName(); ?></td>
-                                   <td><?php $room->getShowDate(); ?>
-                                   <td><?php $room->getShowTime(); ?>
+                                   <td><?php echo $show->getShowDate(); ?>
+                                   <td><?php echo $show->getShowTime(); ?>
                                   
-                                        ?></td>
+                                        </td>
                                         <td><form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST" class="bg-light-alpha p-5">
                                        
                                         <input type="hidden" class="btn btn-dark" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
