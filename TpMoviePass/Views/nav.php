@@ -36,6 +36,9 @@
 
                          <li class="nav-item">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/updateDatabases">Update Database</a>
+                         </li>
+                         <li class="nav-item ">
+                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Show/ShowAddView">Add Show</a>
                          </li>   
 
 

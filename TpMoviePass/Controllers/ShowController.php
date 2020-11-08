@@ -58,13 +58,11 @@ class ShowController{
             $show->setShowMovie($movie);
             $show->setShowRoom($room);
             
-           // var_dump($show);
             $message = $this->showDAO->Add($show);
             if (empty($message)){
                 $message = "Show added successfully";
                   // require_once(VIEWS_PATH."cinemas-list.php");
                    $this->showListView();
-                    var_dump($show);
             }
             
             else {

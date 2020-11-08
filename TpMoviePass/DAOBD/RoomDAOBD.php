@@ -176,7 +176,7 @@
                        
                     }
     
-                    return $cinema;
+                    return $room;
                 }
                 catch(Exception $ex)
                 {
