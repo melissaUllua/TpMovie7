@@ -45,9 +45,12 @@ class ShowController{
     {//ACÁ FALTAN TODOS LOS CHECKEOS!
         $today = date("Y-m-d");
         if (strcmp($showDate, $today)> 0){
+            var_dump($showDate);
+            var_dump($today);
             $show = new show();
             $show->setShowDate($showDate);
             $show->setShowTime($showTime);
+            var_dump($showTime);
     
             $movie = new Movie();
             $movie->setId($movieId);

@@ -41,7 +41,7 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Time</label>
-                                   <input type="dateTime" name="showTime" value="" class="form-control" required>
+                                   <input type="time" name="showTime" value="" class="form-control" required>
                               </div>
                          </div>
                          <div class="col-lg-4">

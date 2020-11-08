@@ -12,8 +12,8 @@
         IdShow int auto_increment,
         IdMovie int not null,
 	    IdRoom int not null,
-        ShowDate varchar(10) not null,
-        ShowTime varchar(5) not null,
+        ShowDate date not null,
+        ShowTime time not null,
         constraint pk_show PRIMARY KEY(IdShow),
         constraint pfk_show_idMovie FOREIGN KEY(IdMovie) REFERENCES Movies(IdMovie) ON DELETE CASCADE ON UPDATE CASCADE,
         constraint pfk_show_idRoom FOREIGN KEY(IdRoom) REFERENCES Rooms(IdRoom) ON DELETE CASCADE ON UPDATE CASCADE
@@ -71,7 +71,6 @@
                     $show->setShowId($row["IdShow"]);
                     $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
                     $room = $room_aux->getOneRoom($row["IdRoom"]);
-                    $room->setRoomCinema($cinema_aux->getOneCinema($room->getRoomCinema()->getCinemaId()));
                     $show->setShowRoom($room);
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
@@ -111,7 +110,7 @@
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
                     $cinemaDao = new CinemaDAOBD();
-                    $cinema = $cinemaDao->getOneCinema($rom["IdCinema"]);
+                    $cinema = $cinemaDao->getOneCinema($room["IdCinema"]);
                     $show->setShowCinema($cinema);
                     
 
