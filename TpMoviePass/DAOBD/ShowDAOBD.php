@@ -215,9 +215,7 @@
                         $duration_aux = $duration_aux + 15; //le sumo 15 minutos
 
                         $startShow_aux = $show_aux["ShowTime"];
-                        echo "empieza aux" .$startShow_aux;
                         $endShow_aux = date("H:i:s", strtotime('+' . $duration_aux . 'minutes', strtotime($startShow_aux)));
-                        echo "termina aux " .$endShow_aux;
                         if (($startShow > $endShow_aux) || ($startShow_aux > $endShow)){
                             $flag = true; //si el horario en que finaliza 
 
