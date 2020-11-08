@@ -6,6 +6,19 @@
     use Models\Cinema as Cinema;    
     use DAOBD\Connection as Connection;
     use DAOBD\CinemaDAOBD as CinemaDAOBD;
+    /*
+    create table if not exists Rooms (IdRoom int not null auto_increment,
+								IdCinema int not null,
+								RoomName varchar(20) not null,
+                                RoomCapacity int not null,
+                                RoomIs3D boolean not null default true,
+                                RoomPrice int not null,
+                                RoomAvailability boolean not null,
+                                CONSTRAINT pk_IdRoom primary key(IdRoom),
+                                CONSTRAINT fk_IdCinema foreign key(IdCinema) references Cinemas(IdCinema),
+								CONSTRAINT unq_roomName UNIQUE (RoomName, IdCinema)
+);
+     */
 
     class RoomDAOBD 
     {

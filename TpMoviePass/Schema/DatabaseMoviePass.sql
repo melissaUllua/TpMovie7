@@ -18,7 +18,7 @@ create table if not exists Rooms (IdRoom int not null auto_increment,
                                 RoomAvailability boolean not null,
                                 CONSTRAINT pk_IdRoom primary key(IdRoom),
                                 CONSTRAINT fk_IdCinema foreign key(IdCinema) references Cinemas(IdCinema),
-								CONSTRAINT unq_roomName UNIQUE (RoomName)
+								CONSTRAINT unq_roomName UNIQUE (RoomName, IdCinema)
 );
 
 create table if not exists Users  (IdUser int not null auto_increment,
@@ -62,3 +62,14 @@ create table if not exists  Genres_by_movies(
 							constraint fk_genres_by_movies_id_movie FOREIGN KEY (IdMovie) REFERENCES movies(IdMovie) ON DELETE CASCADE ON UPDATE CASCADE,
 							constraint fk_genres_by_movies_id_genre FOREIGN KEY (IdGenre) REFERENCES genres(IdGenre) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+create table if not exists  Shows(
+                            IdShow int auto_increment,
+                            IdMovie int not null,
+                            IdRoom int not null,
+                            ShowDate date not null,
+                            ShowTime time not null,
+                            constraint pk_show PRIMARY KEY(IdShow),
+                            constraint pfk_show_idMovie FOREIGN KEY(IdMovie) REFERENCES Movies(IdMovie) ON DELETE CASCADE ON UPDATE CASCADE,
+                            constraint pfk_show_idRoom FOREIGN KEY(IdRoom) REFERENCES Rooms(IdRoom) ON DELETE CASCADE ON UPDATE CASCADE
+    );
