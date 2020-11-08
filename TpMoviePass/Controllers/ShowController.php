@@ -21,7 +21,7 @@ class ShowController{
         $this->showDAO = new ShowDAOBD();
     }
 
-    public function ShowAddView($roomID)
+    public function ShowAddView($roomID,$message="")
     {
         $movieDao = new MovieDAOBD();
         $movieList = $movieDao->getAll();
@@ -30,7 +30,7 @@ class ShowController{
         require_once(VIEWS_PATH."add-show.php");
     }
 
-    public function ShowListView()
+    public function ShowListView($message="")
     {
         $showList = $this->showDAO->GetAll();
         require_once(VIEWS_PATH."shows-list.php");
@@ -43,11 +43,11 @@ class ShowController{
 
     public function Add($movieId, $showDate, $showTime, $roomID)
     {
-        $flag = $this->verifyDate($showDate, $showTime, $roomID);
-        if ($flag > 0){
+        if ($this->verifyDate($showDate, $showTime, $roomID) > 0){
             if ($this->showDAO->ExistsShowByDateTime($showDate, $showTime, $roomID) == false){ //checkeo que no haya otra función para el mismo día y horario
-                
-                if ($this->showDAO->ExistsMovieInRoom($showDate, $movieId, $roomID) == false){ //checkeo que la película no esté en proyección ese día en otra sala (cine)
+                               
+                if ( $this->showDAO->ExistsMovieInRoom($showDate, $movieId, $roomID) != true){ //checkeo que la película no esté en proyección ese día en otra sala (cine)
+
                     $show = new show();
                     $show->setShowDate($showDate);
                     $show->setShowTime($showTime);
@@ -66,7 +66,7 @@ class ShowController{
                          if (empty($message)){
                             $message = "Show added successfully";
                             // require_once(VIEWS_PATH."cinemas-list.php");
-                            $this->showListView();
+                            $this->showListView($message);
                         }
     
                          else {
@@ -76,26 +76,26 @@ class ShowController{
                         }
                 
                     } else {
-                        $message = "There is another function already schedule. Please choose another time.";
-                    $this->ShowAddView($message);
+                        $message = "There is another function already scheduled. Please choose another time.";
+                        $this->ShowAddView($roomID, $message);
                     }
    
 
                 }
                 else {
                     $message = "This movie is already in exhibition. Please choose another one.";
-                $this->ShowAddView($message);
+                    $this->ShowAddView($roomID, $message);
                 }
                
 
             } else {
                 $message = "There already exists a Show scheduled on that day and time";
-                $this->ShowAddView($message);
+                $this->ShowAddView($roomID, $message);
             }
             
         } else {
             $message = "You should choose a future date";
-            $this->ShowAddView($message);
+            $this->ShowAddView($roomID, $message);
         }
      
     }

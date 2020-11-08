@@ -18,7 +18,7 @@ create table if not exists Rooms (IdRoom int not null auto_increment,
                                 RoomAvailability boolean not null,
                                 CONSTRAINT pk_IdRoom primary key(IdRoom),
                                 CONSTRAINT fk_IdCinema foreign key(IdCinema) references Cinemas(IdCinema),
-								CONSTRAINT unq_roomName UNIQUE (RoomName)
+								CONSTRAINT unq_roomName UNIQUE (RoomName, IdCinema)
 );
 
 create table if not exists Users  (IdUser int not null auto_increment,

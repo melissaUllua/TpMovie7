@@ -71,6 +71,8 @@
                     $show->setShowId($row["IdShow"]);
                     $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
                     $room = $room_aux->getOneRoom($row["IdRoom"]);
+                    //$room->setRoomCinema($cinema_aux->getOneCinema($room->getRoomCinema()->getCinemaId()));
+                    $room->setRoomCinema($cinema_aux->getOneCinema($room->getRoomCinema()->getCinemaId()));
                     $show->setShowRoom($room);
                     $show->setShowDate($row["ShowDate"]);
                     $show->setShowTime($row["ShowTime"]);
@@ -132,8 +134,8 @@
         try
             {
                // $room = new Room();
-                $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate = " . $showDate ." AND ShowTime = '" .$showTime ."' AND IdRoom = " .$IdRoom .";";
-                
+                $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate = '" . $showDate ."' AND ShowTime = '" .$showTime ."' AND IdRoom = " .$IdRoom .";";
+                                
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
@@ -145,7 +147,6 @@
                 } else {
                     $flag = false;
                 }
-
                 return $flag;
             }
             catch(Exception $ex)
@@ -162,20 +163,20 @@
             try
                 {
                    // $room = new Room();
-                    $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate = " . $showDate ." AND IdMovie = '" .$IdMovie ."' AND IdRoom = " .$IdRoom .";";
-                    
+                    $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate = '" . $showDate ."' AND IdMovie = " .$IdMovie ." AND IdRoom != " .$IdRoom .";";
+  
                     $this->connection = Connection::GetInstance();
     
                     $resultSet = $this->connection->Execute($query);
                     
                     if(!empty($resultSet))
-                    {         
+                    {  
                         $flag = true;
                        
                     } else {
                         $flag = false;
                     }
-    
+                    
                     return $flag;
                 }
                 catch(Exception $ex)
@@ -205,8 +206,7 @@
                     $duration = $duration + 15; //le sumo 15 minutos
 
                     $startShow = $show->getShowTime(); //horario de inicio de la función por parámetro
-                    $endShow = date("H:i:s", strtotime('+' . $duration . 'minutes', strtotime($startShow))); //horario final, incluyendo los 15 minutos de la función por parámentro
-
+                    $endShow = date("H:i:s", strtotime('+' . $duration . 'minutes', strtotime($startShow))); //horario final, incluyendo los 15 minutos de la función por parámentro  
 
                     foreach ($resultSet as $show_aux){ //recorro y comparo horarios de inicio y finalización
 
@@ -215,7 +215,9 @@
                         $duration_aux = $duration_aux + 15; //le sumo 15 minutos
 
                         $startShow_aux = $show_aux["ShowTime"];
+                        echo "empieza aux" .$startShow_aux;
                         $endShow_aux = date("H:i:s", strtotime('+' . $duration_aux . 'minutes', strtotime($startShow_aux)));
+                        echo "termina aux " .$endShow_aux;
                         if (($startShow > $endShow_aux) || ($startShow_aux > $endShow)){
                             $flag = true; //si el horario en que finaliza 
 
