@@ -68,11 +68,12 @@
                 $cinema_aux = new CinemaDAOBD();
 
                 foreach ($resultSet as $row)
-                {                
+                {
                     $show = new Show();
                     $show->setShowId($row["IdShow"]);
                     $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
                     $room = $room_aux->getOneRoom($row["IdRoom"]);
+                    //$room->setRoomCinema($cinema_aux->getOneCinema($room->getRoomCinema()->getCinemaId()));
                     $room->setRoomCinema($cinema_aux->getOneCinema($room->getRoomCinema()->getCinemaId()));
                     $show->setShowRoom($room);
                     $show->setShowDate($row["ShowDate"]);
