@@ -12,7 +12,7 @@ use Models\Cinema as Cinema;
     
      <section id="listado" class="mb-5">
         <div class="container">    
-        <h2 class="mb-4 text-center text-white ">Edit</h2>
+        <h2 class="mb-4 text-center text-white">Edit</h2>
          <?php 
            if(isset($message))
             {
@@ -20,62 +20,39 @@ use Models\Cinema as Cinema;
             }  
           
             foreach ($cinemaList as $cinema){  ?>
-        <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST"  >
+        <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST" class="bg-light-alpha p-5" >
           <table class="table bg-light-alpha"> 
             
               <tr>
-                <th><?php echo $cinema->getCinemaName(); ?></th>
-                 <td>
-                  <!--<select name="id" id="" class="form-control"> 
-                           <option value="">--Selecciona un Cine--</option> -->
-                        <br>
-                        </select>
+                     <th class= "message" ><?php echo $cinema->getCinemaName(); ?></th>
+                     <td>
                         <input type="hidden" name="id" value="<?php echo $cinema->getCinemaId(); ?>">
-                        <input type="text" value="<?php echo $cinema->getCinemaName(); ?>" name="cinemaName" placeholder = "Cinema Name">
-                        <input type="text" value="<?php echo $cinema->getCinemaAddress(); ?>" name= "cinemaAddress"  placeholder= "Address" class="mt-3">
-                  
-                        <br><label for="">Cinema Status</label>
-                        <select name="cinemaAvailabiity" id="" class="form-control">
+                        <input class="form-control" type="text" value="<?php echo $cinema->getCinemaName(); ?>" name="cinemaName" placeholder = "Cinema Name">
+                        <input class="form-control" type="text" value="<?php echo $cinema->getCinemaAddress(); ?>" name= "cinemaAddress"  placeholder= "Address" class="mt-3">
+                        <br>
                         <option value="<?= $cinema->getCinemaAvailability();?>"></option>
-                        <option value="1">Available</option>
-                        <option value="0">Not Available</option>
-                        </select>
-                        
-                       <!-- <label>Availlability </label>
-          <input type="radio" id="male" value="male" name="user_sex">
-          <label for="male" >Available</label>
-          <input type="radio" id="female" value="female" name="user_sex">
-          <label for="female">Unavailable</label>
-            -->
-                      
-    </div>     
-                       <!-- </select> -->
-                        
-                 </td>
-           
-             </tr>
-                
-              </table>
-                       <br>
-          <div>
-          
-            <input type="submit" class="btn btn-dark ml-auto d-block" value="Save Changes" >
+                        <input type="radio" id="Available" value="1" name="cinemaAvailability">
+                        <label for="Available" >Available</label>
+                        <input type="radio" id="Unavailable" value="0" name="cinemaAvailability">
+                        <label for="Unavailable">Unavailable</label>
+                        <br>
+                        <input type="submit" class="btn btn-dark mb-3" value="Save Changes" >
 
-          </div>
-          <br>
-        </form>
-        <td>
-        <form action="<?php echo FRONT_ROOT."Room/ShowAddView/".$cinema->getCinemaId();?>" method="get" class="mb-5">
-                            
-           <?php//$cinemaSER = serialize($cinema); ?> 
-                     <!-- <input type="hidden" name = "cinema", value= "<?php //$cinemaSER ?>"> -->
-                      <input type="hidden" value="<?php echo $cinema->getCinemaId();?>" name="IdCinema">
-           <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add Room</button>
-           </form>
-                          
-                           
-           </td>
-      <?php  } } else {  ?> <p class= "message"> You are not authorized to view this section <?php }?>
+                        </form>
+                        <br>
+                        <form action="<?php echo FRONT_ROOT."Room/ShowAddView/".$cinema->getCinemaId();?>" method="get" class="mb-5">
+                          <input type="hidden" value="<?php echo $cinema->getCinemaId();?>" name="IdCinema">
+                          <button type="submit" name="button" class="btn btn-dark mb-3">Add Room</button>
+                        </form>      
+                      </td>
+              </tr>
+                
+          </table>
+          
+
+  
+
+      <?php  } } else {  ?> <p class= "message flex-item"> You are not authorized to view this section <?php }?>
       
      </section>
 </main>
