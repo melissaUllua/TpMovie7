@@ -27,11 +27,7 @@ use Models\Cinema as Cinema;
                            ?>
                               <tr>
                               
-<<<<<<< HEAD
-                                  <td> <?php 
-=======
                               <td> <?php 
->>>>>>> 0ee5fb2885b137aec93d2d6748e6e2a0409c0507
                                    $movie = new Movie();
                                    $movie = $show->getShowMovie();
                                     $cinema =  $show->getShowRoom()->getRoomCinema();
