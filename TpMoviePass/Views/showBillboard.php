@@ -53,7 +53,7 @@
                                              $genresArray = array();
                                              $genresArray = $movie->getGenresArray();
 
-                                             var_dump($genresArray);
+                                             //var_dump($genresArray);
                                             foreach($genresArray as $genre){
                                                 echo($genre->getName() . ". ");
                                             }
