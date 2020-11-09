@@ -36,6 +36,12 @@ class ShowController{
         require_once(VIEWS_PATH."shows-list.php");
     }
 
+    public function ShowAvailableListView($message="")
+    {
+        $showList = $this->showDAO->GetAvailable();
+        require_once(VIEWS_PATH."shows-list.php");
+    }
+
     public function ShowListByMovie($idMovie)
     {
         $showList = array();

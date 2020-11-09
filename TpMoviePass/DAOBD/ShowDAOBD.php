@@ -90,6 +90,47 @@
             }
         }
        
+        /*
+            con la intención de mantener la nomenclatura, trae los shows futuros
+         */
+        public function GetAvailable()
+        {
+            try
+            {
+                $today = date("Y-m-d");
+                $showList = array();
+
+                $query = "SELECT * FROM ".$this->tableName. " WHERE ShowDate >  '". $today."' ;";
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                $movie_aux = new MovieDAOBD();
+                $room_aux = new RoomDAOBD();
+                $cinema_aux = new CinemaDAOBD();
+
+                foreach ($resultSet as $row)
+                {
+                    $show = new Show();
+                    $show->setShowId($row["IdShow"]);
+                    $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
+                    $room = $room_aux->getOneRoom($row["IdRoom"]);
+                    $room->setRoomCinema($cinema_aux->getOneCinema($room->getRoomCinema()->getCinemaId()));
+                    $show->setShowRoom($room);
+                    $show->setShowDate($row["ShowDate"]);
+                    $show->setShowTime($row["ShowTime"]);
+
+                    array_push($showList, $show);
+                }
+
+                return $showList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
         public function GetOneById($showID)    //devuelve una función a partir de su ID
         {
             try
