@@ -13,7 +13,6 @@
                }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
                <h2 class="mb-4">Add Movie Show</h2>
-
                
                <form action="<?php echo FRONT_ROOT."Show/Add/"?>" method="get" class="bg-light-alpha p-5">
                     <div class="row">                         
@@ -27,15 +26,13 @@
                                    <?php } ?>
                                    </select>
                               </div>
-                              </div>
                          </div>
                
                         
                          <div class="col-lg-4">
                               <div class="form-group">
                               <label for="">Date</label>
-                                   <input type="date" name="showDate" value="" min="" max="" class="form-control" required>
-
+                              <input type="date" name="showDate" value="" min="" max="" class="form-control" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
@@ -46,15 +43,13 @@
                          </div>
                          <div class="col-lg-4">
                               <input type="hidden" name="roomID" value="<?php echo $room->getRoomId(); ?>" class="form-control"required>
-                                   
-                              </div>
                          </div>
-                    
+                         <button type="submit" class="btn btn-dark ml-auto d-block">Add</button>
+                      
                     </div>
-                    <button type="submit" class="btn btn-dark ml-auto d-block">Add</button>
+                    
                
                </form>
-          </div>
           <?php   } else {  ?> <p class= "message"> You are not authorized to view this section <?php }?>
      </section>
 </main>
