@@ -12,7 +12,7 @@
                }
           ?>
                <h2 class="mb-4">Add Cinema</h2>
-               <form action="<?php echo FRONT_ROOT ?>Cinema/Add" method="post" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT ?>Cinema/Add" method="post" class="bg-light-alpha pl-5 pt-3 pb-3 pr-0">
                     <div class="row"> 
                     <!--<div class="col-lg-4">
                               <div class="form-group">
@@ -61,10 +61,9 @@
                               <div class="form-group">
                          <button type="submit" name="button" class="btn btn-dark ml-5 mt-4 d-block">Add</button>
                          </div>
-                       
-                    </div>
-                   
+                                        
                </form>
+               </div>
           <?php   } else {  ?> <p class= "message"> You are not authorized to view this section <?php }?>
      </section>
 </main>

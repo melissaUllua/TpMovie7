@@ -129,7 +129,7 @@ class ShowController{
 
                 $flag = 0; //si coinciden en fecha y hora
             }
-            else if ($todayDate < $date){
+            else if ($todayDate <= $date){
                 $flag = 1; //si la fecha pasada por parámetro es mayor
             }
 

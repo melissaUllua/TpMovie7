@@ -98,9 +98,10 @@
             try
             {
                 $today = date("Y-m-d");
+               // $now = date("H:i:s"); //necesito una subquery
                 $showList = array();
 
-                $query = "SELECT * FROM ".$this->tableName. " WHERE ShowDate >  '". $today."' ;";
+                $query = "SELECT * FROM ".$this->tableName. " WHERE ShowDate >=  '". $today."' ;";
 
                 $this->connection = Connection::GetInstance();
 
