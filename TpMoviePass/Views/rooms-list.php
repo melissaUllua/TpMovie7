@@ -11,7 +11,7 @@ use Models\Room as Room;
                    <!-- <th>ID</th> -->
                     <th>Name</th>
                     <th>Capacity</th>
-                    <th>Is 3d</th>
+                    <th>Quality</th>
                     <th>Price</th>
                     <th>Availability</th>
                     
@@ -26,29 +26,29 @@ use Models\Room as Room;
                               <td><?php echo $room->getRoomCapacity() ?></td>
                               <td><?php if($room->getIs3d() == "1")
                               {
-                                  echo "is 3d";
+                                  echo "3D";
                               }
                               else
                               {
-                                   echo "is 2d";
+                                   echo "2D";
                               } ?>
                               <td><?php echo $room->getroomPrice() ?></td>
                               <td><?php if($room->getRoomAvailability() == "1")
                               {
-                                  echo "Available";
-                              }
+                                  echo "Available"; ?>
+                                  <form action="<?php echo FRONT_ROOT."Show/ShowAddView/"?>" method="POST">
+                                   <input type="hidden" name = "roomID", value= "<?php echo $room->getRoomId() ?>">
+                                   <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add movie show </button>
+                                  </form>
+                           <?php   }
                               else
                               {
                                    echo "Unavailable";
                               }
                                    ?></td>
                                    
-                                   <td><form action="<?php echo FRONT_ROOT."Show/ShowAddView/"?>" method="POST" class="bg-light-alpha p-5">
-                                   <input type="hidden" name = "roomID", value= "<?php echo $room->getRoomId() ?>">
-                                       <?php// var_dump($room); ?>
-                                       <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add movie show </button>
-                                       </form>
-                                   </tr> 
+                                   <td>
+                                   </td> 
                               <?php
                          }
                     ?>
