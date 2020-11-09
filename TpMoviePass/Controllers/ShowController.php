@@ -35,6 +35,16 @@ class ShowController{
         $showList = $this->showDAO->GetAll();
         require_once(VIEWS_PATH."shows-list.php");
     }
+
+    public function ShowListByMovie($idMovie)
+    {
+        $showList = array();
+        $showList = $this->showDAO->getShowsByMovie($idMovie);
+        require_once(VIEWS_PATH."showListByMovie.php");
+    }
+
+
+
     public function ShowEditView()
     {
         $showList = $this->showDAO->getAll();

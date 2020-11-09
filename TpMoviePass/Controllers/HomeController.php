@@ -3,6 +3,8 @@
     use DAO\MovieDAO as MovieDAO;
     use DAOBD\MovieDAOBD as MovieDAOBD;
     use DAOBD\GenreDAOBD as GenreDAOBD;
+    use DAOBD\ShowDAOBD as ShowDAOBD;
+
     
     class HomeController
     {
@@ -10,13 +12,15 @@
         {
             $movies = new MovieDAOBD();
             $genres = new GenreDAOBD();
+            $shows = new ShowDAOBD();
+
 
 
             $movieList = $movies->getAll();
             $genreList = $genres->getAll();
-            //var_dump($genreList);
+            $showsList = $shows->GetBillboard();
             
-            require_once(VIEWS_PATH."movies-list.php"); 
+            require_once(VIEWS_PATH."showBillboard.php"); 
 
         }        
     }

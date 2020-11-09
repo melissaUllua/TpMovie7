@@ -3,6 +3,8 @@
 
     use \Exception as Exception;
     use Models\Show as Show;    
+    use Models\Movie as Movie;    
+
     use DAOBD\Connection as Connection;
     use DAOBD\MovieDAOBD as MovieDAOBD;
     use DAOBD\RoomDAOBD as RoomDAOBD;
@@ -251,11 +253,12 @@
 
                 if($resultSet != null){
 
-                    foreach($resultset as $row){
+                    foreach($resultSet as $row){
                         $movie = new Movie;
-                        $MovieDao = new MovieDAOBD;
+                        $movieDao = new MovieDAOBD;
 
-                        $movie = $movieDao(searchById($row['IdMovie']));
+                        $movie = $movieDao->searchById($row['IdMovie']);
+
                         array_push($moviesList, $movie);
                     }
 
@@ -274,11 +277,11 @@
         }
 
 
-        public function getShowsByMovie(Movie $movie)     ///devuelve todos los shows correspondientes a una movie. FALTA AGREGAR LA COMPARACION DE FECHA DE HOY CONTRA FECHA DE INICIO
+        public function getShowsByMovie($idMovie)     ///devuelve todos los shows correspondientes a una movie. FALTA AGREGAR LA COMPARACION DE FECHA DE HOY CONTRA FECHA DE INICIO
         {
 
             $showList = array();
-           $query = "SELECT * FROM ' . $this->tableName . ' WHERE IdMovie = ' . $movie->getId() . ';";
+           $query = "SELECT * FROM " . $this->tableName . " WHERE IdMovie = " . $idMovie . ";";
 
 
             try{
@@ -292,6 +295,8 @@
                     $movie_aux = new MovieDAOBD();
                     $room_aux = new RoomDAOBD();
                     $cinema_aux = new CinemaDAOBD();
+                    $todayDay = date("Y-m-d");
+                    $todayTime = date("H:i:s");
     
                     foreach ($resultSet as $row)
                     {
@@ -302,9 +307,13 @@
                         $room = $room_aux->getOneRoom($row["IdRoom"]);
                         $show->setShowRoom($room);
                         $show->setShowDate($row["ShowDate"]);
-                        $show->setShowTime($row["ShowTime"]);  ///COMPARAR ESTO CON FECHA ACTUAL!!!
-    
-                        array_push($showList, $show);
+                        $show->setShowTime($row["ShowTime"]);
+
+                        if($show->getShowDate() >= $todayDay){
+                            if($show->getShowTime() > $todayTime){
+                                array_push($showList, $show);
+                            }
+                        }
                     }
 
                     return $showList;

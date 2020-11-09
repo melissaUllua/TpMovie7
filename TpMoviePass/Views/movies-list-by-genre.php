@@ -51,7 +51,7 @@
                               }
                          }else{
                               ?>
-                              <h4 style="text-align:center;"><b><?php echo ("Sorry! There are no movies of this genre") ?></b></h4>
+                              <p class = "message" ><b><?php echo ("Sorry! There are no movies of this genre") ?></b></p>
                          <?php
                          }
                          ?>
