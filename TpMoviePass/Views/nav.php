@@ -8,10 +8,7 @@
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Display Movies</a>
           </li> 
-          <li class="nav-item ">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Display Cinemas</a>
-          </li>
-          
+         
          <?php if(empty($_SESSION)){?>
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowLogInView">Log In</a>
@@ -32,15 +29,14 @@
                         
                          <li class="nav-item">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Edit Cinemas</a>
-                         </li>   
+                         </li> 
+                         <li class="nav-item ">
+                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Display Cinemas</a>
+                         </li>  
 
                          <li class="nav-item">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/updateDatabases">Update Database</a>
                          </li>
-                         <li class="nav-item ">
-                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Show/ShowAddView">Add Show</a>
-                         </li>   
-
 
                <?php    }  ?>
                <li class="nav-item">

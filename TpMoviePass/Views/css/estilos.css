@@ -68,6 +68,7 @@ body {
      flex-wrap: wrap;
      padding: 2% 1%;
      }
+     
      .flex-container {
      width: 100%;
      height: 250px;
@@ -89,4 +90,5 @@ body {
      .message{
           font-size: 300%;
           text-align: center;
+          font-family:fantasy;
      }
