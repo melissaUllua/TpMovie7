@@ -12,4 +12,4 @@
      
      <title>MoviePass</title>
 </head>
-<body>
+<body class= "bg-picture">

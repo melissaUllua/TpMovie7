@@ -12,7 +12,7 @@ use Models\Cinema as Cinema;
     
      <section id="listado" class="mb-5">
         <div class="container">    
-        <h2 class="mb-4 text-center text-white">Edit</h2>
+        <h2 class="mb-4 text-center">Edit</h2>
          <?php 
            if(isset($message))
             {
@@ -32,7 +32,7 @@ use Models\Cinema as Cinema;
                         <label for=""><strong> Current Address </strong></label>
                         <input class="form-control" type="text" value="<?php echo $cinema->getCinemaAddress(); ?>" name= "cinemaAddress"  placeholder= "Address" class="mt-3">
                         <br>
-                        <label for=""><strong>Current Availability </strong></label>
+                        <label for=""><strong>Current Availability </strong></label> <br>
                         <input type="hidden" value="<?= $cinema->getCinemaAvailability();?>"></option>
                         <input type="radio" id="Available" value="1" name="cinemaAvailability" <?php if ($cinema->getCinemaAvailability() == true) echo "checked" ?>>
                         <label for="Available" >Available</label>

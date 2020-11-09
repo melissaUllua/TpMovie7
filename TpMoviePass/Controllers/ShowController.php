@@ -36,6 +36,12 @@ class ShowController{
         require_once(VIEWS_PATH."shows-list.php");
     }
 
+    public function ShowAvailableListView($message="")
+    {
+        $showList = $this->showDAO->GetAvailable();
+        require_once(VIEWS_PATH."shows-list.php");
+    }
+
     public function ShowListByMovie($idMovie)
     {
         $showList = array();
@@ -123,7 +129,7 @@ class ShowController{
 
                 $flag = 0; //si coinciden en fecha y hora
             }
-            else if ($todayDate < $date){
+            else if ($todayDate <= $date){
                 $flag = 1; //si la fecha pasada por parámetro es mayor
             }
 

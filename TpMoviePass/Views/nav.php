@@ -6,7 +6,7 @@
      <ul class="navbar-nav ml-auto">
      
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Display Movies</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Show/ShowAvailableListView">Next Shows</a>
           </li> 
          
          <?php if(empty($_SESSION)){?>
@@ -16,28 +16,36 @@
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowSignUpView">Sign Up</a>
           </li> 
+     <ul>
          <?php } else { ?>
                 <?php if ($_SESSION['isAdmin'] == true) { ?>
-                         <li class="nav-item ">
-                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Add Cinemas</a>
-                         </li>
+                <li>
+                    <div class="dropdown show">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="Cinemas" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cinemas</a>
+ 
+                         <div class="dropdown-menu bg-dark" aria-labelledby="Cinemas">
+                           <a class="dropdown-item text-white" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Display Cinemas</a>
+                           <a class="dropdown-item text-white" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Edit Cinemas</a>
+                           <a class="dropdown-item text-white" href="<?php echo FRONT_ROOT ?>Cinema/ShowAddView">Add Cinemas</a>
+                        </div>
+                    </div>
+                
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Display Movies</a>
+               </li>  
+                           
+
+               <li class="nav-item">
+                    <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/updateDatabases">Update Database</a>
+               </li>
+                      
                         <!-- <li class="nav-item ">
                               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Room/ShowAddView">Add Show Room</a>
                          </li>
                          LAS SALAS SE AGREGAN DESDE EDITAR CINES 
                          -->
-                        
-                         <li class="nav-item">
-                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowEditView">Edit Cinemas</a>
-                         </li> 
-                         <li class="nav-item ">
-                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Cinema/ShowListView">Display Cinemas</a>
-                         </li>  
-
-                         <li class="nav-item">
-                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/updateDatabases">Update Database</a>
-                         </li>
-
+              
                <?php    }  ?>
                <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/ShowProfileView">Profile</a>
