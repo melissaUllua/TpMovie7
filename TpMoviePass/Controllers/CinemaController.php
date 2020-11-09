@@ -38,7 +38,7 @@ class CinemaController{
         require_once(VIEWS_PATH."room-list.php");
     }*/ 
 
-    public function Add($cinemaName, $cinemaAddress, $cinemaAvailability, $cinemaTotalRooms)
+    public function Add($cinemaName, $cinemaAddress, $cinemaAvailability= true, $cinemaTotalRooms= null)
     {
         $cinema = new Cinema();
        
@@ -73,15 +73,19 @@ class CinemaController{
         }
         if ($cinemaAddress != "")
         {
+            if ($this->cinemaDAO->checkNewAddress($cinemaAddress, $id) == false){
+                $modify->setCinemaAddress($cinemaAddress);
+            } else {
+                $message = "There is a cinema with the same address you have specified.";
+                $this->ShowEditView($message);
+            }
             
-            $modify->setCinemaAddress($cinemaAddress);
-        
+        }
         if ($cinemaAvailabiity != "")
         {
-            $availability = ($cinemaAvailability = 1) ? true : false;
+            $availability = ($cinemaAvailabiity == 1) ? true : false;
             $modify->setCinemaAvailability($availability);
         }
-
         $flag = $this->cinemaDAO->EditCinema($modify, $id);
 
         if($flag == 0){
@@ -91,7 +95,7 @@ class CinemaController{
             $message = "There was an error editing this cinema.";
             $this->ShowEditView($message);
         }else if($flag == 2){
-            $message = "There is already a cinema with the same address you have specified.";
+            $message = "There is a cinema with the same address you have specified.";
             $this->ShowEditView($message);
 
         }
@@ -99,7 +103,7 @@ class CinemaController{
         
     }
 }
-}
+
 
 
 ?>

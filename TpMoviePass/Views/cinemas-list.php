@@ -34,28 +34,26 @@
                                    <td><?php echo $cinema->getCinemaAddress() ?></td>
                                    <td><?php if($cinema->getCinemaAvailability() == "1")
                                    {
-                                       echo "Available";
-                                   }
+                                       echo "Available"; ?>
+                                       </td>
+                                        <td><form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST">
+                                       
+                                        <input type="hidden" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
+                                        <button type="submit" name="button" class="btn btn-dark d-block">See available Rooms</button>
+                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowAddView/'?>"class="btn btn-dark">Add room</button> -->
+                                        </form>
+                                 <?php  }
                                    else
                                    {
                                         echo "Unavailable";
                                    }
-                                        ?></td>
-                                        <td><form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST" class="bg-light-alpha p-5">
-                                       
-                                        <input type="hidden" class="btn btn-dark" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
-                                        <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
-                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowAddView/'?>"class="btn btn-dark">Add room</button> -->
-                                        </form>
-                                            
-                                             
+                                       ?>   
                                         </td>
-                                            
-                                        </tr> 
+                              </tr> 
                                    <?php
                               }
                          ?>
-                         </tr>
+
                     </tbody>
                </table> 
           </div>

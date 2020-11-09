@@ -20,20 +20,23 @@ use Models\Cinema as Cinema;
             }  
           
             foreach ($cinemaList as $cinema){  ?>
-        <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST" class="bg-light-alpha p-5" >
+        <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST" class="p-5" >
           <table class="table bg-light-alpha"> 
-            
+          <th class= "message"><?php echo $cinema->getCinemaName(); ?></th>
               <tr>
-                     <th class= "message" ><?php echo $cinema->getCinemaName(); ?></th>
+                     
                      <td>
                         <input type="hidden" name="id" value="<?php echo $cinema->getCinemaId(); ?>">
-                        <input class="form-control" type="text" value="<?php echo $cinema->getCinemaName(); ?>" name="cinemaName" placeholder = "Cinema Name">
+                        <label for=""> <strong>Current Name </strong></label>
+                        <input class="form-control mb-3" type="text" value="<?php echo $cinema->getCinemaName(); ?>" name="cinemaName" placeholder = "Cinema Name">
+                        <label for=""><strong> Current Address </strong></label>
                         <input class="form-control" type="text" value="<?php echo $cinema->getCinemaAddress(); ?>" name= "cinemaAddress"  placeholder= "Address" class="mt-3">
                         <br>
-                        <option value="<?= $cinema->getCinemaAvailability();?>"></option>
-                        <input type="radio" id="Available" value="1" name="cinemaAvailability">
+                        <label for=""><strong>Current Availability </strong></label>
+                        <input type="hidden" value="<?= $cinema->getCinemaAvailability();?>"></option>
+                        <input type="radio" id="Available" value="1" name="cinemaAvailability" <?php if ($cinema->getCinemaAvailability() == true) echo "checked" ?>>
                         <label for="Available" >Available</label>
-                        <input type="radio" id="Unavailable" value="0" name="cinemaAvailability">
+                        <input type="radio" id="Unavailable" value="0" name="cinemaAvailability" <?php if ($cinema->getCinemaAvailability() == false) echo "checked" ?>>
                         <label for="Unavailable">Unavailable</label>
                         <br>
                         <input type="submit" class="btn btn-dark mb-3" value="Save Changes" >
@@ -42,11 +45,10 @@ use Models\Cinema as Cinema;
                         <br>
                         <form action="<?php echo FRONT_ROOT."Room/ShowAddView/".$cinema->getCinemaId();?>" method="get" class="mb-5">
                           <input type="hidden" value="<?php echo $cinema->getCinemaId();?>" name="IdCinema">
-                          <button type="submit" name="button" class="btn btn-dark mb-3">Add Room</button>
+                          <button type="submit" name="button" class="btn btn-dark">Add Room</button>
                         </form>      
                       </td>
               </tr>
-                
           </table>
           
 

@@ -164,6 +164,35 @@
                 throw $ex;
             }
         }
+
+/*
+        Recibe una dirección y un idCine, trae todas las direcciones que coincidan y no coincidan con el id del cine.
+        Retorna true si hay coincidencia o false si no la hay.
+        Está pensada para el caso en el que el usuario planee cambiar la dirección de un cine, para validar que no exista en otro
+ */
+        public function checkNewAddress($address, $idCinema)
+        {
+            try
+                {
+                    $query = 'SELECT * FROM '.$this->tableName . ' WHERE CinemaAddress = "'. $address .'" AND IdCinema != '.$idCinema.';';
+                    $this->connection = Connection::GetInstance();
+    
+                    $resultSet = $this->connection->Execute($query);
+                    
+                    if($resultSet)
+                    {                
+                        $flag = true;
+                    }
+                    else {
+                        $flag = false;
+                    }
+                    return $flag;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+            }
        /* public function getLastID() 
         {
             try
@@ -194,13 +223,16 @@
             }
         }*/
 
-        public function EditCinema(Cinema $cinema, $idCinema)   //retorna 0 si pudo, 1 si hubo un error, 2 si el address ya existe
+        public function EditCinema(Cinema $cinema, $idCinema)   //retorna 0 si pudo, 1 si hubo un error, (2 si el address ya existe- deprecated)
         {
             $cinemaToModify = $this->getOneCinema($idCinema);   //trae el cine a modificar o null si no existe
 
             $addressValidation = $this->ExistsCinemaByAddress($cinemaToModify->getCinemaAddress());
 
-            if($addressValidation == false){
+         // if($addressValidation == false){ //se necesitaba corroborar que OTROS cines no tuviesen la misma dirección, 
+                                                //porque siempre iba a haber uno agendado con la dirección pasada por parámetro- 
+                                                //el que queremos modificar
+                                                //Solucionado con la función "checkNewAddress()" antes de llamar al editar en el controller.
                 if($cinemaToModify != null){
                     try{
                         
@@ -218,10 +250,10 @@
                     return 1;
                 }
 
-            }else{
+            //} else{
 
-                return 2;
-            }
+                 //return 2;
+            //}
 
  
         }

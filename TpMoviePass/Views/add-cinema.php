@@ -43,7 +43,7 @@
                                    <label for="">Ticket Price</label>
                                    <input type="number" name="cinemaTicketPrice" value="" class="form-control">
                               </div> 
-                         </div>-->
+                         </div>
                          <div class="col-lg-4">
                               <label for="">Type</label>
                                    <select name="cinemaAvailability" id="" class="form-control">
@@ -51,7 +51,7 @@
                                    <option value="0">Unavailable</option>
                                    </select>
                               </div>
-                         <!--<div class="col-lg-4">
+                         <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Amount of rooms</label>
                                    <input type="number" name="cinemaTotalRooms" value="" class="form-control" min = 1>
