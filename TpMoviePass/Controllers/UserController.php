@@ -177,13 +177,15 @@ class UserController{
 
         $this->userDAO->Add($user);
     }
-
+/*
     private function verifyPass($pass){
         $pass_aux = null;
         if(strlen($pass)>=3){ //retorna la longitud del string en int- pongo 3 para no trabajar con valores muy grandes
             $array = str_split($pass);
         }
     }
+
+*/
 
 }
 

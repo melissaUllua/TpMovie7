@@ -1,6 +1,7 @@
 <?php ///falta modificar
     require_once('nav.php');
     //use Models\Movie as Movie;
+    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
@@ -40,7 +41,7 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Time</label>
-                                   <input type="dateTime" name="showTime" value="" class="form-control" required>
+                                   <input type="time" name="showTime" value="" class="form-control" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
@@ -50,9 +51,10 @@
                          </div>
                     
                     </div>
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
+                    <button type="submit" class="btn btn-dark ml-auto d-block">Add</button>
                
                </form>
           </div>
+          <?php   } else {  ?> <p class= "message"> You are not authorized to view this section <?php }?>
      </section>
 </main>

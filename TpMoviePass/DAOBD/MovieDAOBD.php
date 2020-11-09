@@ -131,6 +131,8 @@
                     $movie->setOriginal_title($resultSet[0]['MovieOriginalTitle']);
                     $movie->setOverview($resultSet[0]["MovieOverview"]);
                     $movie->setRelease_date($resultSet[0]["MovieReleaseDate"]);
+                    $movie->setGenresArray($this->addGenresToMovies($movie->getId()));
+
 
                     if ($resultSet[0]['MovieIsAdult'] == 1) {
                         $movie->setAdult(true);
@@ -139,7 +141,6 @@
                     }
 
                     $movie->setPoster_path($resultSet[0]["MoviePosterPath"]);
-                    //$movie->setGenresArray(addGenresToMovies($movie->getId()));
 
                     return $movie;
                 } else {

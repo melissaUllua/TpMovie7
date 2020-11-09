@@ -9,7 +9,7 @@ use Models\Cinema as Cinema;
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Cinemas</h2>
+               <h2 class="mb-4">Shows available</h2>
                <table class="table bg-light-alpha">
                     <thead>
                         <!-- <th>ID</th> -->
@@ -18,6 +18,9 @@ use Models\Cinema as Cinema;
                          <th>Room</th>
                          <th>Show date</th>
                          <th>Show time</th>
+                         <th>Buy Tickets</th>
+
+
                          
                     </thead>
                     <tbody>
@@ -26,16 +29,10 @@ use Models\Cinema as Cinema;
                           {
                            ?>
                               <tr>
-                              
-<<<<<<< HEAD
-                                  <td> <?php 
-=======
                               <td> <?php 
->>>>>>> 0ee5fb2885b137aec93d2d6748e6e2a0409c0507
                                    $movie = new Movie();
                                    $movie = $show->getShowMovie();
-                                    $cinema =  $show->getShowRoom()->getRoomCinema();
-
+                                   $cinema =  $show->getShowRoom()->getRoomCinema();
                                    echo $movie->getTitle(); ?></td> 
                                    <td><?php echo $cinema->getCinemaName(); ?></td>
                                    <td><?php echo $show->getShowRoom()->getRoomName(); ?></td>
@@ -43,11 +40,11 @@ use Models\Cinema as Cinema;
                                    <td><?php echo $show->getShowTime(); ?>
                                   
                                         </td>
-                                        <td><form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST" class="bg-light-alpha p-5">
+                                        <td><form action="<?php echo FRONT_ROOT."Purchase/PurchaseTicket/"?>" method="POST" class="bg-light-alpha p-5">
                                        
                                         <input type="hidden" class="btn btn-dark" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
-                                        <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
-                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowListView/'?>"class="btn btn-dark">Add room</button> -->
+                                        <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Select show</button>
+                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Purchase/PurchaseTicket/'?>"class="btn btn-dark">Add room</button> -->
                                         </form>
                                             
                                              

@@ -5,16 +5,20 @@ use Models\Cinema as Cinema;
     //$cineDao = new CineDao();
 
     //$allCinemas = $cineDao->getAll()
-    
+    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
 ?>
 
 <main class="py-5">
     
      <section id="listado" class="mb-5">
-        <div class="container">
-        
+        <div class="container">    
         <h2 class="mb-4 text-center text-white ">Edit</h2>
          <?php 
+           if(isset($message))
+            {
+                 echo $message;
+            }  
+          
             foreach ($cinemaList as $cinema){  ?>
         <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST"  >
           <table class="table bg-light-alpha"> 
@@ -36,6 +40,13 @@ use Models\Cinema as Cinema;
                         <option value="1">Available</option>
                         <option value="0">Not Available</option>
                         </select>
+                        
+                       <!-- <label>Availlability </label>
+          <input type="radio" id="male" value="male" name="user_sex">
+          <label for="male" >Available</label>
+          <input type="radio" id="female" value="female" name="user_sex">
+          <label for="female">Unavailable</label>
+            -->
                       
     </div>     
                        <!-- </select> -->
@@ -64,7 +75,7 @@ use Models\Cinema as Cinema;
                           
                            
            </td>
-      <?php  } ?>
+      <?php  } } else {  ?> <p class= "message"> You are not authorized to view this section <?php }?>
       
      </section>
 </main>

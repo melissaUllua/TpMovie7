@@ -6,6 +6,19 @@
     use Models\Cinema as Cinema;    
     use DAOBD\Connection as Connection;
     use DAOBD\CinemaDAOBD as CinemaDAOBD;
+    /*
+    create table if not exists Rooms (IdRoom int not null auto_increment,
+								IdCinema int not null,
+								RoomName varchar(20) not null,
+                                RoomCapacity int not null,
+                                RoomIs3D boolean not null default true,
+                                RoomPrice int not null,
+                                RoomAvailability boolean not null,
+                                CONSTRAINT pk_IdRoom primary key(IdRoom),
+                                CONSTRAINT fk_IdCinema foreign key(IdCinema) references Cinemas(IdCinema),
+								CONSTRAINT unq_roomName UNIQUE (RoomName, IdCinema)
+);
+     */
 
     class RoomDAOBD 
     {
@@ -107,7 +120,7 @@
                    
                     array_push($roomList, $room);
                 }
-                var_dump($roomList);
+                //var_dump($roomList);
                 return $roomList;
             }
             catch(Exception $ex)
@@ -176,7 +189,7 @@
                        
                     }
     
-                    return $cinema;
+                    return $room;
                 }
                 catch(Exception $ex)
                 {
@@ -184,33 +197,28 @@
                 }
             }
     /*
-    * Returns a Room
+    * Returns true if finds any match, false if not.
     */
-            public function getOneRoomByName($roomName)
+            public function ExistsRoomByName($roomName, $idCinema)
         {
             try
                 {
                     $room = new Room();
-                    $query = 'SELECT * FROM '.$this->tableName . ' WHERE RoomName = "'. $roomName .'";';
+                    $query = 'SELECT * FROM '. $this->tableName .' WHERE RoomName = "'. $roomName .'" AND IdCinema= '. $idCinema.';';
                     
                     $this->connection = Connection::GetInstance();
     
                     $resultSet = $this->connection->Execute($query);
                     
-                    if($resultSet)
+                    if(!empty($resultSet))
                     {         
-                        $row = $resultSet[0];       
-                        $room->setRoomId($row["IdRoom"]);
-                        $room->setRoomName($row["RoomName"]);
-                        $room->setRoomCapacity($row["RoomCapacity"]);
-                        $room->setRoomAvailability($row["RoomAvailability"]);
-                        $room->setRoomCinema($cinema);
-                        $room->setRoomAvailability($row["RoomAvailability"]);
-                        $room->setroomPrice($row["RoomPrice"]);
+                        $flag = true;
                        
+                    } else {
+                        $flag = false;
                     }
     
-                    return $room;
+                    return $flag;
                 }
                 catch(Exception $ex)
                 {
@@ -219,6 +227,4 @@
             }
     
         }
-    
-    
     

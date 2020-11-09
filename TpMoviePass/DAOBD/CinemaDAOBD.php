@@ -15,7 +15,7 @@
             try
             {
                 $flag = $this->ExistsCinemaByAddress($cinema->getCinemaAddress());
-                if ($flag == false){
+                if ($flag == null){
                     $query = "INSERT INTO ".$this->tableName." (cinemaName, cinemaAddress, cinemaAvailability) 
                 VALUES (:CinemaName, :CinemaAddress, :CinemaAvailability);";
                 
@@ -27,7 +27,7 @@
                 $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
-                $message = "";
+                $message = ""; 
 
                 }
                 else {
@@ -125,12 +125,14 @@
                     $cinema->setCinemaName($row["CinemaName"]);
                     $cinema->setCinemaAddress($row["CinemaAddress"]);
                     $cinema->setCinemaAvailability($row["CinemaAvailability"]);
-                    
+                    return $cinema;
+
 
                    
+                }else{
+                    return null;
                 }
 
-                return $cinema;
             }
             catch(Exception $ex)
             {
@@ -138,11 +140,10 @@
             }
         }
 
-        public function ExistsCinemaByAddress($address)
+    public function ExistsCinemaByAddress($address)
     {
         try
             {
-                $flag = false;
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE CinemaAddress = "'. $address .'";';
                 
                 $this->connection = Connection::GetInstance();
@@ -151,10 +152,11 @@
                 
                 if($resultSet)
                 {                
-                   $flag = true;
-                   
+                    $flag = true;
                 }
-
+                else {
+                    $flag = false;
+                }
                 return $flag;
             }
             catch(Exception $ex)
@@ -167,12 +169,10 @@
             try
             {
                 $cinemaList = array();
-
                 
                 //$query = ' SELECT * FROM ' .$this->tableName . 'ORDER BY IdCinema DESC LIMIT 1;';
                 
                 $this->connection = Connection::GetInstance();
-
                 $resultSet = $this->connection->Execute($query);
                 
                 foreach ($resultSet as $row)
@@ -183,11 +183,9 @@
                     $cinema->setCinemaAddress($row["CinemaAddress"]);
                     $cinema->setCinemaAvailability($row["CinemaAvailability"]);
                     
-
                     array_push($cinemaList, $cinema);
                 }
                 var_dump($cinemaList);
-
                 return $cinemaList;
             }
             catch(Exception $ex)
@@ -196,30 +194,39 @@
             }
         }*/
 
-        public function EditCinema(Cinema $cinema, $idCinema)
+        public function EditCinema(Cinema $cinema, $idCinema)   //retorna 0 si pudo, 1 si hubo un error, 2 si el address ya existe
         {
-            try{
+            $cinemaToModify = $this->getOneCinema($idCinema);   //trae el cine a modificar o null si no existe
+
+            $addressValidation = $this->ExistsCinemaByAddress($cinemaToModify->getCinemaAddress());
+
+            if($addressValidation == false){
+                if($cinemaToModify != null){
+                    try{
+                        
+                        $query =  ' UPDATE '.$this->tableName.' SET CinemaName = "'.$cinema->getCinemaName().'", CinemaAddress = "'.$cinema->getCinemaAddress().'", CinemaAvailability = "'.$cinema->getCinemaAvailability().'" WHERE IdCinema= "'.$idCinema.'";';
+                        $this->connection = Connection::GetInstance();
+                        $this->connection->ExecuteNonQuery($query);
+                        return 0;
+                    }
             
-                $modify = $this->getOneCinema($idCinema);
-                if($modify==null){
+                    catch(Exception $ex){
+                        throw $ex;
+                    } 
+    
+                }else{
+                    return 1;
                 }
-                else{
-    
-                    $modifyIdCinema=$modify->getCinemaId();
-    
-                    $query =  ' UPDATE '.$this->tableName.' SET CinemaName = "'.$cinema->getCinemaName().'", CinemaAddress = "'.$cinema->getCinemaAddress().'", CinemaAvailability = "'.$cinema->getCinemaAvailability().'" WHERE IdCinema= "'.$modifyIdCinema.'";';
-    
-                    $this->connection = Connection::GetInstance();
-                    $this->connection->ExecuteNonQuery($query);
-                    
-                                
-                }
+
+            }else{
+
+                return 2;
             }
-    
-            catch(Exception $ex){
-                throw $ex;
-            }  
+
+ 
         }
-        }
+
+
+    }
     
 ?>

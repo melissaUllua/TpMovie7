@@ -1,6 +1,7 @@
 <?php ///falta modificar
     require_once('nav.php');
     use Models\Cinema as Cinema;
+    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
@@ -59,8 +60,9 @@
                          </div>
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
-               <?php //} ?>
+               <?php /*} llave del for each*/?>
                </form>
           </div>
+          <?php   } else {  ?> <p class= "message"> You are not authorized to view this section <?php }?>
      </section>
 </main>
