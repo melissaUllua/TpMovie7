@@ -44,8 +44,10 @@ class ShowController{
 
     public function ShowListByMovie($idMovie)
     {
+       // var_dump($idMovie);
         $showList = array();
         $showList = $this->showDAO->getShowsByMovie($idMovie);
+       
         require_once(VIEWS_PATH."showListByMovie.php");
     }
 
