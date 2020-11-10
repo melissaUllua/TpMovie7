@@ -350,16 +350,14 @@
                         $show->setShowRoom($room);
                         $show->setShowDate($row["ShowDate"]);
                         $show->setShowTime($row["ShowTime"]);
-                       
+
                         if($show->getShowDate() >= $todayDay){
                             if($show->getShowTime() > $todayTime){
                                 array_push($showList, $show);
-                                                          
                             }
-                        var_dump($showList);
                         }
                     }
-                   
+
                     return $showList;
 
                 }else{
