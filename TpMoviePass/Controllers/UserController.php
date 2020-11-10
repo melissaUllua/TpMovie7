@@ -106,6 +106,8 @@ class UserController{
                     $_SESSION['userName'] = $user_aux->getuserName();
                     $_SESSION['userEmail'] = $user_aux->getuserEmail();
                     $_SESSION['isAdmin'] = $user_aux->getIsAdmin();
+                    $_SESSION['userId'] = $user_aux->getuserId();
+
                 
                     $this->ShowProfileView();
                 }

@@ -1,23 +1,27 @@
-<?php
-require_once "Config/Autoload.php";
-require_once "Config/Config.php";
-use Models\Show as Show;
-use Models\Movie as Movie;
 
-//$today = date_format(new DateTime('now'), "Y-m-d");
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
 
-//echo $today;
-$show = new Show();
-$movie = new Movie();
-$date = date(new DateTime('2020-12-23'), "Y-m-d");
-$time = date(new Time('16:50'), "H:i:s");
-var_dump($time);
-var_dump($date);
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-$movie->setId(531219);
-$show->setShowMovie($movie);
-$show->setShowTime($time);
-$show->setShowDate($date);
-
-
-?>
