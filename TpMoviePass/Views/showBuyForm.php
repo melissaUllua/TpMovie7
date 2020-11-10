@@ -1,8 +1,8 @@
 <?php ///falta modificar
     require_once('nav.php');
     use Models\Cinema as Cinema;
-     //$userId = $_SESSION['userId'];
-     //var_dump($userId);
+     $userId = $_SESSION['userId'];
+     var_dump($userId);
     if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
 ?>
 <main class="py-5">
@@ -18,12 +18,12 @@
                <?php
               // var_dump($cinemaID); 
                //for($i=0 ; $i < $totalRooms ; $i++){ ?>
-               <form action="<?php echo FRONT_ROOT."CreditCard/Add/"?>" method="post" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT."Purchase/Add/"?>" method="post" class="bg-light-alpha p-5">
                     <div class="row">  
-                    <!--<div class="form-group CVV">
+                    <div class="form-group CVV">
                              <label for="cvv">Amount of seats</label>
                              <input type="number" class="form-control" name="Seats" min="1" required>
-                         </div>         -->              
+                         </div>                    
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Owner</label>
@@ -66,6 +66,7 @@
                             </select>
                               </div>
                          </div>
+                         <input type="hidden" value="<?php $userId; ?>" name="IdUser">
                         
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>

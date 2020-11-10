@@ -23,9 +23,12 @@ class PurchaseController{
         $this->purchaseDAO = new PurchaseDAOBD();
     }
 
-    public function ShowBuyView()
+    public function ShowBuyView($ShowId)
     {
         ///Verificacion de tickets disponibles
+        $Show = new Show();
+        $Show->setShowId($ShowId);
+        var_dump($showId);
         require_once(VIEWS_PATH."showBuyForm.php");
     }
 

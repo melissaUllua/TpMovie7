@@ -9,7 +9,7 @@
     use Models\Show as Show; 
 
     
-    //$idGenreShown = $_GET;
+   // $idGenreShown = $_GET;
  
    
 
