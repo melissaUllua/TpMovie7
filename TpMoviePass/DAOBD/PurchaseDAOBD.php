@@ -66,8 +66,7 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
     {
         try
             {
-                $query = "SELECT * FROM " . $this->tableName . " WHERE IdShow = '. $idShow .';";
-                var_dump($query);
+                $query = "SELECT * FROM " . $this->tableName . " WHERE IdShow = ". $idShow .";";
                                 
                 $this->connection = Connection::GetInstance();
 
