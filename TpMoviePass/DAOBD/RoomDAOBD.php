@@ -226,5 +226,36 @@
                 }
             }
     
-        }
+
     
+        
+/*
+        Recibe un IdCine y chequea en BDD de Room, si hay alguno con availability = 1 (true)
+        Retorna true si hay coincidencia o false si no la hay.
+        Esta función es para aplicar previo a la baja de un cine. No se pueden dar de baja cines con rooms disponibles.
+ */
+        public function checkRoomsAvailability($idCinema)
+        {
+            try
+                {
+                    $query = 'SELECT * FROM ' . $this->tableName . ' WHERE IdCinema != '.$idCinema.' AND RoomAvailability = 1;';
+                    $this->connection = Connection::GetInstance();
+
+                    $resultSet = $this->connection->Execute($query);
+                    
+                    if($resultSet)
+                    {                
+                        $flag = true;
+                    }
+                    else {
+                        $flag = false;
+                    }
+                    return $flag;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+            }
+
+        }
