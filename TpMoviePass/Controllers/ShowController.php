@@ -84,15 +84,14 @@ class ShowController{
                     if ($this->showDAO->checkTime($show) == true){ //checkeo que no se superponga con otra función
                         $message = $this->showDAO->Add($show); //agrego
                          if (empty($message)){
-                            $message = "Show added successfully";
-                            // require_once(VIEWS_PATH."cinemas-list.php");
-                            $this->showListView($message);
+                            $message = "There has been a problem";
+                            $this->showAvailableListView($message);
                         }
     
                          else {
-                            $cinema = new CinemaDAOBD();
-                            $cinemaList = $cinema->GetAll(); 
-                            $this->showListView();
+                            
+                            $this->showAvailableListView($message);
+                            
                         }
                 
                     } else {
@@ -142,49 +141,18 @@ class ShowController{
         } 
     } 
         
-    
-
-  /*  public function Edit($id, $showName, $showAddress, $showTotalCapacity, $showTicketPrice, $showAvailabiity)
-    {
-        $modify = new show();
-        if ($showName != "")
-        {
-            $modify->setshowName($showName);
-        }
-        if ($showAddress != "")
-        {
-            $modify->setshowAddress($showAddress);
-        }
-        if ($showTotalCapacity != "")
-        {
-            $modify->setshowTotalCapacity($showTotalCapacity);
-        }
-        if ($showTicketPrice != "")
-        {
-            $modify->setshowTicketPrice($showTicketPrice);
-        }
-        if ($showAvailabiity != "")
-        {
-            $modify->setshowAvailability($showAvailabiity);
-        }
-        $this->showDAO->Edit($id, $modify);
-        $message = "El cine fue editado con exito!";
-        $this->ShowListView();
-    }
-    */
     /*
             Verifica que no haya ventas de la función y si no, procede a borrarla
      */
     public function DeleteShow($idShow){
         $purchaseDao = new PurchaseDAOBD();
-        if ($purchaseDao->ExistsPurchaseByShow($idShow) == 0){
+        if ($purchaseDao->ExistsPurchaseByShow($idShow) == false){
                 $this->showDAO->DeleteShow($idShow);
                 $message = "Show deleted successfully";
         }
         else {
             $message = "Show cannot be deleted. There are purchases registrated";
         }
-
         $this->ShowAvailableListView($message);
     }
 }
