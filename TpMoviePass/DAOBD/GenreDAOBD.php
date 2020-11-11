@@ -132,9 +132,7 @@
         public function exists(Genre $genre)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
     {
 
-      
-
-        //$parameters["IdGenre"] = $genre->getId();
+      //$parameters["IdGenre"] = $genre->getId();
 
         try {
             $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre = " . $genre->getId() . ";"; ///cambiar
