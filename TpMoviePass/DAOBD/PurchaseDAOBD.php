@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
         {
     
             $query = "INSERT INTO " . $this->tableName .
-                " (IdShow, IdCard, Seats) VALUES
-                    (:IdShow, :IdCard,:Seats);";
+                " (IdShow, IdCard, Seats, FinalPrice) VALUES
+                    (:IdShow, :IdCard,:Seats, :FinalPrice);";
 
             $creditCard = new CreditCard();
             $creditCard = $purchase->getCreditCard();
@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
             
             $parameters["IdCard"] = $idCreditCard;
             $parameters["Seats"] = $purchase->getAmountOfSeats();
+            $parameters["FinalPrice"] = $purchase->getFinalPrice();
            // $parameters["FinalPrice"] = $card->getFinalPrice();
             //$parameters["IdUser"] = $card->getCardExpirationYear();
             
