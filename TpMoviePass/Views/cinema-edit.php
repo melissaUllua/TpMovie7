@@ -12,7 +12,7 @@ use Models\Cinema as Cinema;
     
      <section id="listado" class="mb-5">
         <div class="container">    
-        <h2 class="mb-4 text-center">Edit</h2>
+          <h2 class="mb-4 text-center">Edit</h2>
          <?php 
            if(isset($message))
             {
@@ -20,8 +20,11 @@ use Models\Cinema as Cinema;
             }  
           
             foreach ($cinemaList as $cinema){  ?>
-        <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST" class="p-5" >
+            
+            
+            
           <table class="table bg-light-alpha"> 
+          <form action="<?php echo FRONT_ROOT . "Cinema/Edit/".$cinema->getCinemaId(); ?>" method="POST" class="p-5" >
           <th class= "message"><?php echo $cinema->getCinemaName(); ?></th>
               <tr>
                      
@@ -51,6 +54,8 @@ use Models\Cinema as Cinema;
               </tr>
           </table>
           
+         
+        </div>
 
   
 

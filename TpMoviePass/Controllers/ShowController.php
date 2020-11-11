@@ -44,8 +44,10 @@ class ShowController{
 
     public function ShowListByMovie($idMovie)
     {
+       // var_dump($idMovie);
         $showList = array();
         $showList = $this->showDAO->getShowsByMovie($idMovie);
+       
         require_once(VIEWS_PATH."showListByMovie.php");
     }
 
@@ -59,7 +61,8 @@ class ShowController{
 
     public function Add($movieId, $showDate, $showTime, $roomID)
     {
-        if ($this->verifyDate($showDate, $showTime, $roomID) > 0){
+        if ($this->verifyDate($showDate, $showTime, $roomID) >= 0){
+
             if ($this->showDAO->ExistsShowByDateTime($showDate, $showTime, $roomID) == false){ //checkeo que no haya otra función para el mismo día y horario
                                
                 if ( $this->showDAO->ExistsMovieInRoom($showDate, $movieId, $roomID) != true){ //checkeo que la película no esté en proyección ese día en otra sala (cine)
@@ -123,18 +126,20 @@ class ShowController{
         public function verifyDate($date, $time){
             $todayDate = date("Y-m-d");
             $todayTime = date("H:i:s");
-            if ($todayDate > $date){
-                $flag = -1; //esto es para fechas "pasadas"
-            } else if (($todayDate == $date) && ($todayTime == $time)){
-
-                $flag = 0; //si coinciden en fecha y hora
-            }
-            else if ($todayDate <= $date){
+       
+            
+            if ($todayDate < $date){
                 $flag = 1; //si la fecha pasada por parámetro es mayor
-            }
-
+            }else if ($todayDate == $date){
+                if  ($todayTime < $time){
+                    $flag = 0; //si coinciden en dia, pero no en horario
+                } else {
+                    $flag = -1; //para fechas y/u horarios pasados
+                }
+          
             return $flag;
         } 
+    } 
         
     
 

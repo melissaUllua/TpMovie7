@@ -172,16 +172,20 @@
                 $resultSet = $this->connection->Execute($query);
 
                 if ($resultSet != null) {
-                    foreach($resultSet as $row)
+                    foreach($resultSet as $row){
+                        //var_dump($row['IdGenre']);
                         $genre = new Genre();
                         $genre = $DAOGenre->searchById($row['IdGenre']);
                         array_push($arrayGenres, $genre);
+                    }
     
                 } else {
 
                     return null;
                 }
-
+                //var_dump("HOLA ------------------");
+                //var_dump($arrayGenres);
+                //var_dump("HOLA ------------------");
                 return $arrayGenres;
 
             } catch (\Throwable $th) {

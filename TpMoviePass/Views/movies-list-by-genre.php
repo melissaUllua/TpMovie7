@@ -41,9 +41,9 @@
                                              <img src="<?php echo ('https://image.tmdb.org/t/p/w500' . $movie->getPoster_path()) ?>" alt="Avatar" style="width:99%" style="height:60%">
                                              <div class="card:hover">
                                              <h4><b><?php echo $movie->getTitle() ?></b></h4>                <br>
-                                             <?php echo ("Duration: " . $movie->getDuration() . " minutes.") ?>
-                                             <?php echo ("Language: " . $movie->getOriginal_language()) ?>
-                                             <?php echo ("Release date: " . $movie->getRelease_date()) ?>
+                                             <?php echo ("Duration: " . $movie->getDuration() . " minutes.") ?><br>
+                                             <?php echo ("Language: " . $movie->getOriginal_language()) ?><br>
+                                             <?php echo ("Release date: " . $movie->getRelease_date()) ?><br>
 
                                              </div>
                                              </div>
