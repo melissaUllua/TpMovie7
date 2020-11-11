@@ -22,6 +22,13 @@ class PurchaseController{
        // $this->roomDAO = new RoomDAO();
         $this->purchaseDAO = new PurchaseDAOBD();
     }
+    public function ShowSelectCard($IdUser)
+    {
+        $cardDAO = new CreditCardDAOBD();
+        $cardList = $cardDAO->CardsByUser($IdUser);
+        var_dump($IdUser);
+        require_once('select-creditcard.php');
+    }
 
     public function ShowBuyView($ShowId)
     {
@@ -36,28 +43,36 @@ class PurchaseController{
         {
             $show = new Show();
             $show->setShowId($ShowId);
-            var_dump($show);
+            //var_dump($show);
             $purchase = new Purchase();
             $purchase->setAmountOfSeats($Seats);
+            $cardDAO = new CreditCardDAOBD();
+            $creditCard = new CreditCard();
+            if($cardDAO->ExistsCardNumber($CardNumber)>= 0) //me fijo si la tarjeta existe
+            {
+                $idCreditCard = $cardDAO->ExistsCardNumber($CardNumber); //si existe, me retorna el id de la tarjeta
+            }
+            else
+            { //si no existe, la agrego
             $creditCard = new CreditCard();
             $creditCard->setCardOwner($Owner);
             $creditCard->setCardNumber($CardNumber);
             $creditCard->setCardCvv($Cvv);
             $creditCard->setCardExpirationMonth($ExpMonth);
             $creditCard->setCardExpirationYear($ExpYear);
-            //var_dump($creditCard);
-            $cardDAO = new CreditCardDAOBD();
-            $cardDAO->add($creditCard);
+            $creditCardDao = new CreditCardDAOBD();
+            $creditCardDao->Add($creditCard);
+
+            $idCreditCard = $cardDAO->ExistsCardNumber($CardNumber); //ahora me aseguro que la tarjeta está ingresada y que me retorne el Id
+
+            }
+             
             //// faltaria el calculo para el precio final////
-            
-           
-            
+                             
             $purchase->setCreditCard($creditCard);
             $purchase->setShow($show);
-             var_dump($purchase);
-            $this->purchaseDAO->Add($purchase);
+            $this->purchaseDAO->Add($purchase, $idCreditCard);
 
-            ///
             require_once(VIEWS_PATH."aaprueba.php");
         }
 

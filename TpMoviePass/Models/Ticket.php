@@ -27,6 +27,6 @@ class Ticket{
         $this->Show = $SeatNumber;
 
     }
-
+}
 
 ?>

@@ -6,7 +6,7 @@ class Purchase{
     private $Show;
     private $User;
     private $AmountOfSeats;
-    private $CreditCard;
+    private $CreditCard ;
     private $FinalPrice;
    
 
