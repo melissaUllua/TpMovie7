@@ -6,7 +6,7 @@ class Room{
     private $roomName;
     private $roomCapacity;
     private $is3D;
-    private $roomPrice;
+    private $roomTicketPrice;
     private $cinema;
     private $availability;
 

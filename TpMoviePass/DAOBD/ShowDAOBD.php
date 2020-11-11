@@ -284,8 +284,8 @@
         public function GetBillboard()     //devuelve un array de objetos movie con al menos un show programado
         {
             $moviesList = array();
-
-            $query = 'SELECT DISTINCT IdMovie FROM '.$this->tableName . ";";
+            $today = date("Y-m-d");
+            $query = 'SELECT DISTINCT IdMovie FROM '.$this->tableName . ' WHERE ShowDate >=  "'. $today.'" ;';
 
             try{
                 
@@ -351,7 +351,6 @@
                         $show->setShowTime($row["ShowTime"]);
 
                         if($show->getShowDate() > $todayDay){
-                            echo "es mayor";
                                 array_push($showList, $show);                     
 
                         } else if ($show->getShowDate() == $todayDay){
@@ -379,9 +378,10 @@
         */
         public function IsAnyFutureShowInRoom($IdRoom)
         {
+
             try
                 {
-                    $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate >= " . date("Y-m-d") ." AND IdRoom = " .$IdRoom .";";   //busca en BDD de show si hay algun registro con fecha mayor o igual que hoy y que coincida el IDROOM
+                    $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate >= '" . date("Y-m-d") ."' AND IdRoom = " .$IdRoom .";";   //busca en BDD de show si hay algun registro con fecha mayor o igual que hoy y que coincida el IDROOM
   
                     $this->connection = Connection::GetInstance();
     

@@ -20,12 +20,13 @@
 <main>
 <?php  if(isset($message))
                {
-                    echo $message;
-               }  
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
+               }   
                ?>
      <section id="listado" class="mb-5">
      
-     <h2 class="bg-light-alpha p-5" style="text-align:center;"><b><?php echo ("BILLBOARD") ?></b></h2>
+     <h2 class=" message p-5"> Billboard</h2>
 
           <div class="containerMovies">
                

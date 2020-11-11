@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
      <span class="navbar-text">
-          <strong><a class="nav-link" href="<?php echo FRONT_ROOT ?>index.php">TP CINEMA</a></strong>
+          <strong><a class="nav-link" href="<?php echo FRONT_ROOT ?>index.php">BILLBOARD</a></strong>
           
      </span>
      <ul class="navbar-nav ml-auto">

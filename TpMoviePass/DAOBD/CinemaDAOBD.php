@@ -63,6 +63,7 @@
                     $cinema->setCinemaAddress($row["CinemaAddress"]);
                     $cinema->setCinemaAvailability($row["CinemaAvailability"]);
                     
+                    $cinema->setCinemaTotalRooms($this->HasRooms($row["IdCinema"])); //por ahora esta función retorna 1 si tiene salas o 0 si no, pero sirve como validación
                     array_push($cinemaList, $cinema);
                 }
 
@@ -93,6 +94,8 @@
                     $cinema->setCinemaName($row["CinemaName"]);
                     $cinema->setCinemaAddress($row["CinemaAddress"]);
                     $cinema->setCinemaAvailability($row["CinemaAvailability"]);
+                    $cinema->setCinemaTotalRooms($this->HasRooms($row["IdCinema"])); //por ahora esta función retorna 1 si tiene salas o 0 si no, pero sirve como validación
+                    
                     
 
                     array_push($cinemaList, $cinema);
@@ -194,15 +197,16 @@
                 }
             }
 
-
-
-
-
-
-
-
-
-
+            
+    /*
+        Llama al RoomDAOBD, le pasa el $idCine y le pregunta si hay alguna sala vinculada. Retorna 1 si las hay, 0 si no.
+        Para mostrar salas disponibles y para poder dar de baja el cine.
+    */
+    private function HasRooms($idCinema){
+        
+        $RoomDao = new RoomDAOBD();
+        return $RoomDao->GetRoomsByCinema($idCinema);
+    }
 
        /* public function getLastID() 
         {
@@ -240,10 +244,6 @@
 
             $addressValidation = $this->ExistsCinemaByAddress($cinemaToModify->getCinemaAddress());
 
-         // if($addressValidation == false){ //se necesitaba corroborar que OTROS cines no tuviesen la misma dirección, 
-                                                //porque siempre iba a haber uno agendado con la dirección pasada por parámetro- 
-                                                //el que queremos modificar
-                                                //Solucionado con la función "checkNewAddress()" antes de llamar al editar en el controller.
                 if($cinemaToModify != null){
                     try{
                         
@@ -260,11 +260,6 @@
                 }else{
                     return 1;
                 }
-
-            //} else{
-
-                 //return 2;
-            //}
 
  
         }

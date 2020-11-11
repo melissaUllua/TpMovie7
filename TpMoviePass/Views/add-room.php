@@ -9,10 +9,11 @@
           <?php 
                if(isset($message))
                {
-                    echo $message;
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php  
                }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
-               <h2 class="mb-4">Add rooms </h2>
+               <h2 class="mb-4 message">Add rooms </h2>
                <?php
               // var_dump($cinemaID); 
                //for($i=0 ; $i < $totalRooms ; $i++){ ?>
@@ -45,13 +46,6 @@
                                    <input type="number" name="roomTicketPrice" value="" class="form-control">
                               </div>
                          </div> 
-                         <div class="col-lg-4">
-                              <label for="">Availability</label>
-                                   <select name="availability" id="" class="form-control">
-                                   <option value="1">Available</option>
-                                   <option value="0">Unavailable</option>
-                                   </select>
-                              </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for=""></label>

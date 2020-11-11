@@ -75,7 +75,9 @@
                     $room->setIs3d($row["RoomIs3D"]);
                     $room->setRoomPrice($row["RoomPrice"]);
                     $room->setRoomAvailability($row["RoomAvailability"]);
-                    ///falta agregar el cine
+                    $cinema = new Cinema();
+                    $cinema->setCinemaId($row["IdCinema"]);
+                    $room->setRoomCinema($cinema);
 
 
                     array_push($roomList, $room);
@@ -89,7 +91,10 @@
             }
         }
     
-        public function GetRoomByCinemas($cinemaID)
+        /*
+            Recibe un idCinema y retorna un listado de salas que correspondan con dicho id
+         */
+        public function GetRoomsByCinema($cinemaID)
         {
            
             try
@@ -115,7 +120,6 @@
                     $room->setRoomAvailability($row["RoomAvailability"]);
                     $cinemaDao = new CinemaDAOBD();
                     $cinema = $cinemaDao->getOneCinema($row["IdCinema"]);
-                    //var_dump($cinema);
                     $room->setRoomCinema($cinema);
                    
                     array_push($roomList, $room);
@@ -169,7 +173,7 @@
                 {
                     $room = new Room();
                     $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdRoom = "'. $Id .'";';
-                    
+                   
                     $this->connection = Connection::GetInstance();
     
                     $resultSet = $this->connection->Execute($query);
@@ -180,7 +184,7 @@
                         $room->setRoomId($row["IdRoom"]);
                         $room->setRoomName($row["RoomName"]);
                         $room->setRoomCapacity($row["RoomCapacity"]);
-                        $room->setRoomAvailability($row["RoomAvailability"]);
+                        $room->setIs3D($row["RoomIs3D"]);
                         $cinemaDao = new CinemaDAOBD();
                         $cinema = $cinemaDao->getOneCinema($row["IdCinema"]);
                         $room->setRoomCinema($cinema);
@@ -196,6 +200,61 @@
                     throw $ex;
                 }
             }
+
+            public function Edit(Room $room, $idRoom)   //retorna 0 si pudo, 1 si hubo un error
+            {
+                $roomToModify = $this->getOneRoom($idRoom);   //trae la sala a modificar o null si no existe
+            
+                    if($roomToModify != null){
+                        try{
+                            $cinema = $roomToModify->getRoomCinema();
+                            
+                            $query =  ' UPDATE '.$this->tableName.' SET IdCinema = '.$cinema->getCinemaId().', RoomName = "'.$room->getRoomName().'", RoomCapacity= '.$room->getRoomCapacity().', RoomIs3D= '.$room->getIs3D().', RoomPrice= '.$room->getroomPrice().', RoomAvailability= '.$room->getRoomAvailability().'  WHERE IdRoom= "'.$idRoom.'";';
+                            $this->connection = Connection::GetInstance();
+                            $this->connection->ExecuteNonQuery($query);
+                            return 0;
+                        }
+                
+                        catch(Exception $ex){
+                            throw $ex;
+                        } 
+        
+                    }else{
+                        return 1;
+                    }
+        
+            }
+
+            /*
+        Recibe un nombre, un idCine y una idSala, trae todas los nombres que coincidan con el id del cine y no coincidan con el idSala.
+        Retorna true si hay coincidencia o false si no la hay.
+        Está pensada para el caso en el que el usuario planee cambiar la dirección de un cine, para validar que no exista en otro
+ */
+        public function checkNewName($name, $idCinema, $idRoom)
+        {
+            try
+                {
+                    $query = 'SELECT * FROM '.$this->tableName . ' WHERE RoomName = "'. $name .'" AND IdCinema = '.$idCinema.' AND IdRoom != '.$idRoom.';';
+                    $this->connection = Connection::GetInstance();
+    
+                    $resultSet = $this->connection->Execute($query);
+                    
+                    if($resultSet)
+                    {                
+                        $flag = true;
+                    }
+                    else {
+                        $flag = false;
+                    }
+                    return $flag;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+            }
+    
+
     /*
     * Returns true if finds any match, false if not.
     */
@@ -238,7 +297,7 @@
         {
             try
                 {
-                    $query = 'SELECT * FROM ' . $this->tableName . ' WHERE IdCinema != '.$idCinema.' AND RoomAvailability = 1;';
+                    $query = 'SELECT * FROM ' . $this->tableName . ' WHERE IdCinema = '.$idCinema.' AND RoomAvailability = 1;';
                     $this->connection = Connection::GetInstance();
 
                     $resultSet = $this->connection->Execute($query);
@@ -258,4 +317,5 @@
                 }
             }
 
-        }
+         
+    }

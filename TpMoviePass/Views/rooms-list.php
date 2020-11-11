@@ -5,7 +5,11 @@ use Models\Room as Room;
 <h1></h1>
 <section id="listado" class="mb-5">
      <div class="container">
-          <h2 class="mb-4">Cinemas</h2>
+          <h2 class="mb-4 message">Rooms in this cinema</h2>
+          <?php 
+           if(isset($message))
+            {
+                ?> <p class= "message-small"> <?php echo $message; }?> </p>
           <table class="table bg-light-alpha">
                <thead>
                    <!-- <th>ID</th> -->
@@ -38,19 +42,21 @@ use Models\Room as Room;
                                   echo "Available"; ?>
                                   <form action="<?php echo FRONT_ROOT."Show/ShowAddView/"?>" method="POST">
                                    <input type="hidden" name = "roomID", value= "<?php echo $room->getRoomId() ?>">
-                                   <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add movie show </button>
+                                   <button type="submit" name="button" class="btn btn-dark ml-auto mb-3 d-block">Add movie show </button>
                                   </form>
+                                   <form action="<?php echo FRONT_ROOT."Room/ShowEditView/".$room->getroomId();?>" method="get" class="mb-5">
+                                     <input type="hidden" value="<?php echo $room->getroomId();?>" name="Idroom">
+                                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Edit Room</button>
+                                   </form> 
                            <?php   }
                               else
                               {
                                    echo "Unavailable";
                               }
                                    ?></td>
-                                   
-                                   <td>
-                                   </td> 
+
                               <?php
-                         }
+                         } 
                     ?>
                     </tr>
                </tbody>

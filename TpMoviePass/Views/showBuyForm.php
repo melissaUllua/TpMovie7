@@ -11,10 +11,11 @@
           <?php 
                if(isset($message))
                {
-                    echo $message;
-               }                                                                                                                                                                                                                                                                                                                                                                                                                              
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
+               }                                                                                                                                                                                                                                                                                                                                                                                                                               
           ?>
-               <h2 class="mb-4">Confirm Purchase </h2>
+               <h2 class="mb-4 message">Confirm Purchase </h2>
                <?php
               // var_dump($cinemaID); 
                //for($i=0 ; $i < $totalRooms ; $i++){ ?>
@@ -25,23 +26,23 @@
                          
                     <div class="form-group CVV">
                              <label for="cvv">Amount of seats</label>
-                             <input type="number" class="form-control" name="Seats" min="1" required>
+                             <input type="number" class="form-control" name="Seats" min="1" placeholder= "At least 1- Example: 3" required>
                          </div>                    
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Owner</label>
-                                   <input type="text" name="owner" value="" class="form-control" required>
+                                   <input type="text" name="owner" value="" class="form-control"  placeholder= "Enter the name of the CC owner" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Card number</label>
-                                   <input type="text" name="cardNumber" value="" class="form-control" maxlength="16" required>
+                                   <input type="text" name="cardNumber" value="" class="form-control" maxlength="16"  placeholder= "Example: 1234 1234 1234 1234" required>
                               </div>
                          </div>
                          <div class="form-group">
                              <label for="cvv">CVV</label>
-                             <input type="text" class="form-control" name="Cvv" maxlength="3" required>
+                             <input type="text" class="form-control" name="Cvv" maxlength="3" placeholder= "Example: 765" required>
                          </div>
                          <div class="col-lg-4">
                                    <label for="">Expiration date</label>
@@ -59,6 +60,8 @@
                                 <option value="11">November</option>
                                 <option value="12">December</option>
                             </select>
+                         </div>
+                         <div class="col-lg-4 mt-4">
                             <select class="form-control" name="ExpYear" id="" required>
                                 <option value="2020"> 2020</option>
                                 <option value="2021"> 2021</option>
@@ -70,9 +73,9 @@
                               </div>
                          </div>
                          <input type="hidden" value="<?php $userId; ?>" name="IdUser">
-                        
+                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>    
                     </div>
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Add</button>
+                    
                <?php /*} llave del for each*/?>
                </form>
           </div>

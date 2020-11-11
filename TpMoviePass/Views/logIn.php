@@ -20,10 +20,12 @@
                </div>
                </form>
                <?php 
-               if(isset($message))
+                 if(isset($message))
                {
-                    echo $message;
-               }
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
+               }   
+               ?>
                
           ?>
           </div>

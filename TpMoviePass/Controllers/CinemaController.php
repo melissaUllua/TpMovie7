@@ -4,6 +4,9 @@ namespace Controllers;
 use DAO\CinemaDAO as CinemaDAO;
 use Models\Cinema as Cinema;
 use DAOBD\CinemaDAOBD as CinemaDAOBD;
+use DAOBD\RoomDAOBD as RoomDAOBD;
+use DAOBD\ShowDAOBD as ShowDAOBD;
+
 
 class CinemaController{
     private $cinemaDAO;
@@ -79,29 +82,55 @@ class CinemaController{
                 $message = "There is a cinema with the same address you have specified.";
                 $this->ShowEditView($message);
             }
-            
         }
         if ($cinemaAvailabiity != "")
         {
             $availability = ($cinemaAvailabiity == 1) ? true : false;
-            $modify->setCinemaAvailability($availability);
+            if ($availability == false){
+                if($this->checkFutureShowsInCinema($id)== 1){ //verifica que no haya futuras funciones en el cine
+                    $message = "Cannot modify availability. There are programmed shows still."; //si las hay muestra un error
+                    $this->ShowEditView($message);
+                    $modify->setCinemaAvailability(true); 
+                   
+                }else {
+                    $modify->setCinemaAvailability($availability);   
+                   
+                }
+            } else if ($availability == true) {
+                $modify->setCinemaAvailability($availability);
+            } 
         }
-        $flag = $this->cinemaDAO->EditCinema($modify, $id);
-
-        if($flag == 0){
+            $flag = $this->cinemaDAO->EditCinema($modify, $id); //arroja 1 si lo agrega bien o 0 si se produce un error
+        if ($flag == 0){
             $message = "Cinema edited successfully!";
             $this->ShowListView($message);
-        }else if($flag == 1){
-            $message = "There was an error editing this cinema.";
+        } else {
+            $message = "There has been a problem";
             $this->ShowEditView($message);
-        }else if($flag == 2){
-            $message = "There is a cinema with the same address you have specified.";
-            $this->ShowEditView($message);
-
         }
-        
-        
+
+            
+   
     }
+
+    /*
+        trae un listado de salas asociadas al cine, verifica ue no haya funciones futuras. Si encuentra alguna, retorna 1, si no, retorna 0
+     */
+
+    public function checkFutureShowsInCinema($idCinema){
+        $flag = 0;
+        $roomDao = new RoomDAOBD();
+        $showDao = new ShowDAOBD();
+        $roomsList = $roomDao->GetRoomsByCinema($idCinema); //me traigo todas las salas asociadas al cine
+        foreach ($roomsList as $room){
+            if ($showDao->IsAnyFutureShowInRoom($room->getRoomId())){  //por cada una chequeo que no haya funciones
+                $flag = 1; //si en alguna hay, arrojo un mensaje
+            }
+        }
+        return $flag;
+    }
+
+
 }
 
 
