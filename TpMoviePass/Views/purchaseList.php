@@ -22,21 +22,25 @@ use Models\Movie as Movie;
                          <th>Room</th>
                          <th>Show date</th>
                          <th>Show time</th>
+                         <th>Final price</th>
                          
                     </thead>
                     <tbody>
                     <?php
-                    var_dump($purchase);
+                   // var_dump($purchase);
                     $show = new Show();
                     $show = $purchase->getShow();
+                    $room = new Room();
+                    $room = $show->getShowRoom();
                   
                     ?>
                      <td> <?php echo $purchase->getAmountOfSeats(); ?> </td> 
                      <td> <?php echo $show->getShowMovie()->getTitle(); ?> </td> 
-                     <td> <?php echo $show->getShowCinema()->getCinemaName(); ?> </td> 
-                     <td> <?php echo $show->getShowRoom()->getRoomName(); ?> </td> 
+                     <td> <?php echo $room->getRoomCinema()->getCinemaName(); ?> </td> 
+                     <td> <?php echo $room->getRoomName(); ?> </td> 
                      <td> <?php echo $show->getShowTime(); ?> </td> 
                      <td> <?php echo $show->getShowDate(); ?> </td> 
+                     <td> <?php echo $purchase->getFinalPrice(); ?> </td> 
                     </tbody>
                </table> 
           </div>
