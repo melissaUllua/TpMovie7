@@ -2,7 +2,8 @@
     namespace DAOBD;
 
     use \Exception as Exception;
-    use Models\Purchase as Purchase;    
+    use Models\Purchase as Purchase;
+    use Models\CreditCard as CreditCard;       
     use DAOBD\Connection as Connection;
 
     class PurchaseDAOBD 
@@ -22,8 +23,13 @@
             $query = "INSERT INTO " . $this->tableName .
                 " (IdShow, IdCard, Seats) VALUES
                     (:IdShow, :IdCard,:Seats);";
-                    var_dump($query);
+                    //var_dump($purchase);
+            $creditCard = new CreditCard();
+            $creditCard = $purchase->getCreditCard();
+
+            var_dump($creditCard);
             $parameters["IdShow"] = $purchase->getShow()->getShowId();
+            
             $parameters["IdCard"] = $purchase->getCreditCard()->getIdCreditCard();
             $parameters["Seats"] = $purchase->getAmountOfSeats();
            // $parameters["FinalPrice"] = $card->getFinalPrice();

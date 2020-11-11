@@ -2,7 +2,7 @@
 require_once('nav.php');
 use Models\Movie as Movie;
 use Models\Cinema as Cinema;
-
+//if((isset( $_SESSION['userId'] ))){
 
 ?>
 <main class="py-5">
@@ -43,6 +43,7 @@ use Models\Cinema as Cinema;
                                         <td><form action="<?php echo FRONT_ROOT."Purchase/ShowBuyView/"?>" method="POST" class="bg-light-alpha p-5">
                                        
                                         <input type="hidden" class="btn btn-dark" name = "ShowId", value= "<?php echo $show->getShowId() ?>">
+                                       
                                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Select show</button>
                                        <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Purchase/ShowBuyView/'?>"class="btn btn-dark">Add room</button> -->
                                         </form>
@@ -52,7 +53,7 @@ use Models\Cinema as Cinema;
                                             
                                         </tr> 
                                    <?php
-                              }
+                              }  
                          ?>
                          </tr>
                     </tbody>

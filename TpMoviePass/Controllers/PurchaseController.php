@@ -22,6 +22,13 @@ class PurchaseController{
        // $this->roomDAO = new RoomDAO();
         $this->purchaseDAO = new PurchaseDAOBD();
     }
+    public function ShowSelectCard($IdUser)
+    {
+        $cardDAO = new CreditCardDAOBD();
+        $cardList = $cardDAO->CardsByUser($IdUser);
+        var_dump($IdUser);
+        require_once('select-creditcard.php');
+    }
 
     public function ShowBuyView($ShowId)
     {
@@ -36,25 +43,39 @@ class PurchaseController{
         {
             $show = new Show();
             $show->setShowId($ShowId);
-            var_dump($show);
+            //var_dump($show);
             $purchase = new Purchase();
             $purchase->setAmountOfSeats($Seats);
+            $cardDAO = new CreditCardDAOBD();
+            $creditCard = new CreditCard();
+            if($cardDAO->ExistsCardNumber($CardNumber))
+            {
+                $creditCard = $cardDAO->ExistsCardNumber($CardNumber);
+               // var_dump($creditCard);
+            }
+            else
+            {
             $creditCard = new CreditCard();
             $creditCard->setCardOwner($Owner);
             $creditCard->setCardNumber($CardNumber);
             $creditCard->setCardCvv($Cvv);
             $creditCard->setCardExpirationMonth($ExpMonth);
             $creditCard->setCardExpirationYear($ExpYear);
-            //var_dump($creditCard);
-            $cardDAO = new CreditCardDAOBD();
-            $cardDAO->add($creditCard);
+            $creditCardDao = new CreditCardDAOBD();
+            $id = $creditCardDao->Add($creditCard);
+            var_dump($id);
+            }
+           
+           
+            
+            //var_dump($idCreditCard);
             //// faltaria el calculo para el precio final////
             
            
             
             $purchase->setCreditCard($creditCard);
             $purchase->setShow($show);
-             var_dump($purchase);
+             //var_dump($purchase);
             $this->purchaseDAO->Add($purchase);
 
             ///
