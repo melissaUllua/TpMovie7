@@ -20,13 +20,13 @@
         {
     
             $query = "INSERT INTO " . $this->tableName .
-                " (IdShow, CardNnumber, Seats, FinalPrice) VALUES
-                    (:IdShow, :CardNnumber,:Seats, :FinalPrice);";
+                " (IdShow, IdCard, Seats) VALUES
+                    (:IdShow, :IdCard,:Seats);";
                     var_dump($query);
-            $parameters["IdShow"] = $card->getShow()->getShowId();
-            $parameters["CardNnumber"] = $card->getCreditCard()->getCardNumber();
-            $parameters["Seats"] = $card->getAmountOfSeats();
-            $parameters["FinalPrice"] = $card->getFinalPrice();
+            $parameters["IdShow"] = $purchase->getShow()->getShowId();
+            $parameters["IdCard"] = $purchase->getCreditCard()->getIdCreditCard();
+            $parameters["Seats"] = $purchase->getAmountOfSeats();
+           // $parameters["FinalPrice"] = $card->getFinalPrice();
             //$parameters["IdUser"] = $card->getCardExpirationYear();
             
 
@@ -38,21 +38,7 @@
                 throw $ex;
             }
         }
-        public function Exists(CreditCard $card)
-        {
-            try {
-            $query = "SELECT * FROM " .$this->tableName . " WHERE CardNumber = " .$card->getCardNumber().";";
-
-            $this->connection = Connection::GetInstance();
-    
-                $resultSet = $this->connection->Execute($query);
-                //var_dump($resultSet);
-               
-                return $resultSet;
-            } catch (\Throwable $th) {
-                throw $th;
-            }
-        }
+       
 
 
     }
