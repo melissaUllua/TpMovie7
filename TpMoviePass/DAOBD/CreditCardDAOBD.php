@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS creditCards(IdCard int AUTO_INCREMENT,
             $query = "INSERT INTO " . $this->tableName .
                 " (CardOwner, CardNnumber, CardCvv, CardExpirationMonth, CardExpirationYear) VALUES
                     (:CardOwner, :CardNnumber,:CardCvv, :CardExpirationMonth, :CardExpirationYear);";
-                    var_dump($query);
+
             $parameters["CardOwner"] = $card->getCardOwner();
             $parameters["CardNnumber"] = $card->getCardNumber();
             $parameters["CardCvv"] = $card->getCardCvv();

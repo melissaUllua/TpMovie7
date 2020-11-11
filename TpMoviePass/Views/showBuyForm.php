@@ -45,7 +45,7 @@
                              <input type="text" class="form-control" name="Cvv" maxlength="3" placeholder= "Example: 765" required>
                          </div>
                          <div class="col-lg-4">
-                                   <label for="">Expiration date</label>
+                                   <label for="">Expiration Month</label>
                             <select name="ExpMonth" id=""  class="form-control" required>
                                 <option value="01">January</option>
                                 <option value="02">February </option>
@@ -62,6 +62,7 @@
                             </select>
                          </div>
                          <div class="col-lg-4 mt-4">
+                         <label for="">Expiration Year</label>
                             <select class="form-control" name="ExpYear" id="" required>
                                 <option value="2020"> 2020</option>
                                 <option value="2021"> 2021</option>

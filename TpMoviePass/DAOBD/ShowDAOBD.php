@@ -402,6 +402,27 @@
                     throw $ex;
                 }
             }
+            /*
+                    Recibe un idShow y borra la función correspondiente 
+             */
+
+            public function DeleteShow($idShow)   //retorna 0 si pudo, 1 si hubo un error, (2 si el address ya existe- deprecated)
+            {
+            
+                        try{
+                            
+                            $query =  ' DELETE from '.$this->tableName.'  WHERE IdShow= '.$idShow.';';
+                            
+                            $this->connection = Connection::GetInstance();
+                            $this->connection->ExecuteNonQuery($query);
+                                                    }
+                
+                        catch(Exception $ex){
+                            throw $ex;
+                        }                 
+
+            }
+
     }
     
 

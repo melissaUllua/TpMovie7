@@ -44,7 +44,14 @@ use Models\Cinema as Cinema;
                                    <td><?php echo $show->getShowDate(); ?></td>
                                    <td><?php echo $show->getShowTime(); ?></td>
                               </td> 
-                                   <?php
+                              <?php  if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){ ?>
+                              <td>
+                              <form action="<?php echo FRONT_ROOT."Show/DeleteShow/".$show->getShowId();?>" method="get" class="mb-5">
+                                     <input type="hidden" value="<?php echo $show->getShowId();?>" name="IdShow">
+                                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Delete Show</button>
+                                   </form>
+                              </td>
+                              <?php }
                               }
                          ?>
                     </tbody>
