@@ -325,12 +325,12 @@
             $showList = array();
            $query = "SELECT * FROM " . $this->tableName . " WHERE IdMovie = " . $idMovie . ";";
 
-
             try{
                 
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
+
 
                 if($resultSet != null){
 
@@ -342,7 +342,6 @@
     
                     foreach ($resultSet as $row)
                     {
-                        //if()
                         $show = new Show();
                         $show->setShowId($row["IdShow"]);
                         $show->setShowMovie($movie_aux->searchById($row["IdMovie"]));
@@ -350,13 +349,15 @@
                         $show->setShowRoom($room);
                         $show->setShowDate($row["ShowDate"]);
                         $show->setShowTime($row["ShowTime"]);
-                       
-                        if($show->getShowDate() >= $todayDay){
+
+                        if($show->getShowDate() > $todayDay){
+                            echo "es mayor";
+                                array_push($showList, $show);                     
+
+                        } else if ($show->getShowDate() == $todayDay){
                             if($show->getShowTime() > $todayTime){
-                                array_push($showList, $show);
-                                                          
+                                array_push($showList, $show);                     
                             }
-                        var_dump($showList);
                         }
                     }
                    

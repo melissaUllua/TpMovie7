@@ -129,10 +129,8 @@
 
         }
 
-        public function exists(Genre $genre)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
+        public function exists(Genre $genre)   //se fija por ID si existe. Si existe, la devuelve entera. si no, devuelve null
     {
-
-      
 
         //$parameters["IdGenre"] = $genre->getId();
 
@@ -142,7 +140,7 @@
 
             $resultSet = $this->connection->Execute($query);
 
-            
+            return $resultSet;
         
         } catch (\Throwable $th) {
             throw $th;
@@ -174,7 +172,9 @@
                     $genre->setId($valueArray['id']);
                     $genre->setName($valueArray['name']);                                     
                    // var_dump($genre);
-                    $this->exists($genre); //mandamos a chequear si existe en DB. Si no existe, la agrega.
+                    if (!$this->exists($genre)){ //mandamos a chequear si existe en DB. Si no existe, la agrega.
+                    $this->add($genre);
+                    }
                 }
             }
         
