@@ -7,9 +7,11 @@ use DAO\ShowDAO as ShowDAO;
 use DAOBD\ShowDAOBD as ShowDAOBD;
 use DAOBD\MovieDAOBD as MovieDAOBD;
 use DAOBD\CinemaDAOBD as CinemaDAOBD;
+use DAOBD\RoomDAOBD as RoomDAOBD;
 use DAOBD\CreditCardDAOBD as CreditCardDAOBD;
 use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
 use Models\Room as Room;
+use Models\Cinema as Cinema;
 use Models\Movie as Movie;
 use Models\CreditCard as CreditCard;
 use Models\Purchase as Purchase;
@@ -41,8 +43,26 @@ class PurchaseController{
 
     public function ShowPurchaseView($purchase)
     {
-       // $this->purchaseDAO->GetPurchaseByUser($idCreditCard);
-        require_once(VIEWS_PATH."purchase-list.php");
+       $show = new Show();
+       $show = $purchase->getShow();
+
+       $movie = new Movie();
+       $movieAux = new Movie();
+       $movieAux = $show->getShowMovie();
+       $movieDao = new MovieDAOBD();
+       $movie = $movieDao->searchById($movieAux->getId());
+
+       $room = new Room();
+       $roomDAO = new RoomDAOBD();
+       $room = $roomDAO->getOneRoom($show->getShowRoom()->getRoomId());
+        
+       $cinema = new Cinema();
+       $cinemaDao = new CinemaDAOBD();
+       $cinema = $cinemaDao->getOneCinema($room->getRoomCinema()->getCinemaId());
+      
+
+
+        require_once(VIEWS_PATH."purchaseList.php");
     }
 
     public function Add($ShowId, $Seats, $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
@@ -74,9 +94,20 @@ class PurchaseController{
             }
              
             //// faltaria el calculo para el precio final////
-                             
+            $room = new Room();
+            $roomDao = new RoomDAOBD();
+            $show = new Show();
+            $showDao = new ShowDAOBD();
+
+            $show = $showDao->GetOneById($ShowId); //GetOneById
+          
+            $room = $roomDao->getOneRoom($show->getShowRoom()->getRoomId());
+
+            $finalPrice = ($room->getroomPrice() * $Seats);
+            var_dump($finalPrice);
             $purchase->setCreditCard($creditCard);
             $purchase->setShow($show);
+            $purchase->setFinalPrice($finalPrice);
             $this->purchaseDAO->Add($purchase, $idCreditCard);
 
             $this->ShowPurchaseView($purchase);
