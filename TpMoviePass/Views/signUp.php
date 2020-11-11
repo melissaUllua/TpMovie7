@@ -4,12 +4,12 @@
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-          <?php 
-               if(isset($message))
+          <?php  if(isset($message))
                {
-                    echo $message;
-               }
-          ?>
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
+               }   
+               ?>
                <h2 class="mb-4">Complete the form</h2>
                <form action="<?php echo FRONT_ROOT ?>User/signUp" method="post" class="bg-light-alpha p-5" required>
                     <div class="row">                         

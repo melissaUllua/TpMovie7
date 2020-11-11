@@ -17,7 +17,7 @@
     <form action="<?php echo FRONT_ROOT ?>Movie/ShowListViewByGenre" method="get">
         <section id="listado" class="mb-5">
             <div class="container">
-                <h2 class="mb-4">Select genre</h2>
+                <h2 class="mb-4 message">Select genre</h2>
 
                 <?php
                 foreach($genreList as $genre){ ?>

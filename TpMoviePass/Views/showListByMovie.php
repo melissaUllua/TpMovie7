@@ -9,7 +9,13 @@ use Models\Cinema as Cinema;
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Shows available</h2>
+               <h2 class="mb-4 message">Shows available</h2>
+               <?php  if(isset($message))
+               {
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
+               }   
+               ?>
                <table class="table bg-light-alpha">
                     <thead>
                         <!-- <th>ID</th> -->

@@ -4,6 +4,7 @@
 
     use Models\Cinema as Cinema; 
     use Models\Room as Room;
+
 ?>
 <main class="py-5">
      <h1></h1>
@@ -11,10 +12,11 @@
           <div class="container">
                <?php  if(isset($message))
                {
-                    echo $message;
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
                }  
                ?>
-               <h2 class="mb-4">Cinemas</h2>
+               <h2 class="mb-4 message">Cinemas</h2>
                <table class="table bg-light-alpha">
                     <thead>
                         <!-- <th>ID</th> -->
@@ -32,17 +34,17 @@
                                    <!-- <td><?php echo $cinema->getCinemaId() ?></td> -->
                                    <td><?php echo $cinema->getCinemaName() ?></td>
                                    <td><?php echo $cinema->getCinemaAddress() ?></td>
-                                   <td><?php if($cinema->getCinemaAvailability() == "1")
+                                   <td><?php if(($cinema->getCinemaAvailability() == "1"))
                                    {
-                                       echo "Available"; ?>
-                                       </td>
-                                        <td><form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST">
+                                       echo "Available"; if ($cinema->getCinemaAmountOfRooms()>0){?>
+                                       
+                                        <form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST">
                                        
                                         <input type="hidden" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
-                                        <button type="submit" name="button" class="btn btn-dark d-block">See available Rooms</button>
+                                        <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
                                        <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowAddView/'?>"class="btn btn-dark">Add room</button> -->
                                         </form>
-                                 <?php  }
+                                 <?php  }}
                                    else
                                    {
                                         echo "Unavailable";

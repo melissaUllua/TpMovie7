@@ -6,6 +6,7 @@ use Models\Room as Room;
 use Models\Cinema as Cinema;
 use DAOBD\RoomDAOBD as RoomDAOBD;
 use DAOBD\CinemaDAOBD as CinemaDAOBD;
+use DAOBD\ShowDAOBD as ShowDAOBD;
 
 class RoomController{
     private $roomDAO;
@@ -26,7 +27,7 @@ class RoomController{
     public function ShowListView($cinemaID)
     {
 
-        $roomList = $this->roomDAO->GetRoomByCinemas($cinemaID);
+        $roomList = $this->roomDAO->GetRoomsByCinema($cinemaID);
         require_once(VIEWS_PATH."rooms-list.php");
     }
 
@@ -36,14 +37,14 @@ class RoomController{
         require_once(VIEWS_PATH."rooms-list.php");
     }*/
 
-    public function ShowEditView()
+    public function ShowEditView($roomID, $message="")
     {
-        $cinemaList = $this->roomDAO->getAll();
-        require_once(VIEWS_PATH.".php");
+        $room = $this->roomDAO->getOneRoom($roomID);
+        require_once(VIEWS_PATH."room-edit.php");
     }
 
 
-    public function Add($RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice, $RoomAvailability,$cinemaID)
+    public function Add($RoomName, $RoomCapacity, $RoomIs3D, $RoomPrice,$cinemaID, $RoomAvailability= 1) //disponible por defecto
     {
        // $cinemaDAO = new CinemaDAOBD();
         //$cinema = $cinemaDAO->getOneCinema($cinemaID);
@@ -72,31 +73,52 @@ class RoomController{
       }
         
     }
-    public function Edit($roomID, $roomName, $roomCapacity, $Is3D, $roomTicketPrice)
+    public function Edit($roomID, $roomName, $roomCapacity, $roomPrice, $Is3D, $roomAvailability, $idCinema)
     {
         $modify = new Room();
         if ($roomName != "")
         {
-            $modify->setroomName($roomName);
+           
+            if ($this->roomDAO->checkNewName($roomName, $roomID, $idCinema) == false){
+                $modify->setroomName($roomName);
+            } else {
+                $message = "There is a room with the same name in this cinema.";
+                $this->ShowEditView($idCinema, $message);
+            }
         }
-        if ($cinemaAddress != "")
+        if ($roomCapacity != "")
         {
             $modify->setroomCapacity($roomCapacity);
         }
-        if ($cinemaTotalCapacity != "")
+        if ($Is3D != "")
         {
             $modify->setIs3D($Is3D);
         }
-        if ($cinemaTicketPrice != "")
+        if ($roomPrice != "")
         {
-            $modify->setroomTicketPrice($roomTicketPrice);
+            $modify->setroomPrice($roomPrice);
+        }
+        if ($roomAvailability != "")
+        {
+            $availability = ($roomAvailability == 1) ? true : false; //transformo el boolean en un int para enviar a la bbdd
+            $showDao = new ShowDAOBD();
+            if ($availability == false){ //en caso de que quieran dar de baja la sala
+                if ($showDao->IsAnyFutureShowInRoom($roomID) == true){ //chequeo que no haya funciones
+                    $message = "Cannot modify availability. There are programmed shows for this room yet."; //si las hay muestra un error
+                    $this->ShowEditView($idCinema, $message);
+                } else {
+                    $modify->setRoomAvailability($availability);
+                }
+            } 
+            $modify->setRoomAvailability($availability);
         }
 
-        //$this->roomDAO->Edit($roomID, $modify); /*is not working yet*/
-        $message = "Cinema modified successfully";
+        $this->roomDAO->Edit($modify, $roomID);
+        $message = "Room modified successfully";
 
-        $this->ShowListView();
+        $this->ShowListView($idCinema);
     }
+    
 }
 
 

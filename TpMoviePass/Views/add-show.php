@@ -9,7 +9,8 @@
           <?php 
                if(isset($message))
                {
-                    echo $message;
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
                }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
                <h2 class="mb-4">Add Movie Show</h2>

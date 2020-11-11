@@ -147,6 +147,13 @@ class Cinema{
     {
         $this->cinemaTotalRooms = $cinemaTotalRooms;
     }
+
+    /* Por si necesitamos sólo la cantidad
+     */
+    public function getCinemaAmountOfRooms() 
+    {
+        return count($this->cinemaTotalRooms);
+    }
     
 }
 

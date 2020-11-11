@@ -8,23 +8,20 @@
     //use DAO\GenreDAOBD as GenreDAOBD; 
     
     $idGenreShown = $_GET;
- 
-   
-
-
     //getMoviesByIdGenre($idGenre)
 
 ?>
 <main>
 <?php  if(isset($message))
                {
-                    echo $message;
-               }  
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
+               }   
                ?>
 <div style="background-image: https://preview.pixlr.com/images/800wm/100/1/1001435035.jpg">
      <section id="listado" class="mb-5">
      
-     <h2 class="bg-light-alpha p-5"><?php if ($genreSelected == null) { echo "Displaying all movies";}else{echo $genreSelected->getName();} ?></h2>
+     <h2 class="message p-5"><?php if ($genreSelected == null) { echo "Displaying all movies";}else{echo $genreSelected->getName();} ?></h2>
           <div class="containerMovies">
                
                <br>               <br>               <br>
