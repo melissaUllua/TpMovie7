@@ -40,11 +40,11 @@ use Models\Cinema as Cinema;
                                    <td><?php echo $show->getShowTime(); ?>
                                   
                                         </td>
-                                        <td><form action="<?php echo FRONT_ROOT."Purchase/PurchaseTicket/"?>" method="POST" class="bg-light-alpha p-5">
+                                        <td><form action="<?php echo FRONT_ROOT."Purchase/ShowBuyView/"?>" method="POST" class="bg-light-alpha p-5">
                                        
-                                        <input type="hidden" class="btn btn-dark" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
+                                        <input type="hidden" class="btn btn-dark" name = "ShowId", value= "<?php echo $show->getShowId() ?>">
                                         <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Select show</button>
-                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Purchase/PurchaseTicket/'?>"class="btn btn-dark">Add room</button> -->
+                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Purchase/ShowBuyView/'?>"class="btn btn-dark">Add room</button> -->
                                         </form>
                                             
                                              

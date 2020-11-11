@@ -374,6 +374,34 @@
             }
 
         }
+        /* Busca si una sala tiene alguna funcion futura
+        Retorna true si encuentra una coincidencia, o false de no ser así.
+        */
+        public function IsAnyFutureShowInRoom($IdRoom)
+        {
+            try
+                {
+                    $query = "SELECT * FROM " . $this->tableName . " WHERE ShowDate >= " . date("Y-m-d") ." AND IdRoom = " .$IdRoom .";";   //busca en BDD de show si hay algun registro con fecha mayor o igual que hoy y que coincida el IDROOM
+  
+                    $this->connection = Connection::GetInstance();
+    
+                    $resultSet = $this->connection->Execute($query);
+                    
+                    if(!empty($resultSet))
+                    {  
+                        $flag = true;     //si no esta vacio significa que encontró algo
+                       
+                    } else {
+                        $flag = false;
+                    }
+                    
+                    return $flag;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+            }
     }
     
 

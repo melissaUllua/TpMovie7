@@ -166,10 +166,8 @@ class ShowController{
         {
             $modify->setshowAvailability($showAvailabiity);
         }
-
         $this->showDAO->Edit($id, $modify);
         $message = "El cine fue editado con exito!";
-
         $this->ShowListView();
     }
     */
