@@ -2,7 +2,7 @@
     require_once('nav.php');
     use Models\Cinema as Cinema;
      //$userId = $_SESSION['userId'];
-     //var_dump($userId);
+    // var_dump($Show);
     if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
 ?>
 <main class="py-5">
@@ -36,7 +36,7 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Card number</label>
-                                   <input type="text" name="cardNumber" value="" class="form-control" maxlength="16" required>
+                                   <input type="text" name="cardNumber" value="" class="form-control" maxlength="16" minlength="16" required>
                               </div>
                          </div>
                          <div class="form-group">

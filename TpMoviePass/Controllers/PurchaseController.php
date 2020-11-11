@@ -35,7 +35,8 @@ class PurchaseController{
     public function Add($ShowId, $Seats, $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
         {
             $show = new Show();
-            $show->getShowId($ShowId);
+            $show->setShowId($ShowId);
+            var_dump($show);
             $purchase = new Purchase();
             $purchase->setAmountOfSeats($Seats);
             $creditCard = new CreditCard();
@@ -47,10 +48,14 @@ class PurchaseController{
             //var_dump($creditCard);
             $cardDAO = new CreditCardDAOBD();
             $cardDAO->add($creditCard);
+            //// faltaria el calculo para el precio final////
+            
            
             
             $purchase->setCreditCard($creditCard);
             $purchase->setShow($show);
+             var_dump($purchase);
+            $this->purchaseDAO->Add($purchase);
 
             ///
             require_once(VIEWS_PATH."aaprueba.php");
