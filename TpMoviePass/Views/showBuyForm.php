@@ -3,7 +3,7 @@
     use Models\Cinema as Cinema;
      //$userId = $_SESSION['userId'];
     // var_dump($Show);
-    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
+    if(isset($_SESSION['isAdmin'])){
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
