@@ -1,8 +1,8 @@
 <?php ///falta modificar
     require_once('nav.php');
     use Models\Cinema as Cinema;
-     $userId = $_SESSION['userId'];
-     var_dump($userId);
+     //$userId = $_SESSION['userId'];
+     //var_dump($userId);
     if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
 ?>
 <main class="py-5">
@@ -20,6 +20,9 @@
                //for($i=0 ; $i < $totalRooms ; $i++){ ?>
                <form action="<?php echo FRONT_ROOT."Purchase/Add/"?>" method="post" class="bg-light-alpha p-5">
                     <div class="row">  
+
+                             <input type="hidden" name="ShowId" value = "<?php echo $Show->getShowId(); ?>" required>
+                         
                     <div class="form-group CVV">
                              <label for="cvv">Amount of seats</label>
                              <input type="number" class="form-control" name="Seats" min="1" required>

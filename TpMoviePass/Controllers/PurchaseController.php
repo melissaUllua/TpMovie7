@@ -28,23 +28,29 @@ class PurchaseController{
         ///Verificacion de tickets disponibles
         $Show = new Show();
         $Show->setShowId($ShowId);
-        var_dump($showId);
+        //var_dump($showId);
         require_once(VIEWS_PATH."showBuyForm.php");
     }
 
-    public function Add(/*$idShow*/ $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear, $amountOfSeats)
+    public function Add($ShowId, $Seats, $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
         {
+            $show = new Show();
+            $show->getShowId($ShowId);
+            $purchase = new Purchase();
+            $purchase->setAmountOfSeats($Seats);
             $creditCard = new CreditCard();
             $creditCard->setCardOwner($Owner);
             $creditCard->setCardNumber($CardNumber);
             $creditCard->setCardCvv($Cvv);
             $creditCard->setCardExpirationMonth($ExpMonth);
             $creditCard->setCardExpirationYear($ExpYear);
+            //var_dump($creditCard);
             $cardDAO = new CreditCardDAOBD();
             $cardDAO->add($creditCard);
-            $purchase = new Purchase();
-            $purchase->setAmountOfSeats($amountOfSeats);
+           
+            
             $purchase->setCreditCard($creditCard);
+            $purchase->setShow($show);
 
             ///
             require_once(VIEWS_PATH."aaprueba.php");
