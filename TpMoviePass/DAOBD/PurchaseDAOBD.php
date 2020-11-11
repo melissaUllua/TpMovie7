@@ -55,7 +55,38 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 throw $ex;
             }
         }
-       
+
+               
+        /*
+            Recibe un IdShow y devuelve true si existen compras con ese Id o false si no.
+          
+         */
+        
+        public function ExistsPurchaseByShow($idShow)
+    {
+        try
+            {
+                $query = "SELECT * FROM " . $this->tableName . " WHERE IdShow = '. $idShow .';";
+                var_dump($query);
+                                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                if(!empty($resultSet))
+                {         
+                    $flag = true;
+                   
+                } else {
+                    $flag = false;
+                }
+                return $flag;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
 
 
     }

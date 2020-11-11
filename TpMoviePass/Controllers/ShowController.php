@@ -6,6 +6,7 @@ use DAO\ShowDAO as ShowDAO;
 use DAOBD\ShowDAOBD as ShowDAOBD;
 use DAOBD\MovieDAOBD as MovieDAOBD;
 use DAOBD\CinemaDAOBD as CinemaDAOBD;
+use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
 
 use Models\Room as Room;
 use Models\Movie as Movie;
@@ -171,6 +172,21 @@ class ShowController{
         $this->ShowListView();
     }
     */
+    /*
+            Verifica que no haya ventas de la función y si no, procede a borrarla
+     */
+    public function DeleteShow($idShow){
+        $purchaseDao = new PurchaseDAOBD();
+        if ($purchaseDao->ExistsPurchaseByShow($idShow) == 0){
+                $this->showDAO->DeleteShow($idShow);
+                $message = "Show deleted successfully";
+        }
+        else {
+            $message = "Show cannot be deleted. There are purchases registrated";
+        }
+
+        $this->ShowAvailableListView($message);
+    }
 }
 
 

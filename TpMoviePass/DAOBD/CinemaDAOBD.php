@@ -201,6 +201,7 @@
     /*
         Llama al RoomDAOBD, le pasa el $idCine y le pregunta si hay alguna sala vinculada. Retorna 1 si las hay, 0 si no.
         Para mostrar salas disponibles y para poder dar de baja el cine.
+        DE ESTO DEPENDE EL MOSTRAR AVAILABLE ROOMS
     */
     private function HasRooms($idCinema){
         

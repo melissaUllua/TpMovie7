@@ -39,6 +39,12 @@ class PurchaseController{
         require_once(VIEWS_PATH."showBuyForm.php");
     }
 
+    public function ShowPurchaseView($purchase)
+    {
+       // $this->purchaseDAO->GetPurchaseByUser($idCreditCard);
+        require_once(VIEWS_PATH."purchase-list.php");
+    }
+
     public function Add($ShowId, $Seats, $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
         {
             $show = new Show();
@@ -73,7 +79,7 @@ class PurchaseController{
             $purchase->setShow($show);
             $this->purchaseDAO->Add($purchase, $idCreditCard);
 
-            require_once(VIEWS_PATH."aaprueba.php");
+            $this->ShowPurchaseView($purchase);
         }
 
 
