@@ -2,8 +2,22 @@
     namespace DAOBD;
 
     use \Exception as Exception;
-    use Models\Purchase as Purchase;    
+    use Models\Purchase as Purchase;
+    use Models\CreditCard as CreditCard;       
     use DAOBD\Connection as Connection;
+
+    /*
+CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
+										IdCard int not null,
+										IdShow int not null,
+                                        IdUser int not null,
+                                        Seats int not null,
+										FinalPrice float not null,
+										CONSTRAINT pk_IdPurchase PRIMARY KEY (IdPurchase),
+                                        CONSTRAINT fk_IdCard foreign key(IdCard) references creditCards(IdCard),
+                                        CONSTRAINT fk_IdShow foreign key(IdShow) references Shows(IdShow)
+										);
+     */
 
     class PurchaseDAOBD 
     {
@@ -16,15 +30,18 @@
 
 
 
-        public function Add(Purchase $purchase)   //agrega un genero a la base de datos
+        public function Add(Purchase $purchase, $idCreditCard)   //agrega un genero a la base de datos
         {
     
             $query = "INSERT INTO " . $this->tableName .
                 " (IdShow, IdCard, Seats) VALUES
                     (:IdShow, :IdCard,:Seats);";
-                    var_dump($query);
+
+            $creditCard = new CreditCard();
+            $creditCard = $purchase->getCreditCard();
             $parameters["IdShow"] = $purchase->getShow()->getShowId();
-            $parameters["IdCard"] = $purchase->getCreditCard()->getIdCreditCard();
+            
+            $parameters["IdCard"] = $idCreditCard;
             $parameters["Seats"] = $purchase->getAmountOfSeats();
            // $parameters["FinalPrice"] = $card->getFinalPrice();
             //$parameters["IdUser"] = $card->getCardExpirationYear();

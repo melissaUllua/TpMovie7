@@ -37,7 +37,7 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">Card number</label>
-                                   <input type="text" name="cardNumber" value="" class="form-control" maxlength="16"  placeholder= "Example: 1234 1234 1234 1234" required>
+                                   <input type="text" name="cardNumber" value="" class="form-control" maxlength="16"  placeholder= "No spaces-Example:1234123412341234" required>
                               </div>
                          </div>
                          <div class="form-group">

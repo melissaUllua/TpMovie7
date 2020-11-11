@@ -29,11 +29,7 @@
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 $message = ""; 
-
-                }
-                
-                
-                return $message;
+                  return $message;
     
             }
             catch(Exception $ex)
