@@ -69,7 +69,6 @@ class PurchaseController{
         {
             $show = new Show();
             $show->setShowId($ShowId);
-            //var_dump($show);
             $purchase = new Purchase();
             $purchase->setAmountOfSeats($Seats);
             $cardDAO = new CreditCardDAOBD();
@@ -104,7 +103,6 @@ class PurchaseController{
             $room = $roomDao->getOneRoom($show->getShowRoom()->getRoomId());
 
             $finalPrice = ($room->getroomPrice() * $Seats);
-            var_dump($finalPrice);
             $purchase->setCreditCard($creditCard);
             $purchase->setShow($show);
             $purchase->setFinalPrice($finalPrice);
