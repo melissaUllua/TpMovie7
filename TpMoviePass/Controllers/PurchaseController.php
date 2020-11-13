@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use \Exception as Exception;
+use \PDOException as PDOException;
 use Models\Show as Show;
 use DAO\ShowDAO as ShowDAO;
 use DAOBD\ShowDAOBD as ShowDAOBD;
@@ -45,28 +47,41 @@ class PurchaseController{
     {
        $show = new Show();
        $show = $purchase->getShow();
-
-       $movie = new Movie();
-       $movieAux = new Movie();
-       $movieAux = $show->getShowMovie();
-       $movieDao = new MovieDAOBD();
-       $movie = $movieDao->searchById($movieAux->getId());
-
-       $room = new Room();
-       $roomDAO = new RoomDAOBD();
-       $room = $roomDAO->getOneRoom($show->getShowRoom()->getRoomId());
+       try{
+        $movie = new Movie();
+        $movieAux = new Movie();
+        $movieAux = $show->getShowMovie();
+        $movieDao = new MovieDAOBD();
+        $movie = $movieDao->searchById($movieAux->getId());
+ 
+        $room = new Room();
+        $roomDAO = new RoomDAOBD();
+        $room = $roomDAO->getOneRoom($show->getShowRoom()->getRoomId());
+         
+        $cinema = new Cinema();
+        $cinemaDao = new CinemaDAOBD();
+        $cinema = $cinemaDao->getOneCinema($room->getRoomCinema()->getCinemaId());
+       }
+       catch(PDOException $pdoE){
+        if($pdoE->getCode() == 1045){
+            $message = "Wrong DB Password";
+        } else{
+            $message = $pdo->getMessage();
+        }
         
-       $cinema = new Cinema();
-       $cinemaDao = new CinemaDAOBD();
-       $cinema = $cinemaDao->getOneCinema($room->getRoomCinema()->getCinemaId());
-      
-
-
-        require_once(VIEWS_PATH."purchaseList.php");
+         }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {    
+            require_once(VIEWS_PATH."purchaseList.php");
+        }
     }
 
     public function Add($ShowId, $Seats, $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
-        {
+    {
+        try{
             $show = new Show();
             $show->setShowId($ShowId);
             $purchase = new Purchase();
@@ -109,19 +124,21 @@ class PurchaseController{
             $this->purchaseDAO->Add($purchase, $idCreditCard);
 
             $this->ShowPurchaseView($purchase);
+
         }
-
-
-
-
-
-
-
-
-
-
-
-
+        catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+            }
+            
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+            
+        }
 
 }
 

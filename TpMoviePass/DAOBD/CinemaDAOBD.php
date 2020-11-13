@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\Cinema as Cinema;    
     use DAOBD\Connection as Connection;
 
@@ -33,21 +34,25 @@
                 else {
                     $message = "There already exists a Cinema in that address";
                 }
-                
-                return $message;
-    
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally{
+                 return $message;
+            }
         }
 
         public function GetAll()
         {
+            $cinemaList = array();
             try
             {
-                $cinemaList = array();
+                
 
                 $query = "SELECT * FROM ".$this->tableName;
 
@@ -66,21 +71,23 @@
                     $cinema->setCinemaTotalRooms($this->HasRooms($row["IdCinema"])); //por ahora esta función retorna 1 si tiene salas o 0 si no, pero sirve como validación
                     array_push($cinemaList, $cinema);
                 }
-
-                return $cinemaList;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally{
+                 return $cinemaList;
+            }
         }
         public function getAvailable()
         {
+            $cinemaList = array();
             try
-            {
-                $cinemaList = array();
-
-                
+            {               
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE cinemaAvailability = "1";';
                 
                 $this->connection = Connection::GetInstance();
@@ -100,21 +107,26 @@
 
                     array_push($cinemaList, $cinema);
                 }
-
-                return $cinemaList;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally {
+                return $cinemaList;
+            }
         }
     
     
     public function getOneCinema($Id)
-    {
+    {   
+        $cinema = new Cinema();
         try
             {
-                $cinema = new Cinema();
+                
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdCinema = "'. $Id .'";';
                 
                 $this->connection = Connection::GetInstance();
@@ -127,24 +139,25 @@
                     $cinema->setCinemaId($row["IdCinema"]);
                     $cinema->setCinemaName($row["CinemaName"]);
                     $cinema->setCinemaAddress($row["CinemaAddress"]);
-                    $cinema->setCinemaAvailability($row["CinemaAvailability"]);
-                    return $cinema;
-
-
-                   
-                }else{
-                    return null;
+                    $cinema->setCinemaAvailability($row["CinemaAvailability"]);  
                 }
 
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally {
+                return $cinema;
+            }
         }
 
     public function ExistsCinemaByAddress($address)
     {
+        $flag = null;
         try
             {
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE CinemaAddress = "'. $address .'";';
@@ -160,11 +173,16 @@
                 else {
                     $flag = false;
                 }
-                return $flag;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally {
+                return $flag;
             }
         }
 
@@ -175,6 +193,7 @@
  */
         public function checkNewAddress($address, $idCinema)
         {
+           $flag = null;
             try
                 {
                     $query = 'SELECT * FROM '.$this->tableName . ' WHERE CinemaAddress = "'. $address .'" AND IdCinema != '.$idCinema.';';
@@ -189,11 +208,16 @@
                     else {
                         $flag = false;
                     }
-                    return $flag;
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
                 }
                 catch(Exception $ex)
                 {
                     throw $ex;
+                }
+                finally{
+                    return $flag;
                 }
             }
 
@@ -204,9 +228,23 @@
         DE ESTO DEPENDE EL MOSTRAR AVAILABLE ROOMS
     */
     private function HasRooms($idCinema){
-        
         $RoomDao = new RoomDAOBD();
-        return $RoomDao->GetRoomsByCinema($idCinema);
+        $list = array();
+       try {
+            $list = $RoomDao->GetRoomsByCinema($idCinema);
+       }
+       catch(PDOException $pdoE){
+        throw $pdoE;
+    }
+    catch(Exception $ex)
+    {
+        throw $ex;
+    } 
+    finally{
+        return $list;
+    }
+        
+        
     }
 
        /* public function getLastID() 
@@ -241,25 +279,34 @@
 
         public function EditCinema(Cinema $cinema, $idCinema)   //retorna 0 si pudo, 1 si hubo un error, (2 si el address ya existe- deprecated)
         {
+            $flag = null;
+            try{
             $cinemaToModify = $this->getOneCinema($idCinema);   //trae el cine a modificar o null si no existe
 
             $addressValidation = $this->ExistsCinemaByAddress($cinemaToModify->getCinemaAddress());
 
                 if($cinemaToModify != null){
-                    try{
+                    
                         
                         $query =  ' UPDATE '.$this->tableName.' SET CinemaName = "'.$cinema->getCinemaName().'", CinemaAddress = "'.$cinema->getCinemaAddress().'", CinemaAvailability = "'.$cinema->getCinemaAvailability().'" WHERE IdCinema= "'.$idCinema.'";';
                         $this->connection = Connection::GetInstance();
                         $this->connection->ExecuteNonQuery($query);
-                        return 0;
+                        $flag = 0;
                     }
-            
-                    catch(Exception $ex){
-                        throw $ex;
-                    } 
-    
-                }else{
-                    return 1;
+                    else{
+                        $flag = 1;
+                    }
+       
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+                finally{
+                    return $flag;
                 }
 
  

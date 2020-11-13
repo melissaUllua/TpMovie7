@@ -23,18 +23,31 @@ class CreditCardController{
 
 public function Add($Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
         {
-            $creditCard = new CreditCard();
-            $creditCard->setCardOwner($Owner);
-            $creditCard->setCardNumber($CardNumber);
-            $creditCard->setCardCvv($Cvv);
-            $creditCard->setCardExpirationMonth($ExpMonth);
-            $creditCard->setCardExpirationYear($ExpYear);
+             $creditCard = new CreditCard();
+            try{
+                $creditCard->setCardOwner($Owner);
+                $creditCard->setCardNumber($CardNumber);
+                $creditCard->setCardCvv($Cvv);
+                $creditCard->setCardExpirationMonth($ExpMonth);
+                $creditCard->setCardExpirationYear($ExpYear);
             
-            $this->CreditCardDAO->Add($creditCard);
-            
-            
-            ///
-            require_once(VIEWS_PATH."aaprueba.php");
+                $this->CreditCardDAO->Add($creditCard);
+            }
+            catch(PDOException $pdoE){
+                if($pdoE->getCode() == 1045){
+                    $message = "Wrong DB Password";
+                } else{
+                    $message = $pdo->getMessage();
+                }
+                
+            }
+            catch(Exception $e){
+                $message = $e->getMessage();
+            } 
+            finally{
+               // require_once(VIEWS_PATH."aaprueba.php");
+            }
+
         }
 
 

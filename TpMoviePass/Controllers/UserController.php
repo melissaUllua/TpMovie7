@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
 
+use \Exception as Exception;
+use \PDOException as PDOException;
 use DAO\UserDAO as UserDAO;
 use DAOBD\UserDAOBD as UserDAOBD;
 use Models\User as User;
@@ -68,27 +70,27 @@ class UserController{
                     }
                      
             }
-            catch (Exception $exAdd) {
-                $message = "There has been a problem with the Sign Up";
-                $this->ShowSignUpView($message);
-                echo $exAdd->get_Message();
-
+            catch(PDOException $pdoE){
+                if($pdoE->getCode() == 1045){
+                    $message = "Wrong DB Password";
+                } else{
+                    $message = $pdo->getMessage();
+                    $this->ShowSignUpView($message);
+                }
+                
             }
-            catch (Exception $exGetAll) {
-                $message = "There has been a problem with the data";
+            catch(Exception $e){
+                $message = $e->getMessage();
                 $this->ShowSignUpView($message);
-                echo $exGetAll->get_Message();
-
-            }
-            
-
+            }       
                 
         }
     }
 
 
     public function LogIn(){
-        if($_POST)
+        try {
+            if($_POST)
         {
             $users = $this->userDAO->getAll();
             if(empty($users)){ //si no hay ningún usuario, al menos necesito un admin
@@ -113,22 +115,40 @@ class UserController{
            }
            }
            else /*($this->userDAO instanceof UserDAOBD)*/{
-            $user_aux = $this->userDAO->getUser2($user_aux);
+            $user_aux = $this->userDAO->GetUser($user_aux);
             if ($user_aux->getuserName() != NULL){
-             $_SESSION['userName'] = $user_aux->getuserName();
-             $_SESSION['userEmail'] = $user_aux->getuserEmail();
-             $_SESSION['isAdmin'] = $user_aux->getIsAdmin();
-             $this->ShowProfileView();
+                if ($user_aux->getuserPass() === $_POST['userPass']){
+                    $_SESSION['userName'] = $user_aux->getuserName();
+                    $_SESSION['userEmail'] = $user_aux->getuserEmail();
+                    $_SESSION['isAdmin'] = $user_aux->getIsAdmin();
+                    $this->ShowProfileView();
+
+                } else {
+                    $message = "Wrong Password";
+                    $this->ShowLogInView($message);
+                }
             }
             }
             if (empty($_SESSION)) {
                 $message = "User not found";
                 $this->ShowLogInView($message);
-            } 
-
-            
-                
+            }        
         }
+        }
+        catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+                $this->ShowLogInView($message);
+            }
+            
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+            $this->ShowLogInView($message);
+        }
+        
     }
 
     public function LogInHC(){

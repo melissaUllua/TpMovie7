@@ -2,9 +2,9 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\Show as Show;    
     use Models\Movie as Movie;    
-
     use DAOBD\Connection as Connection;
     use DAOBD\MovieDAOBD as MovieDAOBD;
     use DAOBD\RoomDAOBD as RoomDAOBD;
@@ -30,6 +30,7 @@
 
         public function Add($show)
         {
+            $message = "";
             try
             {
                 $query = "INSERT INTO ".$this->tableName." (IdMovie, ShowDate, ShowTime, IdRoom) 
@@ -43,19 +44,26 @@
 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
-                return $message = "Show added successfully";
+                $message = "Show added successfully";
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally {
+                return $message;
+            }
         }
 
         public function GetAll()
         {
+            $showList = array();
             try
             {
-                $showList = array();
+               
 
                 $query = "SELECT * FROM ".$this->tableName;
 
@@ -81,12 +89,16 @@
 
                     array_push($showList, $show);
                 }
-
-                return $showList;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally {
+                return $showList;
             }
         }
        
@@ -95,11 +107,12 @@
          */
         public function GetAvailable()
         {
+            $showList = array();
             try
             {
                 $today = date("Y-m-d");
                // $now = date("H:i:s"); //necesito una subquery
-                $showList = array();
+                
 
                 $query = "SELECT * FROM ".$this->tableName. " WHERE ShowDate >=  '". $today."' ;";
 
@@ -124,16 +137,21 @@
 
                     array_push($showList, $show);
                 }
-
-                return $showList;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally {
+                return $showList;
+            }
         }
         public function GetOneById($showID)    //devuelve una función a partir de su ID
         {
+            $show = new Show();
             try
             {
 
@@ -145,7 +163,7 @@
                 
                 $movie_aux = new MovieDAOBD();
                 $room_aux = new RoomDAOBD();
-                $show = new Show();
+                
 
                 if ($resultSet)
                 {                
@@ -157,14 +175,17 @@
                     $show->setShowTime($row["ShowTime"]);
                     $room = $room_aux->getOneRoom($row["IdRoom"]);
                     $show->setShowRoom($room);
-
                 }
-
-                return $show;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally {
+                return $show;
             }
 
         }
@@ -175,6 +196,7 @@
     */
     public function ExistsShowByDateTime($showDate, $showTime, $IdRoom)
     {
+        $flag = null;
         try
             {
                // $room = new Room();
@@ -191,11 +213,16 @@
                 } else {
                     $flag = false;
                 }
-                return $flag;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally {
+                return $flag;
             }
         }
 
@@ -204,6 +231,7 @@
         */
         public function ExistsMovieInRoom($showDate, $IdMovie, $IdRoom)
         {
+            $flag = null;
             try
                 {
                    // $room = new Room();
@@ -221,11 +249,16 @@
                         $flag = false;
                     }
                     
-                    return $flag;
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
                 }
                 catch(Exception $ex)
                 {
                     throw $ex;
+                }
+                finally {
+                    return $flag;
                 }
             }
     /* 
@@ -273,11 +306,17 @@
                 }
 
             }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
             catch(Exception $ex)
             {
                 throw $ex;
             }
-            return $flag;
+            finally {
+                return $flag;
+            }
+            
         }
 
 
@@ -304,16 +343,16 @@
                         array_push($moviesList, $movie);
                     }
 
-                    return $moviesList;
-
-                }else{
-
-                    return null;
-
                 }
-
-            }catch(Exception $ex){
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex){
                 throw $ex;
+            }
+            finally {
+                return $moviesList;
             }
 
         }
@@ -359,17 +398,16 @@
                             }
                         }
                     }
-                   
-                    return $showList;
-
-                }else{
-
-                    return null;
-
                 }
-
-            }catch(Exception $ex){
+            }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
+                }
+        catch(Exception $ex){
                 throw $ex;
+            }
+            finally {
+                return $showList;
             }
 
         }
@@ -378,6 +416,7 @@
         */
         public function IsAnyFutureShowInRoom($IdRoom)
         {
+            $flag = null;
 
             try
                 {
@@ -394,12 +433,16 @@
                     } else {
                         $flag = false;
                     }
-                    
-                    return $flag;
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
                 }
                 catch(Exception $ex)
                 {
                     throw $ex;
+                }
+                finally {       
+                    return $flag;
                 }
             }
             /*
@@ -415,7 +458,10 @@
                             
                             $this->connection = Connection::GetInstance();
                             $this->connection->ExecuteNonQuery($query);
-                                                    }
+                        }
+                        catch(PDOException $pdoE){
+                            throw $pdoE;
+                        }
                 
                         catch(Exception $ex){
                             throw $ex;

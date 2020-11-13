@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\CreditCard as CreditCard; 
     use Models\User as User;      
     use DAOBD\Connection as Connection;
@@ -49,8 +50,12 @@ CREATE TABLE IF NOT EXISTS creditCards(IdCard int AUTO_INCREMENT,
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
              
-            } catch (\Throwable $ex) {
-    
+            } 
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
                 throw $ex;
             }
         
@@ -60,6 +65,7 @@ CREATE TABLE IF NOT EXISTS creditCards(IdCard int AUTO_INCREMENT,
          */
         public function ExistsCardNumber($cardNumber)
         {
+            $reply = null;
             try {
             $query = "SELECT * FROM " .$this->tableName . " WHERE CardNnumber = " .$cardNumber.";";
 
@@ -73,11 +79,15 @@ CREATE TABLE IF NOT EXISTS creditCards(IdCard int AUTO_INCREMENT,
                 else {
                     $reply = -1;
                 }
-                
+            } catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally{
                 return $reply;
-               
-            } catch (\Throwable $th) {
-                throw $th;
             }
             
         }
@@ -98,11 +108,15 @@ CREATE TABLE IF NOT EXISTS creditCards(IdCard int AUTO_INCREMENT,
     
                     array_push($this->CreditCardsList, $card);
                 }
-
+            } catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
                 return $this->CreditCardsList;
-
-            } catch (\Throwable $th) {
-                throw $th;
             }
         }
 

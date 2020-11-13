@@ -1,5 +1,7 @@
 <?php
     namespace Controllers;
+    use \Exception as Exception;
+    use \PDOException as PDOException;
     use DAO\MovieDAO as MovieDAO;
     use DAOBD\MovieDAOBD as MovieDAOBD;
     use DAOBD\GenreDAOBD as GenreDAOBD;
@@ -14,13 +16,26 @@
             $genres = new GenreDAOBD();
             $shows = new ShowDAOBD();
 
-
-
-            $movieList = $movies->getAll();
-            $genreList = $genres->getAll();
-            $showsList = $shows->GetBillboard();
-            
-            require_once(VIEWS_PATH."showBillboard.php"); 
+            try {
+                $movieList = $movies->getAll();
+                $genreList = $genres->getAll();
+                $showsList = $shows->GetBillboard();
+            }
+            catch(PDOException $pdoE){
+                if($pdoE->getCode() == 1045){
+                    $message = "Wrong DB Password";
+                } else{
+                    $message = $pdo->getMessage();
+                }
+                
+            }
+            catch(Exception $e){
+                $message = $e->getMessage();
+            }
+            finally
+            {
+                require_once(VIEWS_PATH."showBillboard.php"); 
+            }
 
         }        
     }

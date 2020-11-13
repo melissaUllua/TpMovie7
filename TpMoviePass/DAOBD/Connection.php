@@ -13,15 +13,8 @@
 
         private function __construct()
         {
-            try
-            {
                 $this->pdo = new PDO("mysql:host=".DB_HOST."; dbname=".DB_NAME, DB_USER, DB_PASS);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
         }
 
         public static function GetInstance()
@@ -34,8 +27,6 @@
 
         public function Execute($query, $parameters = array(), $queryType = QueryType::Query)
 	    {
-            try
-            {
                 $this->Prepare($query);
                 
                 $this->BindParameters($parameters, $queryType);
@@ -43,17 +34,10 @@
                 $this->pdoStatement->execute();
 
                 return $this->pdoStatement->fetchAll();
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
         }
         
         public function ExecuteNonQuery($query, $parameters = array(), $queryType = QueryType::Query)
 	    {            
-            try
-            {
                 $this->Prepare($query);
                 
                 $this->BindParameters($parameters, $queryType);
@@ -61,23 +45,12 @@
                 $this->pdoStatement->execute();
 
                 return $this->pdoStatement->rowCount();
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }        	    	
-        }
-        
+            }       	    	
+                
         private function Prepare($query)
         {
-            try
-            {
-                $this->pdoStatement = $this->pdo->prepare($query);
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
+            $this->pdoStatement = $this->pdo->prepare($query);
+            
         }
         
         private function BindParameters($parameters = array(), $queryType = QueryType::Query)

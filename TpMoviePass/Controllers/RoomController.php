@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
 
+use \Exception as Exception;
+use \PDOException as PDOException;
 use DAO\RoomDAO as roomDAO;
 use Models\Room as Room;
 use Models\Cinema as Cinema;
@@ -26,9 +28,24 @@ class RoomController{
 
     public function ShowListView($cinemaID)
     {
-
-        $roomList = $this->roomDAO->GetRoomsByCinema($cinemaID);
-        require_once(VIEWS_PATH."rooms-list.php");
+        $roomList = array();
+        try{
+            $roomList = $this->roomDAO->GetRoomsByCinema($cinemaID);
+        }catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+            }
+            
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {        
+            require_once(VIEWS_PATH."rooms-list.php");
+        }
     }
 
     /*public function ShowAvailableView($cinemaID) ///no funciona, idk why
@@ -39,8 +56,24 @@ class RoomController{
 
     public function ShowEditView($roomID, $message="")
     {
-        $room = $this->roomDAO->getOneRoom($roomID);
-        require_once(VIEWS_PATH."room-edit.php");
+        $room = new Room();
+        try{
+            $room = $this->roomDAO->getOneRoom($roomID);
+        }catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+            }
+            
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
+            require_once(VIEWS_PATH."room-edit.php");
+        }
     }
 
 
@@ -48,35 +81,49 @@ class RoomController{
     {
        // $cinemaDAO = new CinemaDAOBD();
         //$cinema = $cinemaDAO->getOneCinema($cinemaID);
-        
-      $flag = $this->roomDAO->ExistsRoomByName($RoomName, $cinemaID);
-      if($flag == false){
-        $cinema = new Cinema();
-        $cinema->setCinemaId($cinemaID);
-        $room = new Room();
-        $room->setRoomName($RoomName);
-        $room->setRoomCapacity($RoomCapacity);
-        $is3D = ($RoomIs3D = 1) ? true : false;
-        $room->setIs3D($is3D);
-        $room->setRoomPrice($RoomPrice);
-        $availability = ($RoomAvailability = 1) ? true : false;
-        $room->setRoomAvailability($availability);
-        $room->setRoomCinema($cinema);
-        $this->roomDAO->Add($room);
-        $message = "Show Room added successfully!";
-        require_once(VIEWS_PATH."add-cinema.php");
+        try{
+            $flag = $this->roomDAO->ExistsRoomByName($RoomName, $cinemaID);
+            if($flag == false){
+                    $cinema = new Cinema();
+                    $cinema->setCinemaId($cinemaID);
+                    $room = new Room();
+                    $room->setRoomName($RoomName);
+                    $room->setRoomCapacity($RoomCapacity);
+                    $is3D = ($RoomIs3D = 1) ? true : false;
+                    $room->setIs3D($is3D);
+                    $room->setRoomPrice($RoomPrice);
+                    $availability = ($RoomAvailability = 1) ? true : false;
+                    $room->setRoomAvailability($availability);
+                    $room->setRoomCinema($cinema);
+                    $this->roomDAO->Add($room);
+                    $message = "Show Room added successfully!";
+                    require_once(VIEWS_PATH."add-cinema.php");
+            }
+            else {
+                    $message = "There already exists a Room with that name";
+                    $this->ShowAddView($cinemaID, $message);
+            }
 
-      }
-      else {
-          $message = "There already exists a Room with that name";
-          $this->ShowAddView($cinemaID, $message);
-      }
-        
+        }catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+            }
+            $this->ShowAddView($cinemaID, $message);
+            
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+            $this->ShowAddView($cinemaID, $message);
+        }
     }
+
     public function Edit($roomID, $roomName, $roomCapacity, $roomPrice, $Is3D, $roomAvailability, $idCinema)
     {
         $modify = new Room();
-        if ($roomName != "")
+        try{
+            if ($roomName != "")
         {
            
             if ($this->roomDAO->checkNewName($roomName, $roomID, $idCinema) == false){
@@ -117,9 +164,21 @@ class RoomController{
         $message = "Room modified successfully";
 
         $this->ShowListView($idCinema);
+
+   }catch(PDOException $pdoE){
+    if($pdoE->getCode() == 1045){
+        $message = "Wrong DB Password";
+    } else{
+        $message = $pdo->getMessage();
     }
+    $this->ShowEditView($idCinema, $message);
+}
+catch(Exception $e){
+    $message = $e->getMessage();
+    $this->ShowEditView($idCinema, $message);
+}     
     
 }
-
+}
 
 ?>
