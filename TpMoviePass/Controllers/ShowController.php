@@ -116,7 +116,7 @@ class ShowController{
     }
 
 
-
+/*
     public function ShowEditView()
     {
         $showList = array();
@@ -137,7 +137,7 @@ class ShowController{
         require_once(VIEWS_PATH."show-edit.php");
         }
     }
-
+*/
     public function Add($movieId, $showDate, $showTime, $roomID)
     {
         if ($this->verifyDate($showDate, $showTime) >= 0){
@@ -165,19 +165,15 @@ class ShowController{
                                 $message = "There has been a problem";
                                 $this->showAvailableListView($message);
                             }
-        
                              else {
                                 
                                 $this->showAvailableListView($message);
-                                
                             }
                     
                         } else {
                             $message = "There is another function already scheduled. Please choose another time.";
                             $this->ShowAddView($roomID, $message);
-                        }
-       
-    
+                        }  
                     }
                     else {
                         $message = "This movie is already in exhibition. Please choose another one.";
@@ -194,37 +190,48 @@ class ShowController{
                 } else{
                     $message = $pdo->getMessage();
                 }
+                $this->ShowAddView($roomID, $message);
             }
             catch(Exception $e){
                 $message = $e->getMessage();
+                $this->ShowAddView($roomID, $message);
             }      
     }
-    else {
+    else if($this->verifyDate($showDate, $showTime) == -1){
         $message = "You should choose a future date";
+        $this->ShowAddView($roomID, $message);
+    } else {
+        $message = "You should choose a time between 14:00 and 23:59";
         $this->ShowAddView($roomID, $message);
     }
 }
-         /* 
-            Recibe un día y un horario, y lo compara con la fecha actual. 
-            Retorna 1 los datos por parámetros son mayores, 0 si son iguales, -1 si son menores que la fecha actual
-        */
+         /**
+          *Recibe un día y un horario, y lo compara con la fecha actual.
+          *  @return 1 los datos por parámetros son mayores, 0 si son iguales, -1 si son menores que la fecha actual, -2 si el horario está por fuera de atención del cine
+          */ 
+            
 
         public function verifyDate($date, $time){
             $todayDate = date("Y-m-d");
             $todayTime = date("H:i:s");
+            $minTime = "14:00";
+            $maxTime = "23:59";
        
-            
+            if (($time > $minTime) && ($time < $maxTime)){
             if ($todayDate < $date){
-                $flag = 1; //si la fecha pasada por parámetro es mayor
+                $reply = 1; //si la fecha pasada por parámetro es mayor
             }else if ($todayDate == $date){
                 if  ($todayTime < $time){
-                    $flag = 0; //si coinciden en dia, pero no en horario
+                        $reply = 0; //si coinciden en dia, pero no en horario
                 } else {
-                    $flag = -1; //para fechas y/u horarios pasados
+                    $reply = -1; //para fechas y/u horarios pasados
                 }
-          
-            return $flag;
+            }
         } 
+        else {
+            $reply = -2;
+        }
+            return $reply;
     } 
         
     /*
