@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\Room as Room;    
     use Models\Cinema as Cinema;    
     use DAOBD\Connection as Connection;
@@ -47,6 +48,9 @@
 
     
             }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
             catch(Exception $ex)
             {
                 throw $ex;
@@ -55,10 +59,9 @@
 
         public function GetAll()
         {
+            $roomList = array();
             try
             {
-                $roomList = array();
-
                 $query = "SELECT * FROM ".$this->tableName;
 
                 $this->connection = Connection::GetInstance();
@@ -82,12 +85,16 @@
 
                     array_push($roomList, $room);
                 }
-
-                return $roomList;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally{
+                return $roomList;
             }
         }
     
@@ -96,12 +103,9 @@
          */
         public function GetRoomsByCinema($cinemaID)
         {
-           
+           $roomList = array();
             try
-            {
-                $roomList = array();
-               
-                
+            {              
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdCinema = "' . $cinemaID . '";';
                 
                 $this->connection = Connection::GetInstance();
@@ -125,21 +129,25 @@
                     array_push($roomList, $room);
                 }
                 //var_dump($roomList);
-                return $roomList;
+                
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally{
+                return $roomList;
+            }
         }
 
        public function getAvailable($cinemaID)
         {
+             $roomList = array();
             try
-            {
-                $roomList = array();
-
-                
+            {               
                 $query = 'SELECT * FROM '.$this->tableName . ' WHERE RoomAvailability = "1" AND IdRoom = "' . $cinemaID .'";';
                 
                 $this->connection = Connection::GetInstance();
@@ -158,20 +166,25 @@
 
                     array_push($roomList, $room);
                     
-                }
-
-                return $roomList;
+                }  
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally {
+                return $roomList;
+            }
+            
         }
         public function getOneRoom($Id)
         {
+            $room = new Room();
             try
-                {
-                    $room = new Room();
+                {        
                     $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdRoom = "'. $Id .'";';
                    
                     $this->connection = Connection::GetInstance();
@@ -193,35 +206,47 @@
                        
                     }
     
-                    return $room;
+                    
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
                 }
                 catch(Exception $ex)
                 {
                     throw $ex;
                 }
+                finally{
+                    return $room;
+                }
             }
 
             public function Edit(Room $room, $idRoom)   //retorna 0 si pudo, 1 si hubo un error
             {
-                $roomToModify = $this->getOneRoom($idRoom);   //trae la sala a modificar o null si no existe
+                $flag = null;
+                try{
+                    $roomToModify = $this->getOneRoom($idRoom);   //trae la sala a modificar o null si no existe
             
                     if($roomToModify != null){
-                        try{
+                        
                             $cinema = $roomToModify->getRoomCinema();
                             
                             $query =  ' UPDATE '.$this->tableName.' SET IdCinema = '.$cinema->getCinemaId().', RoomName = "'.$room->getRoomName().'", RoomCapacity= '.$room->getRoomCapacity().', RoomIs3D= '.$room->getIs3D().', RoomPrice= '.$room->getroomPrice().', RoomAvailability= '.$room->getRoomAvailability().'  WHERE IdRoom= "'.$idRoom.'";';
                             $this->connection = Connection::GetInstance();
                             $this->connection->ExecuteNonQuery($query);
-                            return 0;
-                        }
-                
-                        catch(Exception $ex){
-                            throw $ex;
-                        } 
+                            $flag = 0;
         
-                    }else{
-                        return 1;
                     }
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
+                }
+                catch(Exception $ex)
+                {
+                    throw $ex;
+                }
+                finally{
+                    return $flag;
+                }
         
             }
 
@@ -232,6 +257,7 @@
  */
         public function checkNewName($name, $idCinema, $idRoom)
         {
+            $flag = null;
             try
                 {
                     $query = 'SELECT * FROM '.$this->tableName . ' WHERE RoomName = "'. $name .'" AND IdCinema = '.$idCinema.' AND IdRoom != '.$idRoom.';';
@@ -246,11 +272,17 @@
                     else {
                         $flag = false;
                     }
-                    return $flag;
+                    
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
                 }
                 catch(Exception $ex)
                 {
                     throw $ex;
+                }
+                finally {
+                    return $flag;
                 }
             }
     
@@ -260,6 +292,7 @@
     */
             public function ExistsRoomByName($roomName, $idCinema)
         {
+            $flag = null;
             try
                 {
                     $room = new Room();
@@ -276,12 +309,16 @@
                     } else {
                         $flag = false;
                     }
-    
-                    return $flag;
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
                 }
                 catch(Exception $ex)
                 {
                     throw $ex;
+                }
+                finally{
+                    return $flag;
                 }
             }
     
@@ -295,6 +332,7 @@
  */
         public function checkRoomsAvailability($idCinema)
         {
+            $flag = null;
             try
                 {
                     $query = 'SELECT * FROM ' . $this->tableName . ' WHERE IdCinema = '.$idCinema.' AND RoomAvailability = 1;';
@@ -309,13 +347,18 @@
                     else {
                         $flag = false;
                     }
-                    return $flag;
+                    
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
                 }
                 catch(Exception $ex)
                 {
                     throw $ex;
                 }
-            }
+                finally {
+                    return $flag;
+                }
 
-         
+            }    
     }

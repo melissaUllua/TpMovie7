@@ -5,7 +5,15 @@
      <main class="d-flex align-items-center justify-content-center height-100" >
           <div class="content">
           
-               <h2 class="mb-4">Log In</h2>
+          
+               <h2 class="mb-4 message">Log In</h2>
+               <?php 
+                 if(isset($message))
+               {
+                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
+                    <?php   
+               }   
+               ?>
                <form action="<?php echo FRONT_ROOT ?>User/LogIn" method="POST" class="bg-light-alpha p-5">
                <div class= "row">
                     <div class="col-lg-4">
@@ -18,16 +26,8 @@
                     </div>
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Log In</button>
                </div>
-               </form>
-               <?php 
-                 if(isset($message))
-               {
-                    ?> <p class= "message-small"> <?php echo $message; ?> </p>
-                    <?php   
-               }   
-               ?>
-               
-          ?>
+               </form>             
+          
           </div>
      </main>
 

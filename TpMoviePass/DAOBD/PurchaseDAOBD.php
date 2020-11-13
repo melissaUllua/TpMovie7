@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\Purchase as Purchase;
     use Models\CreditCard as CreditCard;       
     use DAOBD\Connection as Connection;
@@ -51,8 +52,11 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
             try {
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
-            } catch (\Throwable $ex) {
-    
+            } catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
                 throw $ex;
             }
         }
@@ -65,6 +69,7 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
         
         public function ExistsPurchaseByShow($idShow)
     {
+        $flag = null;
         try
             {
                 $query = "SELECT * FROM " . $this->tableName . " WHERE IdShow = ". $idShow .";";
@@ -80,11 +85,16 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 } else {
                     $flag = false;
                 }
-                return $flag;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally {
+                return $flag;
             }
         }
 

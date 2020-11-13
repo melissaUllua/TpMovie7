@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
 
+use \Exception as Exception;
+use \PDOException as PDOException;
 use Models\Movie as Movie;
 use Models\Genre as Genre;
 use DAO\MovieDAO as MovieDAO;
@@ -23,32 +25,33 @@ class MovieController{
     }
 
 
-    public function ShowAddView($message ="")   //no usar.
-    {
-        require_once(VIEWS_PATH."addmoviebygenre.php");
-    }
-
-
-    /*public function ShowListView()    //va a ser para listar peliculas por género
-    {
-        $movieList =  $genreDaoBD->getMoviesByIdGenre($idGenreShown);
-        $this->MovieDao->updateDatabaseMovies();
-       // require_once(VIEWS_PATH."select-genre.php");
-        require_once(VIEWS_PATH."movies-list-by-genre.php");
-    }*/
-
     public function updateDatabases()    
     {
-       // $movies = new MovieDAOBD();
-       // $genres = new GenreDAOBD();
+       $genreList = array();
        if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){
-        $this->MovieDao->updateDatabaseMovies();
-        $this->GenreDao->updateDatabaseGenres();
-        $genreList = $this->GenreDao->getAll();
-        
-        $message = "Upgraded Database";
+           try {
+            $this->MovieDao->updateDatabaseMovies();
+            $this->GenreDao->updateDatabaseGenres();
+            $genreList = $this->GenreDao->getAll();
+            
+            $message = "Upgraded Database";
+           }
+           catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+            }
+            
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
         $this->ShowListViewByGenre($message);
-    }
+        }
+    }   
     else {
         $message = "Denied Access";
         $this->ShowListView($message);
@@ -59,23 +62,64 @@ class MovieController{
     public function ShowListViewByGenre($idGenre, $message ="")    ///ver de que vista viene
     {  
         $genreSelected = new Genre();
-        if($idGenre == 0){
-            $movieList = $this->MovieDao->getAll();
-            $genreSelected = null;
-        }else{
-            $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
-            $genreSelected = $this->GenreDao->searchById($idGenre);
-     
+        try {
+            if($idGenre == 0){
+                $movieList = $this->MovieDao->getAll();
+                $genreSelected = null;
+            }else{
+                $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
+                $genreSelected = $this->GenreDao->searchById($idGenre);
+         
+            }
         }
-        require_once(VIEWS_PATH."movies-list-by-genre.php");
+        catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+            }
+            
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
+            require_once(VIEWS_PATH."movies-list-by-genre.php");
+        }
     }
 
     public function ShowListView($message ="")    ///ver de que vista viene
     {
-        $genreList =$this->GenreDao->getAll();
-
-        require_once(VIEWS_PATH."movies-list.php");
+        $genreList = array();
+        try {
+            $genreList =$this->GenreDao->getAll();
+        }
+        catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+            }
+            
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
+            require_once(VIEWS_PATH."movies-list.php");
+        }
     }
+
+/// FUNCIONES NO USADAS
+/*
+    public function ShowAddView($message ="")   //no usar.
+    {
+        require_once(VIEWS_PATH."addmoviebygenre.php");
+    }
+*/
+
 
 /*    public function ShowListView()    ///ver de que vista viene
     {
@@ -83,19 +127,14 @@ class MovieController{
         require_once(VIEWS_PATH."movies-list.php");
     }
 */
-
-
-
-
-
-
-
-
-/// FUNCIONES NO USADAS
-
-
-
-
+    /*public function ShowListView()    //va a ser para listar peliculas por género
+    {
+        $movieList =  $genreDaoBD->getMoviesByIdGenre($idGenreShown);
+        $this->MovieDao->updateDatabaseMovies();
+       // require_once(VIEWS_PATH."select-genre.php");
+        require_once(VIEWS_PATH."movies-list-by-genre.php");
+    }*/
+/*
     public function ShowEditView()
     {
         require_once(VIEWS_PATH."movie-edit.php");
@@ -124,8 +163,7 @@ class MovieController{
 
         //$this->ShowListView();
     }
-
+*/
 }
-
 
 ?>

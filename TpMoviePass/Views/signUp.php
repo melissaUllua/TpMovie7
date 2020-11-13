@@ -10,7 +10,7 @@
                     <?php   
                }   
                ?>
-               <h2 class="mb-4">Complete the form</h2>
+               <h2 class="mb-4 message">Complete the form</h2>
                <form action="<?php echo FRONT_ROOT ?>User/signUp" method="post" class="bg-light-alpha p-5" required>
                     <div class="row">                         
                          <div class="col-lg-4">

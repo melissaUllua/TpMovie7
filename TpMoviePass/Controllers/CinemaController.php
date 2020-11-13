@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
 
+use \Exception as Exception;
+use \PDOException as PDOException;
 use DAO\CinemaDAO as CinemaDAO;
 use Models\Cinema as Cinema;
 use DAOBD\CinemaDAOBD as CinemaDAOBD;
@@ -19,18 +21,33 @@ class CinemaController{
     }
 
     public function ShowAddView($message ="")
-    {
-        
-        require_once(VIEWS_PATH."add-cinema.php");
-        
+    { 
+        require_once(VIEWS_PATH."add-cinema.php");   
     }
 
     public function ShowListView($message = "")
     {
+        $cinemaList = array();
+        try{
+            $cinemaList = $this->cinemaDAO->GetAll();
+        }
+       catch(PDOException $pdoE){
+        if($pdoE->getCode() == 1045){
+            $message = "Wrong DB Password";
+        } else{
+            $message = $pdo->getMessage();
+        }
         
-       $cinemaList = $this->cinemaDAO->GetAll();
+    }
+    catch(Exception $e){
+        $message = $e->getMessage();
+    }
+    finally
+    {
         require_once(VIEWS_PATH."cinemas-list.php");
     }
+    }
+
     public function ShowEditView($message = "")
     {
         $cinemaList = $this->cinemaDAO->getAll();
@@ -50,8 +67,8 @@ class CinemaController{
         $cinema->setCinemaAddress($cinemaAddress);
         $availability = ($cinemaAvailability = 1) ? true : false;
         $cinema->setCinemaAvailability($availability);
-        
-        $this->cinemaDAO->Add($cinema);
+        try{
+            $this->cinemaDAO->Add($cinema);
         $message =  $this->cinemaDAO->Add($cinema);
         if (empty($message)){
             $message = "Cinema added successfully";
@@ -62,9 +79,20 @@ class CinemaController{
         else {
             $this->ShowAddView($message);
         }
-        
-        
-        
+
+        }catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+                $this->ShowAddView($message);
+            } else{
+                $message = $pdo->getMessage();
+                $this->ShowAddView($message);
+            }
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+            $this->ShowAddView($message);
+        }    
     }
 
     public function Edit($id, $cinemaName, $cinemaAddress, $cinemaAvailabiity)
@@ -100,6 +128,8 @@ class CinemaController{
                 $modify->setCinemaAvailability($availability);
             } 
         }
+        
+        try{
             $flag = $this->cinemaDAO->EditCinema($modify, $id); //arroja 1 si lo agrega bien o 0 si se produce un error
         if ($flag == 0){
             $message = "Cinema edited successfully!";
@@ -108,8 +138,21 @@ class CinemaController{
             $message = "There has been a problem";
             $this->ShowEditView($message);
         }
-
+        }
+        catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+                $this->ShowEditView($message);
+            } else{
+                $message = $pdo->getMessage();
+                $this->ShowEditView($message);
+            }
             
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+            $this->ShowEditView($message);
+        }         
    
     }
 

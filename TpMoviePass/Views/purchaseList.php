@@ -23,11 +23,12 @@ use Models\Movie as Movie;
                          <th>Show date</th>
                          <th>Show time</th>
                          <th>Final price</th>
+                         <th>QR Code</th>
                          
                     </thead>
                     <tbody>
                     <?php
-                   // var_dump($purchase);
+
                     $show = new Show();
                     $show = $purchase->getShow();
                     $room = new Room();
@@ -41,6 +42,7 @@ use Models\Movie as Movie;
                      <td> <?php echo $show->getShowTime(); ?> </td> 
                      <td> <?php echo $show->getShowDate(); ?> </td> 
                      <td> <?php echo $purchase->getFinalPrice(); ?> </td> 
+                     <td> <img style="width:50%" style="height:50%" src="<?php echo ('https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $purchase->getIdPurchase() . '&choe=UTF-8'); ?>">
                     </tbody>
                </table> 
           </div>

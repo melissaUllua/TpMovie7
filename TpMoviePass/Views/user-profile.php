@@ -9,7 +9,7 @@
      <h1></h1>
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Welcome, <?php echo $_SESSION['userName']; ?></h2>
+               <h2 class="mb-4 message">Welcome, <?php echo $_SESSION['userName']; ?></h2>
                <table class="table bg-light-alpha">
                     <thead>
                          <th>Email</th>
@@ -25,8 +25,8 @@
 
                     </tbody>
                </table>
-               <?php  if($_SESSION['isAdmin'] == 1){ echo "Coming soon, functions for admins";
-      }?>
+               <?php // if($_SESSION['isAdmin'] == 1){ echo "Coming soon, functions for admins";
+    //  }?>
                <!--<form action="<?php //echo FRONT_ROOT ?>Cinema/EditCinema". method="post" class="bg-light-alpha p-5">
                <table class="table text-white bg-oscuro"> 
             
