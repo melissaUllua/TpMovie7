@@ -24,7 +24,6 @@ class MailController{
             
             /* Set the subject. */
             $mail->Subject = 'esto es un Test';
-            
 
             /* SMTP parameters. */
             
@@ -92,11 +91,13 @@ class MailController{
         {
         /* PHPMailer exception. */
         echo $e->errorMessage();
+        //$message = $e->errorMessage();
         }
         catch (\Exception $e)
         {
         /* PHP exception (note the backslash to select the global namespace Exception class). */
         echo $e->getMessage();
+        //$message = $e->errorMessage();
         }
 
     }

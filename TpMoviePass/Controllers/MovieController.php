@@ -40,7 +40,7 @@ class MovieController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
@@ -76,7 +76,7 @@ class MovieController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
@@ -99,7 +99,7 @@ class MovieController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }

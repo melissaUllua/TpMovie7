@@ -35,7 +35,7 @@ class PurchaseController{
         require_once('select-creditcard.php');
     }
 
-    public function ShowBuyView($ShowId)
+    public function ShowBuyView($ShowId, $message="")
     {
         ///Verificacion de tickets disponibles
         $Show = new Show();
@@ -136,10 +136,11 @@ class PurchaseController{
             } else{
                 $message = $pdoE->getMessage();
             }
-            
+            $this->ShowBuyView($ShowId, $message);
         }
         catch(Exception $e){
             $message = $e->getMessage();
+            $this->ShowBuyView($ShowId, $message);
         }
             
         }

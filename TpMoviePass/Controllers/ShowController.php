@@ -36,7 +36,7 @@ class ShowController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
@@ -59,7 +59,7 @@ class ShowController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
@@ -81,7 +81,7 @@ class ShowController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }       
         }
         catch(Exception $e){
@@ -103,7 +103,7 @@ class ShowController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
         }
         catch(Exception $e){
@@ -126,7 +126,7 @@ class ShowController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
         }
         catch(Exception $e){
@@ -188,7 +188,7 @@ class ShowController{
                 if($pdoE->getCode() == 1045){
                     $message = "Wrong DB Password";
                 } else{
-                    $message = $pdo->getMessage();
+                    $message = $pdoE->getMessage();
                 }
                 $this->ShowAddView($roomID, $message);
             }
@@ -248,16 +248,18 @@ class ShowController{
             else {
                 $message = "Show cannot be deleted. There are purchases registrated";
             }
-            $this->ShowAvailableListView($message);
         }catch(PDOException $pdoE){
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
         }
         catch(Exception $e){
             $message = $e->getMessage();
+        }
+        finally{
+            $this->ShowAvailableListView($message);
         }
         }
     }
