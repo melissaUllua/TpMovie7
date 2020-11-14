@@ -4,7 +4,10 @@ namespace Models;
 
 class Ticket{
     private $TicketShow;
-    private $TicketSeatNumber;
+    private $TicketId;
+    private $Purchase;
+    private $User;
+    
 
     public function getTicketShow()
     {
@@ -18,13 +21,32 @@ class Ticket{
     }
 
  
-    public function getTicketSeatNumber()
+    public function getTicketTicketId()
     {
-        return $this->ShowSeatNumber;
+        return $this->ShowTicketId;
     }
-    public function setTicketSeatNumber($SeatNumber)
+    public function setTicketTicketId($TicketId)
     {
-        $this->Show = $SeatNumber;
+        $this->Show = $TicketId;
+
+    }
+
+    public function getTicketPurchase()
+    {
+        return $this->Showpurchase;
+    }
+    public function setTicketPurchase($purchase)
+    {
+        $this->Show = $purchase;
+
+    }
+    public function getTicketUser()
+    {
+        return $this->ShowUser;
+    }
+    public function setTicketUser($User)
+    {
+        $this->Show = $User;
 
     }
 }
