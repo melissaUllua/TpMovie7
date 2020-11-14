@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
 
+use \Exception as Exception;
+use \PDOException as PDOException;
 use DAO\GenreDAO as GenreDAO;
 use DAOBD\MovieDAOBD as MovieDAOBD;
 use DAOBD\GenreDAOBD as GenreDAOBD;
@@ -23,9 +25,24 @@ class GenreController{
 
     public function ShowListView()
     {
-        $genreList = $this->GenreDao->getAll();
-        require_once(VIEWS_PATH."movies-list.php");
-
+        $genreList = array();
+        try{
+            $genreList = $this->GenreDao->getAll();
+        }
+        catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdo->getMessage();
+            }          
+        }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
+            require_once(VIEWS_PATH."movies-list.php");
+        }
     }
 
 }

@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\User as User;    
     use DAOBD\Connection as Connection;
 
@@ -30,17 +31,21 @@
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
             }
-            catch(Exception $exAdd)
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
             {
-                throw $exAdd;
+                throw $ex;
             }
         }
 
         public function GetAll()
         {
+            $userList = array();
             try
             {
-                $userList = array();
+                
 
                 $query = "SELECT * FROM ".$this->tableName;
 
@@ -63,56 +68,56 @@
 
                     array_push($userList, $user);
                 }
-
-                return $userList;
             }
-            catch(Exception $exGetAll)
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
             {
-                throw $exGetAll;
+                throw $ex;
+            }
+            finally {
+                return $userList;
             }
         }
 
-        public function GetUser($user)
+         /**
+         * Trae todos los usuarios de la base de datos que coincidan en nombre
+         */
+        public function GetUser($user_aux)
         {
+            $user = new User();
             try
             {
-                $userList = array();
-
-                $query = 'SELECT * FROM Users WHERE Users.UserName ='. $user.getuserName();
+                
+                $query = 'SELECT * FROM '. $this->tableName .' WHERE UserName ="'. $user_aux->getuserName().'";';
 
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
-
-                return $resultSet;
-            }
-            catch(Exception $exGetUser)
-            {
-                throw $exGetUser;
-            }
-        }
-
-        public function GetUser2($user)
-        {
-            $user_found = new User();
-            try
-            {
-                
-                $users = $this->getAll();
-                foreach ($users as $user_aux){
-                    if ($user_aux->getuserName() == $user->getuserName()){
-                        $user_found = $user_aux;
-                    }
-
+                if($resultSet){
+                    $row = $resultSet[0];
+                    $user->setuserId($row['IdUser']);
+                    $user->setuserFirstName($row['UserFirstName']);
+                    $user->setuserLastName($row['UserLastName']);
+                    $user->setuserName($row['UserName']);
+                    $user->setuserPass($row['UserPass']);
+                    $user->setIsActive($row['UserIsActive']);
+                    $user->setuserEmail($row['UserEmail']);
+                    $user->setIsAdmin($row['UserIsAdmin']);
                 }
             }
-            catch(Exception $exGetUser2)
-            {
-                throw $exGetUser2;
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
-            return $user_found;
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                return $user;
+            }
         }
-
-        
+           
     }
 ?>

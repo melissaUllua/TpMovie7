@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\Movie as Movie;    
     use Models\Genre as Genre;    
 
@@ -35,15 +36,19 @@
             try {
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
-            } catch (\Throwable $ex) {
-    
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
                 throw $ex;
             }
         }
 
         public function getAll()    ///devuelve una lista de todos los generos
         {
-    
+            $this->genreList = array();
             $query = "SELECT * FROM" . ' ' . $this->tableName;
             try {
                 $this->connection = Connection::GetInstance();
@@ -54,10 +59,17 @@
                     $genre->setName($row['GenreName']);
                     array_push($this->genreList, $genre);
                 }
-                //var_dump($this->genreList);
+                
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
                 return $this->genreList;
-            } catch (\Throwable $th) {
-                throw $th;
             }
         }
 
@@ -65,6 +77,7 @@
         public function searchById($idGenre)  //busca un genero por su ID y lo devuelve como objeto
         {
 
+            $genre = new Genre();
             $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre= $idGenre";
     
             //$parameters["IdGenre"] = $idGenre;
@@ -75,16 +88,20 @@
                 $resultSet = $this->connection->Execute($query);
 
                 if ($resultSet != null) {
-                    $genre = new Genre();
+                   
                     $genre->setId($resultSet[0]["IdGenre"]);
-                    $genre->setName($resultSet[0]["GenreName"]);
-
-                    return $genre;
-                } else {
-                    return null;
+                    $genre->setName($resultSet[0]["GenreName"]);   
                 }
-            } catch (\Throwable $th) {
-                throw $th;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally{
+                return $genre;
             }
         }
 
@@ -116,14 +133,18 @@
                         array_push($movieList, $movie);
                     }
 
+                } 
 
-                    return $genre;
-                } else {
-                    return null;
-                }
-
-            } catch (\Throwable $th) {
-                throw $th;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                return $movieList;
             }
 
 
@@ -132,26 +153,26 @@
         public function exists(Genre $genre)   //se fija por ID si existe. Si existe, la devuelve entera. si no, devuelve null
     {
 
-        //$parameters["IdGenre"] = $genre->getId();
+        $resultSet = array();
 
         try {
             $query = "SELECT * FROM " . $this->tableName . " WHERE IdGenre = " . $genre->getId() . ";"; ///cambiar
             $this->connection = Connection::GetInstance();
 
             $resultSet = $this->connection->Execute($query);
-
-            return $resultSet;
         
-        } catch (\Throwable $th) {
-            throw $th;
+        }
+        catch(PDOException $pdoE){
+            throw $pdoE;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
+        finally {
+            return $resultSet;
         }
     }
-
-
-
-
-
-
 
     public function updateDatabaseGenres()
     {
@@ -178,12 +199,15 @@
                 }
             }
         
-        } catch (\Throwable $th) {
-            throw $th;
+        }
+        catch(PDOException $pdoE){
+            throw $pdoE;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
         }
     }
-
-
 
     }
 ?>

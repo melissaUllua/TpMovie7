@@ -6,15 +6,14 @@
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-          <?php 
+               <h2 class="mb-4 message">Add Movie Show</h2>
+               <?php 
                if(isset($message))
                {
                     ?> <p class= "message-small"> <?php echo $message; ?> </p>
                     <?php   
                }                                                                                                                                                                                                                                                                                                                                                                                                                              
           ?>
-               <h2 class="mb-4">Add Movie Show</h2>
-               
                <form action="<?php echo FRONT_ROOT."Show/Add/"?>" method="get" class="bg-light-alpha p-5">
                     <div class="row">                         
                          <div class="col-lg-4">

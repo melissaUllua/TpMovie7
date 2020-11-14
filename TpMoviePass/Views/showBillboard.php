@@ -70,7 +70,7 @@
                               }
                          }else{
                               ?>
-                              <h4 style="text-align:center;"><b><?php echo ("Sorry! There are no movies on Billboard this week. Come back soon!") ?></b></h4>
+                              <h4 class="message"><b><?php echo ("Sorry! There are no movies on Billboard this week. Come back soon!") ?></b></h4>
                          <?php
                          }
                          ?>

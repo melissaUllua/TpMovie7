@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\Movie as Movie;    
     use Models\Genre as Genre; 
     use DAOBD\Connection as Connection;
@@ -44,7 +45,15 @@
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 $this->addGenresByMovies($movie);
-            } catch (\Throwable $ex) {
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            catch (\Throwable $ex) {
                
                 throw $ex;
             }
@@ -53,17 +62,24 @@
 
         public function exists(Movie $movie)   //se fija por ID si existe. Si existe, la devuelve entera. si no, la agrega. va a servir para el update
         {
+            $resultSet = array();
     
-        try {
+            try {
                 $query = 'SELECT * FROM '. $this->tableName . ' WHERE  IdMovie = ' . $movie->getId() . ';';
                 $this->connection = Connection::GetInstance();
     
                 $resultSet = $this->connection->Execute($query);
                 //var_dump($resultSet);
-               
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally{
                 return $resultSet;
-            } catch (\Throwable $th) {
-                throw $th;
             }
         }
     
@@ -102,10 +118,16 @@
     
                     array_push($this->moviesList, $movie);
                 }
-                   //echo "BASE DE DATOS";
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
                 return $this->moviesList;
-            } catch (\Throwable $th) {
-                throw $th;
             }
         }
     
@@ -114,6 +136,7 @@
         public function searchById($id)  //busca una pelicula por su ID
         {
 
+            $movie = new Movie();
             $query = 'SELECT * FROM ' . $this->tableName .' WHERE IdMovie = "' . $id .'";';
     
             //$parameters["IdMovie"] = $id;
@@ -123,7 +146,6 @@
     
                 $resultSet = $this->connection->Execute($query);
                 if ($resultSet != null) {
-                    $movie = new Movie();
                     $movie->setId($resultSet[0]["IdMovie"]);
                     $movie->setTitle($resultSet[0]["MovieTitle"]);
                     $movie->setDuration($resultSet[0]["MovieDuration"]);
@@ -141,13 +163,17 @@
                     }
 
                     $movie->setPoster_path($resultSet[0]["MoviePosterPath"]);
-
-                    return $movie;
-                } else {
-                    return null;
                 }
-            } catch (\Throwable $th) {
-                throw $th;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                return $movie;
             }
         }
 
@@ -173,23 +199,23 @@
 
                 if ($resultSet != null) {
                     foreach($resultSet as $row){
-                        //var_dump($row['IdGenre']);
                         $genre = new Genre();
                         $genre = $DAOGenre->searchById($row['IdGenre']);
                         array_push($arrayGenres, $genre);
                     }
     
-                } else {
-
-                    return null;
                 }
-                //var_dump("HOLA ------------------");
-                //var_dump($arrayGenres);
-                //var_dump("HOLA ------------------");
-                return $arrayGenres;
 
-            } catch (\Throwable $th) {
-                throw $th;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                return $arrayGenres;
             }
         }
 
@@ -227,8 +253,13 @@
                     }
                 }
             
-            } catch (\Throwable $th) {
-                throw $th;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
             }
         }
 
@@ -259,8 +290,12 @@
                 try {
                     $this->connection = Connection::GetInstance();
                     $this->connection->ExecuteNonQuery($query, $parameters);
-                } catch (\Throwable $ex) {
-        
+                }
+                catch(PDOException $pdoE){
+                    throw $pdoE;
+                }
+                catch(Exception $ex)
+                {
                     throw $ex;
                 }
             }
@@ -286,10 +321,16 @@
                     array_push($this->moviesList, $movie);
                 }
 
-                return $this->moviesList;
-
-            } catch (\Throwable $th) {
-                throw $th;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                return $this->moviesList;            
             }
         }
 
