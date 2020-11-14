@@ -4,6 +4,7 @@ namespace Controllers;
 
 use \Exception as Exception;
 use \PDOException as PDOException;
+use \MailController as MailController;
 use Models\Show as Show;
 use DAO\ShowDAO as ShowDAO;
 use DAOBD\ShowDAOBD as ShowDAOBD;
@@ -66,7 +67,7 @@ class PurchaseController{
         if($pdoE->getCode() == 1045){
             $message = "Wrong DB Password";
         } else{
-            $message = $pdo->getMessage();
+            $message = $pdoE->getMessage();
         }
         
          }
@@ -125,12 +126,15 @@ class PurchaseController{
 
             $this->ShowPurchaseView($purchase);
 
+            //$emailcontroller = new MailController();
+            //$emailcontroller->sendEmailFalopa();
+
         }
         catch(PDOException $pdoE){
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
