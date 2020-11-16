@@ -29,6 +29,7 @@ use Models\Cinema as Cinema;
                     <?php } 
                    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){ ?>
                     <th>Delete Show</th>
+                    <th>Total </th>
                     <?php } ?>
 
                 </thead>
@@ -70,11 +71,21 @@ use Models\Cinema as Cinema;
                                     Show</button>
                             </form>
                         </td>
+                        <?php if($_SESSION['isAdmin'] == 1){ ?>
+                        <td>
+                            <form action="<?php echo FRONT_ROOT."Purchase/ShowPurchaseByShow/".$show->getShowId();?>" method="get"
+                                class="mb-5">
+                                <input type="hidden" value="<?php echo $show->getShowId();?>" name="IdShow">
+                                <button type="submit" name="button" class="btn btn-dark ml-auto">Total 
+                                    </button>
+                            </form>
+                        </td>
                         <?php } ?>
 
 
                         <?php }
                               }
+                            }
                          ?>
                 </tbody>
             </table>

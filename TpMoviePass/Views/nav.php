@@ -31,6 +31,7 @@
                     </div>
                 
                 </li> 
+                
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Display Movies</a>
                </li>  
@@ -38,6 +39,9 @@
 
                <li class="nav-item">
                     <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/updateDatabases">Update Database</a>
+               </li>
+               <li class="nav-item">
+                    <a class="nav-link" href="<?php echo FRONT_ROOT ?>Prueba/ShowPurchaseByShow">Purchase by show</a>
                </li>
                       
                         <!-- <li class="nav-item ">

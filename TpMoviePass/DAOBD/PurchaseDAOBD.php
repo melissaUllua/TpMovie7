@@ -4,6 +4,7 @@
     use \Exception as Exception;
     use \PDOException as PDOException;
     use Models\Purchase as Purchase;
+    use Models\User as User;
     use Models\CreditCard as CreditCard;       
     use DAOBD\Connection as Connection;
 
@@ -97,7 +98,107 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 return $flag;
             }
         }
+        public function GetPurchasesTotalIncome($IdShow)
+        {
+           
+            try
+            {
+                $purchaseList = array();
+                $totalSeats = null;
+               
+                ///funciona bien, necesito ver como pasarlo a una sola variable
+                $query = 'SELECT SUM(seats) as totalSeats FROM '.$this->tableName . ' WHERE IdShow = "' . $IdShow . '";';
+                
+                $this->connection = Connection::GetInstance();
 
+                $resultSet = $this->connection->Execute($query);
+                
+                if (!empty($resultSet))
+                {                
+                   ///no se hace así, pero no estoy segura de como se hace tampoco
+                    $totalSeats = $resultSet();
+                   
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+        public function GetPurchasesByUser($IdUser) ///no la probé pero debería funcionar
+        {
+           
+            try
+            {
+                $purchaseList = array();
+               
+                $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdUser = "' . $IdUser . '";';
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row) {
+    
+                   $purchase = new Purchase();
+                   $purchase->setIdPurchase($row["IdPurchase"]);
+                   $purchase->setShow()->setShowId($row["IdShow"]);
+                   $purchase->setUser($row["IdUser"]);
+                   $purchase->setAmountOfSeats($row["Seats"]);
+                   $purchase->setCreditCard()->setIdCreditCard($row["IdCard"]);
+                   $purchase->setFinalPrice($row["FinalPrice"]);
+    
+                    array_push($this->purchaseList, $purchase);
+                }
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                return $this->purchaseList;
+            }
+        }
+        public function GetPurchasesByMovies($IdMovie)
+        {
+           
+            try
+            {
+                $purchaseList = array();
+               /// pensé en hacer esta query con una subquery, pero todavía es medio dudoso
+                ///$query = 'SELECT * FROM '.$this->tableName . ' WHERE IdUser = "' . $IdUser . '";';
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row) {
+    
+                   $purchase = new Purchase();
+                   $purchase->setIdPurchase($row["IdPurchase"]);
+                   $purchase->setShow()->setShowId($row["IdShow"]);
+                   $purchase->setUser($row["IdUser"]);
+                   $purchase->setAmountOfSeats($row["Seats"]);
+                   $purchase->setCreditCard()->setIdCreditCard($row["IdCard"]);
+                   $purchase->setFinalPrice($row["FinalPrice"]);
+    
+                    array_push($this->purchaseList, $purchase);
+                }
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                return $this->purchaseList;
+            }
+        }
 
     }
+?>
 
