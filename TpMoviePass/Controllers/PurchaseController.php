@@ -42,12 +42,12 @@ class PurchaseController{
         //var_dump($showId);
         require_once(VIEWS_PATH."showBuyForm.php");
     }
-    public function ShowPurchaseByShow($IdShow)
+    public function ShowPurchaseByShow($IdUser)
     {
-        var_dump($IdShow);
-        $showsList = array();
-        $showsList = $this->purchaseDAO->GetPurchasesTotalIncome($IdShow);
-        require_once('showPurchaseByShow.php');
+        
+        //$showsList = array();
+        $PurchasesList = $this->purchaseDAO->GetPurchasesByUser($IdUser);
+        require_once(VIEWS_PATH."showPurchaseByShow.php");
     }
 
     public function ShowPurchaseView($purchase)

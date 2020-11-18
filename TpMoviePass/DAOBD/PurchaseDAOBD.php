@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
             }
         }
         public function GetPurchasesTotalIncome($IdShow)
-        {
+        {///funciona, hay que agregarla a las vistas
            
             try
             {
@@ -115,9 +115,12 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 
                 if (!empty($resultSet))
                 {                
-                   ///no se hace así, pero no estoy segura de como se hace tampoco
-                    $totalSeats = $resultSet();
-                   
+                
+                  $row = $resultSet['0'];
+                  $totalSeats = $row["totalSeats"];
+                  var_dump($totalSeats);
+                   return $totalSeats;
+                }
             }
             catch(Exception $ex)
             {
@@ -168,7 +171,8 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
             {
                 $purchaseList = array();
                /// pensé en hacer esta query con una subquery, pero todavía es medio dudoso
-                ///$query = 'SELECT * FROM '.$this->tableName . ' WHERE IdUser = "' . $IdUser . '";';
+                $query = 'SELECT * FROM '.$this->tableName .
+                'WHERE IdShow in (SELECT IdShow FROM Shows WHERE IdMovie = "' .$IdMovie .'");'; 
                 
                 $this->connection = Connection::GetInstance();
 
@@ -195,7 +199,42 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 throw $ex;
             }
             finally {
+                var_dump($purchaseList);
                 return $this->purchaseList;
+            }
+        }
+        public function GetPurchasesTotalIncomeByMovie($IdMovie)
+        {///funciona, hay que agregarla a las vistas
+           
+            try
+            {
+                $purchaseList = array();
+                $totalIncome = 0;
+               /// pensé en hacer esta query con una subquery, pero todavía es medio dudoso
+                $query = 'SELECT FinalPrice FROM '.$this->tableName .
+                ' WHERE IdShow in (SELECT IdShow FROM Shows WHERE IdMovie = "' .$IdMovie .'");'; 
+                
+                
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+              
+                foreach ($resultSet as $row) {
+                   // var_dump($resultSet);
+                  $totalIncome = $totalIncome + $row["FinalPrice"];
+                    
+                }
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                //var_dump($totalIncome);
+                return $totalIncome;
             }
         }
 
