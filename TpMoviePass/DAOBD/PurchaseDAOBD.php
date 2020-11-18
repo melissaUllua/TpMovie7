@@ -98,13 +98,13 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 return $flag;
             }
         }
-        public function GetPurchasesTotalIncome($IdShow)
+        public function TotalSeatsByShow($IdShow)
         {///funciona, hay que agregarla a las vistas
            
             try
             {
                 $purchaseList = array();
-                $totalSeats = null;
+                $totalSeats = 0;
                
                 ///funciona bien, necesito ver como pasarlo a una sola variable
                 $query = 'SELECT SUM(seats) as totalSeats FROM '.$this->tableName . ' WHERE IdShow = "' . $IdShow . '";';
@@ -117,14 +117,120 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 {                
                 
                   $row = $resultSet['0'];
+                  
+                  if ($row["totalSeats"] == null)
+                  {
+                      $totalSeats = 0;
+                     // var_dump($row["totalSeats"]);   
+                      
+                  }
+                  else
+                  {
                   $totalSeats = $row["totalSeats"];
-                  var_dump($totalSeats);
-                   return $totalSeats;
+                 
+                  }
+                  
                 }
             }
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally
+            {
+                return $totalSeats; 
+            }
+        }
+        public function TotalSeatsByMovie($IdMovie)
+        {///funciona, hay que agregarla a las vistas
+           
+            try
+            {
+                $purchaseList = array();
+                $totalSeats = 0;
+               
+                ///funciona bien, necesito ver como pasarlo a una sola variable
+                $query = 'SELECT SUM(seats) as totalSeats FROM '.$this->tableName .  ' as p 
+                INNER JOIN Shows s on p.IdShow = s.IdShow 
+                INNER JOIN Movies m on m.IdMovie = s.IdMovie
+                WHERE m.IdMovie = " ' . $IdMovie . '" ;';
+                //var_dump($query);
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                if (!empty($resultSet))
+                {                
+                
+                  $row = $resultSet['0'];
+                  
+                  
+                  if ($row["totalSeats"] == null)
+                  {
+                      $totalSeats = 0;
+                     // var_dump($row["totalSeats"]);   
+                      
+                  }
+                  else
+                  {
+                  $totalSeats = $row["totalSeats"];
+                 
+                  }
+                  
+                }
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally
+            {
+                return $totalSeats; 
+            }
+        }
+        public function TotalSeatsByCinema($IdCinema)
+        {///funciona, hay que agregarla a las vistas
+           
+            try
+            {
+                $purchaseList = array();
+                $totalSeats = 0;
+               
+                ///funciona bien, necesito ver como pasarlo a una sola variable
+                $query = 'SELECT SUM(seats) as totalSeats FROM '.$this->tableName .  ' as p 
+                INNER JOIN Shows s on p.IdShow = s.IdShow 
+                INNER JOIN Rooms r on r.IdRoom = s.IdRoom
+                WHERE r.IdCinema = " ' . $IdCinema . '" ;';
+               // var_dump($query);
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                if (!empty($resultSet))
+                {                
+                
+                  $row = $resultSet['0'];
+                  
+                  if ($row["totalSeats"] == null)
+                  {
+                      $totalSeats = 0;
+                    
+                  }
+                  else
+                  {
+                  $totalSeats = $row["totalSeats"];
+                 
+                  }
+                  
+                }
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally
+            {
+                return $totalSeats; 
             }
         }
         public function GetPurchasesByUser($IdUser) ///no la probé pero debería funcionar
@@ -237,7 +343,54 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 return $totalIncome;
             }
         }
+       
+        public function TotalIncomeByCinema($IdCinema)
+        {///funciona, hay que agregarla a las vistas
+           
+            try
+            {
+                $purchaseList = array();
+                $totalSeats = 0;
+               
+                ///funciona bien, necesito ver como pasarlo a una sola variable
+                $query = 'SELECT SUM(FinalPrice) as totalSeats FROM '.$this->tableName .  ' as p 
+                INNER JOIN Shows s on p.IdShow = s.IdShow 
+                INNER JOIN Rooms r on r.IdRoom = s.IdRoom
+                WHERE r.IdCinema = " ' . $IdCinema . '" ;';
+               // var_dump($query);
+                $this->connection = Connection::GetInstance();
 
+                $resultSet = $this->connection->Execute($query);
+                
+                if (!empty($resultSet))
+                {                
+                
+                  $row = $resultSet['0'];
+                  
+                  if ($row["totalSeats"] == null)
+                  {
+                      $totalSeats = 0;
+                    
+                  }
+                  else
+                  {
+                  $totalSeats = $row["totalSeats"];
+                 
+                  }
+                  
+                }
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally
+            {
+                return $totalSeats; 
+            }
+        }
+       
+      
     }
 ?>
 

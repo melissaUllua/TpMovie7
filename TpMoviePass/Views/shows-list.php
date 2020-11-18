@@ -2,7 +2,9 @@
 require_once('nav.php');
 use Models\Movie as Movie;
 use Models\Cinema as Cinema;
+use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
 
+$purchase = new PurchaseDAOBD();
 
 ?>
 <main class="py-5 text-white">
@@ -73,12 +75,7 @@ use Models\Cinema as Cinema;
                         </td>
                         <?php if($_SESSION['isAdmin'] == 1){ ?>
                         <td>
-                            <form action="<?php echo FRONT_ROOT."Purchase/ShowPurchaseByShow/".$show->getShowId();?>" method="get"
-                                class="mb-5">
-                                <input type="hidden" value="<?php echo $show->getShowId();?>" name="IdShow">
-                                <button type="submit" name="button" class="btn btn-dark ml-auto">Total 
-                                    </button>
-                            </form>
+                           <?php echo ($purchase->TotalSeatsByShow($show->getShowId())) ?>
                         </td>
                         <?php } ?>
 
