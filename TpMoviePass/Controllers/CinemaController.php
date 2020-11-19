@@ -6,6 +6,7 @@ use \PDOException as PDOException;
 use DAO\CinemaDAO as CinemaDAO;
 use Models\Cinema as Cinema;
 use DAOBD\CinemaDAOBD as CinemaDAOBD;
+use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
 use DAOBD\RoomDAOBD as RoomDAOBD;
 use DAOBD\ShowDAOBD as ShowDAOBD;
 
@@ -24,12 +25,14 @@ class CinemaController{
     { 
         require_once(VIEWS_PATH."add-cinema.php");   
     }
+    
 
     public function ShowListView($message = "")
     {
         $cinemaList = array();
         try{
             $cinemaList = $this->cinemaDAO->GetAll();
+            $purchase = new PurchaseDAOBD();
         }
        catch(PDOException $pdoE){
         if($pdoE->getCode() == 1045){

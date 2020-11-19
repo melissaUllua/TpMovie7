@@ -350,10 +350,10 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
             try
             {
                 $purchaseList = array();
-                $totalSeats = 0;
+                $totalIncome = 0;
                
                 ///funciona bien, necesito ver como pasarlo a una sola variable
-                $query = 'SELECT SUM(FinalPrice) as totalSeats FROM '.$this->tableName .  ' as p 
+                $query = 'SELECT SUM(FinalPrice) as totalIncome FROM '.$this->tableName .  ' as p 
                 INNER JOIN Shows s on p.IdShow = s.IdShow 
                 INNER JOIN Rooms r on r.IdRoom = s.IdRoom
                 WHERE r.IdCinema = " ' . $IdCinema . '" ;';
@@ -367,14 +367,14 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                 
                   $row = $resultSet['0'];
                   
-                  if ($row["totalSeats"] == null)
+                  if ($row["totalIncome"] == null)
                   {
-                      $totalSeats = 0;
+                      $totalIncome = 0;
                     
                   }
                   else
                   {
-                  $totalSeats = $row["totalSeats"];
+                  $totalIncome = $row["totalIncome"];
                  
                   }
                   
@@ -387,6 +387,95 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
             finally
             {
                 return $totalSeats; 
+            }
+        }
+        public function TotalIncomeByDate($idMovie, $fisrtDate, $lastDate)
+        {
+            try
+            {
+                $purchaseList = array();
+                $TotalIncome = 0 ;
+                $query = 'SELECT sum(finalPrice) as TotalIncome FROM ' . $this->tableName .' p
+                INNER JOIN shows s on p.idShow = s.Idshow
+                INNER JOIN movies m on s.idMovie = " '  . $idMovie . ' "
+                where s.ShowDate BETWEEN " ' .$fisrtDate. ' " AND "' .$lastDate. ' ";';
+                var_dump($query);
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                if (!empty($resultSet))
+                {                
+                
+                  $row = $resultSet['0'];
+                  
+                  if ($row["TotalIncome"] == null)
+                  {
+                      $TotalIncome = 0;
+                    
+                  }
+                  else
+                  {
+                  $TotalIncome = $row["TotalIncome"];
+                 
+                  }
+                  
+                }
+            
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally
+            {
+                return $TotalIncome; 
+            }
+        }
+       
+        public function TotalIncomeByDateByCinema($idCinema, $firstDate, $lastDate)
+        {
+            try
+            {
+                $purchaseList = array();
+                $TotalIncome = 0 ;
+                $query = 'SELECT SUM(FinalPrice) as TotalIncome FROM '.$this->tableName .  ' as p 
+                INNER JOIN Shows s on p.IdShow = s.IdShow 
+                INNER JOIN Rooms r on r.IdRoom = s.IdRoom
+                WHERE r.IdCinema = " ' . $idCinema . '" 
+                AND s.ShowDate BETWEEN " ' .$firstDate. ' " AND "' .$lastDate. ' ";';
+                var_dump($query);
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                if (!empty($resultSet))
+                {                
+                
+                  $row = $resultSet['0'];
+                  
+                  if ($row["TotalIncome"] == null)
+                  {
+                      var_dump($totalIncome);
+                      $TotalIncome = 0;
+                    
+                  }
+                  else
+                  {
+                  $TotalIncome = $row["TotalIncome"];
+                 
+                  }
+                  
+                }
+            
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally
+            {
+                return $TotalIncome; 
             }
         }
        

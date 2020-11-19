@@ -4,7 +4,7 @@ use Models\Movie as Movie;
 use Models\Cinema as Cinema;
 use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
 
-$purchase = new PurchaseDAOBD();
+
 
 ?>
 <main class="py-5 text-white">
@@ -75,7 +75,8 @@ $purchase = new PurchaseDAOBD();
                         </td>
                         <?php if($_SESSION['isAdmin'] == 1){ ?>
                         <td>
-                           <?php echo ($purchase->TotalSeatsByShow($show->getShowId())) ?>
+                           <?php echo ($purchase->TotalSeatsByShow($show->getShowId()) . "/" . $show->getShowRoom()->getRoomCapacity()) ?>
+                           
                         </td>
                         <?php } ?>
 

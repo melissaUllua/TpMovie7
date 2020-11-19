@@ -4,9 +4,8 @@
 
     use Models\Cinema as Cinema; 
     use Models\Room as Room;
-    use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
 
-    $purchase = new PurchaseDAOBD();
+
 
 ?>
 <main class="py-5">
