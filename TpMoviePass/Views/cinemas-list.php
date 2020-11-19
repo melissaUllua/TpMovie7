@@ -5,6 +5,8 @@
     use Models\Cinema as Cinema; 
     use Models\Room as Room;
 
+
+
 ?>
 <main class="py-5">
      <h1></h1>
@@ -23,6 +25,8 @@
                          <th>Name</th>
                          <th>Address</th>
                          <th>Availability</th>
+                         <th>Total sold seats</th>
+                         <th>Total income</th>
                          
                     </thead>
                     <tbody>
@@ -38,12 +42,7 @@
                                    {
                                        echo "Available"; if ($cinema->getCinemaAmountOfRooms()>0){?>
                                        
-                                        <form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST">
                                        
-                                        <input type="hidden" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
-                                        <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
-                                       <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowAddView/'?>"class="btn btn-dark">Add room</button> -->
-                                        </form>
                                  <?php  }}
                                    else
                                    {
@@ -51,9 +50,30 @@
                                    }
                                        ?>   
                                         </td>
+                                   <td>
+                                   <?php echo $purchase->TotalSeatsByCinema($cinema->getCinemaId()) ?>
+                                   </td>
+                                   <td>
+                                   <?php echo $purchase->TotalIncomeByCinema($cinema->getCinemaId()) ?>
+                                   </td>
+                                   <td>
+                                   <?php  if ($cinema->getCinemaAmountOfRooms()>0){?>
+                                   <form action="<?php echo FRONT_ROOT."Room/ShowListView/"?>" method="POST">
+                                       
+                                       <input type="hidden" name = "cinemaID", value= "<?php echo $cinema->getCinemaId() ?>">
+                                       <button type="submit" name="button" class="btn btn-dark ml-auto d-block">See available Rooms</button>
+                                      <!-- <button onclick="window.location.href='<?php echo FRONT_ROOT.'Room/ShowAddView/'?>"class="btn btn-dark">Add room</button> -->
+                                      <?php  }
+                                   else
+                                   {
+                                           echo "There's not available rooms";
+                                   }
+                                       ?>   
+                                       </form>
+                                       </td>
                               </tr> 
-                                   <?php
-                              }
+                              <?php }
+                              
                          ?>
 
                     </tbody>

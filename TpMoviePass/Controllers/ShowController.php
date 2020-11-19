@@ -77,6 +77,7 @@ class ShowController{
         $showList = array();
         try{
             $showList = $this->showDAO->GetAvailable();
+            $purchase = new PurchaseDAOBD();
         }catch(PDOException $pdoE){
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";

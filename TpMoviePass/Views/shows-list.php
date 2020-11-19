@@ -2,6 +2,8 @@
 require_once('nav.php');
 use Models\Movie as Movie;
 use Models\Cinema as Cinema;
+use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
+
 
 
 ?>
@@ -29,6 +31,7 @@ use Models\Cinema as Cinema;
                     <?php } 
                    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){ ?>
                     <th>Delete Show</th>
+                    <th>Total </th>
                     <?php } ?>
 
                 </thead>
@@ -70,11 +73,17 @@ use Models\Cinema as Cinema;
                                     Show</button>
                             </form>
                         </td>
+                        <?php if($_SESSION['isAdmin'] == 1){ ?>
+                        <td>
+                           <?php echo ($purchase->TotalSeatsByShow($show->getShowId()) . "/" . $show->getShowRoom()->getRoomCapacity()) ?>
+                           
+                        </td>
                         <?php } ?>
 
 
                         <?php }
                               }
+                            }
                          ?>
                 </tbody>
             </table>
