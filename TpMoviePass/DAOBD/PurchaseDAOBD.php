@@ -455,7 +455,7 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                   
                   if ($row["TotalIncome"] == null)
                   {
-                      var_dump($totalIncome);
+                      var_dump($TotalIncome);
                       $TotalIncome = 0;
                     
                   }
