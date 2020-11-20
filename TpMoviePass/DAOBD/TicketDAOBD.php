@@ -21,11 +21,12 @@
             $message = ""; 
             try
             { ///if con verificacion de asiento en la sala 
-                    $query = "INSERT INTO ".$this->tableName." (IdShow, TicketSeatNumber) 
-                VALUES (:IdShow, :TicketSeatNumber);";
+                    $query = "INSERT INTO ".$this->tableName." (IdShow, Purchase, IdUser) 
+                VALUES (:IdShow, :Purchase, :IdUser);";
                 
-                $parameters["IdShow"] = $ticket->getTicketShow();
-                $parameters["TicketSeatNumber"] = $ticket->getTicketSeatNumber();
+                $parameters["IdShow"] = $ticket->getTicketShow()->getShowId();
+                $parameters["Purchase"] = $ticket->getTicketPurchase();
+                $parameters["IdUser"] = $ticket->getTicketUser()->getUserId();
                 
                 $this->connection = Connection::GetInstance();
 
@@ -59,7 +60,8 @@
                 {                
                     $ticket = new Ticket();
                     $ticket->setTicketShow($row["IdShow"]);
-                    $ticket->setTicketSeatNumber($row["TicketSeatNumber"]);
+                    $ticket->setTicketPurchase($row["TicketPurchase"]);
+                    $ticket->setTicketUser($row["IdUser"]);
                     
                     array_push($TicketList, $ticket);
                 }
@@ -77,12 +79,15 @@
                 return $TicketList;
             }
         }
-        public function getAvailable() ///modificar para disponibles x show
+        public function GetTicketsByShow($IdShow)
         {
-            $cinemaList = array();
+           
             try
-            {                
-                $query = 'SELECT * FROM '.$this->tableName . ' WHERE cinemaAvailability = "1";';
+            {
+                $ticketList = array();
+               
+                
+                $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdShow = "' . $IdShow . '";';
                 
                 $this->connection = Connection::GetInstance();
 
@@ -90,18 +95,17 @@
                 
                 foreach ($resultSet as $row)
                 {                
-                    $cinema = new Cinema();
-                    $cinema->setCinemaId($row["IdCinema"]);
-                    $cinema->setCinemaName($row["CinemaName"]);
-                    $cinema->setCinemaAddress($row["CinemaAddress"]);
-                    $cinema->setCinemaAvailability($row["CinemaAvailability"]);
-                    
+                   
+                    $ticket = new Ticket();
+                    $ticket->setTicketId("IdTicket");
+                    $ticket->setTicketShow($row["IdShow"]);
+                    $ticket->setTicketUser($row["IdUser"]);
 
-                    array_push($cinemaList, $cinema);
+                   
+                    array_push($ticketList, $ticket);
                 }
-            }
-            catch(PDOException $pdoE){
-                throw $pdoE;
+                //var_dump($ticketList);
+                return $ticketList;
             }
             catch(Exception $ex)
             {
@@ -112,6 +116,7 @@
                 return $cinemaList;
             }
         }
+
     
     } 
     ?>

@@ -29,21 +29,57 @@ class PurchaseController{
        // $this->roomDAO = new RoomDAO();
         $this->purchaseDAO = new PurchaseDAOBD();
     }
-    public function ShowSelectCard($IdUser)
-    {
-        $cardDAO = new CreditCardDAOBD();
-        $cardList = $cardDAO->CardsByUser($IdUser);
-        var_dump($IdUser);
-        require_once('select-creditcard.php');
-    }
 
+    public function ShowConsultsByMovies()
+    {
+        $movieDAOBD = new MovieDAOBD();
+        $movieList = $movieDAOBD->getAll();
+        require_once(VIEWS_PATH.'consultsByMovie.php');
+    }
+    public function ShowConsultsByCinema()
+    {
+        $CinemaDAO = new CinemaDAOBD();
+        $cinemaList = array();
+        $cinemaList = $CinemaDAO->getAvailable();
+       // var_dump($cinemaList);
+        require_once(VIEWS_PATH.'consultsByCinema.php');
+    }
+    public function ConsultByMovie($IdMovie, $firstDate, $lastDate)
+    {
+      
+        $TotalIncome = $this->purchaseDAO->TotalIncomeByDate($IdMovie, $firstDate, $lastDate);
+        var_dump($TotalIncome);
+        require_once(VIEWS_PATH.'purchase-list.php');
+
+<<<<<<< HEAD
     public function ShowBuyView($ShowId, $message="")
+=======
+
+    }
+    public function ConsultByCinema($IdCinema, $firstDate, $lastDate)
+    {
+      
+        $TotalIncome = $this->purchaseDAO->TotalIncomeByDateByCinema($IdCinema, $firstDate, $lastDate);
+        var_dump($TotalIncome);
+        require_once(VIEWS_PATH.'purchase-list.php');
+
+
+    }
+    public function ShowBuyView($ShowId)
+>>>>>>> 4ba3a86b76ee32b0839856263600cf4fffe270b5
     {
         ///Verificacion de tickets disponibles
         $Show = new Show();
         $Show->setShowId($ShowId);
         //var_dump($showId);
         require_once(VIEWS_PATH."showBuyForm.php");
+    }
+    public function ShowPurchaseByShow($IdUser)
+    {
+        
+        //$showsList = array();
+        $PurchasesList = $this->purchaseDAO->GetPurchasesByUser($IdUser);
+        require_once(VIEWS_PATH."showPurchaseByShow.php");
     }
 
     public function ShowPurchaseView($purchase)
