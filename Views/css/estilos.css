@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600');
+
+html, body {
+     height: 100%;
+}
+/*
+body {
+     font-family: 'Montserrat', sans-serif;
+     background-image: url(../img/cine.jpg);
+     color: white;
+     -webkit-background-size: cover;
+        -moz-background-size: cover;
+          -o-background-size: cover;
+             background-size: cover;
+}*/
+body {
+     background: #e96443;  /* fallback for old browsers */
+     background: -webkit-linear-gradient(to right, #904e95, #e96443);  /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #904e95, #e96443); 
+     
+     font-family: Arial, Helvetica, sans-serif; 
+   }
+
+.bg-picture{
+     background: url(../img/watercolors.png);
+}
+
+.height-100 {
+     height: 100%;
+}
+
+.bg-dark-alpha {
+     background-color: rgba(0,0,0,0.2);
+}
+.bg-light-alpha {
+     /*background-color: rgba(255,255,255,0.2); 
+     background-color: white; */
+     background: #e96443;  /* fallback for old browsers */
+     background: -webkit-linear-gradient(to right, #904e95, #e96443);  /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #904e95, #e96443); 
+}
+
+.login-form {
+     width: 500px;
+     border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.card {
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     transition: 0.3s;
+     width: 20%;
+     height: 30%;
+     border-radius: 3%;
+     text-align:center;
+     background-color: thistle;
+     margin: 1% 0.5%;
+     }
+
+     .card:hover {
+     box-shadow: 0 8px 160px 0 rgba(0,0,0,0.2);
+     text-align:center;
+     background-color: rgba(255,255,255,0.2);
+     }
+
+     .containerMovies {
+     display: flex;
+     float: left;
+     justify-content: space-between;
+    /* border-style: solid;
+     border-width: 1px; */
+     margin-left: 0px;
+     margin-right: 0px;
+     flex-direction: row;
+     flex-wrap: wrap;
+     padding: 2% 1%;
+     }
+     
+     .flex-container {
+     width: 100%;
+     height: 250px;
+     background-color: rgba(0, 0, 150, .3);
+     text-align: center;
+     }
+     .flex-item {
+     box-sizing: border-box;
+     border: 1px solid #ddd;
+     background-color: rgba(0, 150, 0, .3);
+     display: inline-block;
+     width: 150px;
+     height: 250px;
+     }
+     .flex-item + .flex-item {
+     margin-left: 2%;
+     }
+
+     .message{
+          font-size: 300%;
+          text-align: center;
+          font-family:fantasy;
+          color: honeydew;
+     }
+
+     .message-small{
+          font-size: 150%;
+       /*   text-align: center;*/
+          color: honeydew;
+     }
