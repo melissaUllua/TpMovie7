@@ -59,7 +59,7 @@ class PurchaseController{
 
 
     }
-    public function ShowBuyView($ShowId)
+    public function ShowBuyView($ShowId, $message ="")
     {
         ///Verificacion de tickets disponibles
         $Show = new Show();
@@ -117,6 +117,28 @@ class PurchaseController{
             $show = new Show();
             $show->setShowId($ShowId);
             $purchase = new Purchase();
+           // $purchase->setAmountOfSeats($Seats);
+            $TotalSeats = $this->purchaseDAO->TotalSeatsByShow($ShowId);
+            $TotalSeats = $TotalSeats + $Seats;
+            $show = new Show();
+            $showDao = new ShowDAOBD();
+
+            $show = $showDao->GetOneById($ShowId); //GetOneById
+          
+            $room = new Room();
+            $roomDao = new RoomDAOBD();
+          
+            $room = $roomDao->getOneRoom($show->getShowRoom()->getRoomId());
+            //var_dump($TotalSeats);
+            if($TotalSeats > $room->getRoomCapacity()) ///Reviso que la cantidad de asientos agregados sea < que la capacidad
+            {
+                ///Puede que esa no sea la frase correcta
+                $message = "Sorry! There's not available that amount of seats";
+                $this->ShowBuyView($ShowId, $message);
+                echo "entra";
+            }
+            else
+            {
             $purchase->setAmountOfSeats($Seats);
             $cardDAO = new CreditCardDAOBD();
             $creditCard = new CreditCard();
@@ -140,29 +162,25 @@ class PurchaseController{
             }
              
             //// faltaria el calculo para el precio final////
-            $room = new Room();
-            $roomDao = new RoomDAOBD();
-            $show = new Show();
-            $showDao = new ShowDAOBD();
-
-            $show = $showDao->GetOneById($ShowId); //GetOneById
-          
-            $room = $roomDao->getOneRoom($show->getShowRoom()->getRoomId());
+           
 
             $finalPrice = ($room->getroomPrice() * $Seats);
+            
             $purchase->setCreditCard($creditCard);
             $purchase->setShow($show);
             $purchase->setFinalPrice($finalPrice);
+           
             $this->purchaseDAO->Add($purchase, $idCreditCard);
-
+            
             $this->ShowPurchaseView($purchase);
+        }
 
         }
         catch(PDOException $pdoE){
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }

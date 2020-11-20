@@ -74,7 +74,7 @@ class UserController{
                 if($pdoE->getCode() == 1045){
                     $message = "Wrong DB Password";
                 } else{
-                    $message = $pdo->getMessage();
+                    $message = $pdoE->getMessage();
                     $this->ShowSignUpView($message);
                 }
                 
@@ -139,7 +139,7 @@ class UserController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
                 $this->ShowLogInView($message);
             }
             
