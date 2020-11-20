@@ -49,6 +49,10 @@
             {
                 throw $ex;
             }
+            finally
+            {
+                return $this->connection->getLastId();
+            }
         }
 
                

@@ -21,6 +21,7 @@ use Models\PHPMailer as PHPMailer;
 use Models\ExceptionMailer as ExceptionMailer;
 use Models\SMTP as SMTP;
 
+
 class PurchaseController{
     private $purchaseDAO;
 
@@ -188,7 +189,7 @@ class PurchaseController{
         }
         finally
         {    
-            require_once(VIEWS_PATH."purchase-list.php");
+            require_once(VIEWS_PATH."purchaseList.php");
         }
     }
 
@@ -251,13 +252,14 @@ class PurchaseController{
             $purchase->setShow($show);
             $purchase->setFinalPrice($finalPrice);
            
-            $this->purchaseDAO->Add($purchase, $idCreditCard);
+            $idPurchase = $this->purchaseDAO->Add($purchase, $idCreditCard);
+           // var_dump($idPurchase);
             
             $this->ShowPurchaseView($purchase);
         }
 
-            $url = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $purchase->getIdPurchase() . '&choe=UTF-8.jpg';
-            $img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
+            $url = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $idPurchase . '&choe=UTF-8.jpg';
+            $img = FRONT_ROOT . 'QRimages/' . $idPurchase . '.jpg';
             file_put_contents($img, file_get_contents($url));
 
 
