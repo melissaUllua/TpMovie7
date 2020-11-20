@@ -25,8 +25,8 @@ class CinemaController{
     { 
         require_once(VIEWS_PATH."add-cinema.php");   
     }
-    
 
+    
     public function ShowListView($message = "")
     {
         $cinemaList = array();
@@ -38,7 +38,7 @@ class CinemaController{
         if($pdoE->getCode() == 1045){
             $message = "Wrong DB Password";
         } else{
-            $message = $pdo->getMessage();
+            $message = $pdoE->getMessage();
         }
         
     }
@@ -88,7 +88,7 @@ class CinemaController{
                 $message = "Wrong DB Password";
                 $this->ShowAddView($message);
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
                 $this->ShowAddView($message);
             }
         }
@@ -147,7 +147,7 @@ class CinemaController{
                 $message = "Wrong DB Password";
                 $this->ShowEditView($message);
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
                 $this->ShowEditView($message);
             }
             

@@ -17,6 +17,9 @@ use Models\Cinema as Cinema;
 use Models\Movie as Movie;
 use Models\CreditCard as CreditCard;
 use Models\Purchase as Purchase;
+use Models\PHPMailer as PHPMailer;
+use Models\ExceptionMailer as ExceptionMailer;
+use Models\SMTP as SMTP;
 
 class PurchaseController{
     private $purchaseDAO;
@@ -26,36 +29,100 @@ class PurchaseController{
        // $this->roomDAO = new RoomDAO();
         $this->purchaseDAO = new PurchaseDAOBD();
     }
-
-    public function ShowConsultsByMovies()
+    public function ShowConsultsByMovies($TotalIncome = "")
     {
         $movieDAOBD = new MovieDAOBD();
-        $movieList = $movieDAOBD->getAll();
-        require_once(VIEWS_PATH.'consultsByMovie.php');
+        try{
+            $movieList = $movieDAOBD->getAll();
+        }
+        catch(PDOException $pdoE){
+            if($pdoE->getCode() == 1045){
+                $message = "Wrong DB Password";
+            } else{
+                $message = $pdoE->getMessage();
+            }
+            
+             }
+            catch(Exception $e){
+                $message = $e->getMessage();
+            }
+            finally
+            {
+        
+            require_once(VIEWS_PATH.'consultsByMovie.php');
+            }
     }
-    public function ShowConsultsByCinema()
+    public function ShowConsultsByCinema($TotalIncome = "")
     {
+        //var_dump($totalIncome);
         $CinemaDAO = new CinemaDAOBD();
         $cinemaList = array();
+        try{
         $cinemaList = $CinemaDAO->getAvailable();
-       // var_dump($cinemaList);
+    }
+    catch(PDOException $pdoE){
+        if($pdoE->getCode() == 1045){
+            $message = "Wrong DB Password";
+        } else{
+            $message = $pdoE->getMessage();
+        }
+        
+         }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
         require_once(VIEWS_PATH.'consultsByCinema.php');
+        }
     }
     public function ConsultByMovie($IdMovie, $firstDate, $lastDate)
     {
-      
-        $TotalIncome = $this->purchaseDAO->TotalIncomeByDate($IdMovie, $firstDate, $lastDate);
-        var_dump($TotalIncome);
-        require_once(VIEWS_PATH.'purchase-list.php');
+        try{
+        $totalIncome = $this->purchaseDAO->TotalIncomeByDate($IdMovie, $firstDate, $lastDate);
+        //var_dump($totalIncome);
+    }
+    catch(PDOException $pdoE){
+        if($pdoE->getCode() == 1045){
+            $message = "Wrong DB Password";
+        } else{
+            $message = $pdoE->getMessage();
+        }
+        
+         }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
+        
+            $this->ShowConsultsByMovies($totalIncome);
+           // var_dump($totalIncome);
+        }
 
 
     }
     public function ConsultByCinema($IdCinema, $firstDate, $lastDate)
     {
-      
+        try {
         $TotalIncome = $this->purchaseDAO->TotalIncomeByDateByCinema($IdCinema, $firstDate, $lastDate);
-        var_dump($TotalIncome);
-        require_once(VIEWS_PATH.'purchase-list.php');
+    }
+    catch(PDOException $pdoE){
+        if($pdoE->getCode() == 1045){
+            $message = "Wrong DB Password";
+        } else{
+            $message = $pdoE->getMessage();
+        }
+        
+         }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
+            //var_dump($TotalIncome);
+        $this->ShowConsultsByCinema($TotalIncome);
+        }
 
 
     }
@@ -69,10 +136,24 @@ class PurchaseController{
     }
     public function ShowPurchaseByShow($IdUser)
     {
-        
-        //$showsList = array();
+        try{
         $PurchasesList = $this->purchaseDAO->GetPurchasesByUser($IdUser);
+    }
+    catch(PDOException $pdoE){
+        if($pdoE->getCode() == 1045){
+            $message = "Wrong DB Password";
+        } else{
+            $message = $pdoE->getMessage();
+        }
+        
+         }
+        catch(Exception $e){
+            $message = $e->getMessage();
+        }
+        finally
+        {
         require_once(VIEWS_PATH."showPurchaseByShow.php");
+        }
     }
 
     public function ShowPurchaseView($purchase)
@@ -98,7 +179,7 @@ class PurchaseController{
         if($pdoE->getCode() == 1045){
             $message = "Wrong DB Password";
         } else{
-            $message = $pdo->getMessage();
+            $message = $pdoE->getMessage();
         }
         
          }
@@ -107,7 +188,7 @@ class PurchaseController{
         }
         finally
         {    
-            require_once(VIEWS_PATH."purchaseList.php");
+            require_once(VIEWS_PATH."purchase-list.php");
         }
     }
 
@@ -175,6 +256,13 @@ class PurchaseController{
             $this->ShowPurchaseView($purchase);
         }
 
+            $url = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $purchase->getIdPurchase() . '&choe=UTF-8.jpg';
+            $img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
+            file_put_contents($img, file_get_contents($url));
+
+
+            $this->sendPurchaseEmail($purchase);
+
         }
         catch(PDOException $pdoE){
             if($pdoE->getCode() == 1045){
@@ -182,15 +270,116 @@ class PurchaseController{
             } else{
                 $message = $pdoE->getMessage();
             }
-            
+            $this->ShowBuyView($ShowId, $message);
         }
         catch(Exception $e){
             $message = $e->getMessage();
+            $this->ShowBuyView($ShowId, $message);
         }
             
         }
 
-}
 
 
-?>
+        public function sendPurchaseEmail(Purchase $purchase){
+
+
+            $mail = new PHPMailer(TRUE);
+    
+            /* Open the try/catch block. */
+            try {
+                /* Set the mail sender. */
+                $mail->setFrom('tpmoviepass.lab4.utn@gmail.com', 'TpMoviePass ADMIN');
+                
+                /* Add a recipient. */
+                $mail->addAddress($_SESSION['userEmail'], $_SESSION['userName']);
+                
+                /* Set the subject. */
+                $mail->Subject = 'Tu compra en MoviePass';
+    
+                /* SMTP parameters. */
+                
+                /* Tells PHPMailer to use SMTP. */
+                $mail->isSMTP();
+                $mail->isHTML(true);
+                
+                /* SMTP server address. */
+                $mail->Host = 'smtp.gmail.com';
+    
+                /* Use SMTP authentication. */
+                $mail->SMTPAuth = TRUE;
+                
+                /* Set the encryption system. */
+                $mail->SMTPSecure = 'tls';
+                
+                /* SMTP authentication username. */
+                $mail->Username = 'tpmoviepass.lab4.utn@gmail.com';
+                
+                /* SMTP authentication password. */
+                $mail->Password = 'melidaiagus';
+                
+                /* Set the SMTP port. */
+                $mail->Port = 587;
+
+
+                $mail->AddAttachment('QRimages/' . $purchase->getIdPurchase() . '.jpg');
+
+    
+                $showAux = new Show;
+                $showAux = $purchase->getShow();
+                $creditCardAux = new CreditCard;
+                $creditCardAux = $purchase->getcreditCard();
+    
+    
+                $mail->Body    = '<BODY BGCOLOR="White">
+                    <body>
+                    <div Style="align:center;">
+                    <p> PURCHASE INFORMATION  </p>
+                    <pre>
+                    <p>'."Date:". $showAux->getShowDate() ." - Hour: " .$showAux->getShowTime()."</p>
+                    <p>Tickets Quantity: " .$purchase->getAmountOfSeats()."</p>
+                    <p>Credit Card: " . $creditCardAux->getCardNumber()."</p>
+                    <p>TOTAL: $" .$purchase->getFinalPrice()."</p>".'
+                    </pre>
+                    <p>
+                    </p>
+                    </div>
+                    </br>
+                    <div style=" height="40" align="left">
+                    <font size="3" color="#000000" style="text-decoration:none;font-family:Lato light">
+                    <div class="info" Style="align:left;">           
+    
+                    <br>
+                    <p>Please find the QR code attached to this email.   </p> 
+                    <br>
+                    </div>
+    
+                    </br>
+                    <p>-----------------------------------------------------------------------------------------------------------------</p>
+                    </br>
+                    </font>
+                    </div>
+                    </body>';
+    
+                
+                /* Finally send the mail. */
+                $mail->send();
+    
+    
+            }
+            catch (ExceptionMailer $e)
+            {
+            /* PHPMailer exception. */
+            echo $e->errorMessage();
+            //$message = $e->errorMessage();
+            }
+            catch (\Exception $e)
+            {
+            /* PHP exception (note the backslash to select the global namespace Exception class). */
+            echo $e->getMessage();
+            //$message = $e->errorMessage();
+            }
+    
+        }
+    }
+    ?>

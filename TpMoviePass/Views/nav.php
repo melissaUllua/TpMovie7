@@ -33,16 +33,14 @@
                     <li>
                     <div class="dropdown show">
                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="Consults" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Consults</a>
- 
+
                          <div class="dropdown-menu bg-dark" aria-labelledby="Consults">
                            <a class="dropdown-item text-white" href="<?php echo FRONT_ROOT ?>Purchase/ShowConsultsByCinema">Consults by cinemas</a>
                            <a class="dropdown-item text-white" href="<?php echo FRONT_ROOT ?>Purchase/ShowConsultsByMovies">Consults by movies</a>
                 </li> 
                 
+                </li> 
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Display Movies</a>
-               </li>  
-               <li class="nav-item">
                     <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/ShowListView">Display Movies</a>
                </li>  
                            
@@ -50,6 +48,12 @@
                <li class="nav-item">
                     <a class="nav-link" href="<?php echo FRONT_ROOT ?>Movie/updateDatabases">Update Database</a>
                </li>
+                      
+                        <!-- <li class="nav-item ">
+                              <a class="nav-link" href="<?php echo FRONT_ROOT ?>Room/ShowAddView">Add Show Room</a>
+                         </li>
+                         LAS SALAS SE AGREGAN DESDE EDITAR CINES 
+                         -->
               
                <?php    }  ?>
                <li class="nav-item">
