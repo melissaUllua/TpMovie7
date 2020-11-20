@@ -1,10 +1,10 @@
 <?php
 
-use Model\Purchase;
-use DAO\UserDAOBD;
-use Model\PHPMailer;
-use Model\Exception;
-use Model\SMTP;
+use Models\Purchase as Purchase;
+use DAOBD\UserDAOBD as UserDAOBD;
+use Models\PHPMailer as PHPMailer;
+use Models\Exception as Exception;
+use Models\SMTP as SMTP;
 
 
 
@@ -101,15 +101,6 @@ class MailController{
         }
 
     }
-
-
-
-
-
-
-
-
-
 
 
         public function sendPurchaseEmail(Purchase $purchase,$qrsToSend)

@@ -271,9 +271,9 @@ class PurchaseController{
                 $this->ShowPurchaseView($purchase, $message);
 
                 $url = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $purchase->getIdPurchase() . '&choe=UTF-8.jpg';
-                $img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
-                file_put_contents($img, file_get_contents($url));
-                $this->sendPurchaseEmail($purchase);
+                //$img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
+                //file_put_contents($img, file_get_contents($url));
+                $this->sendPurchaseEmail($purchase, $url);
             
             }
             else{
@@ -305,7 +305,7 @@ class PurchaseController{
 
 
 
-        public function sendPurchaseEmail(Purchase $purchase){
+        public function sendPurchaseEmail(Purchase $purchase, $url){
 
 
             $mail = new PHPMailer(TRUE);
@@ -346,8 +346,8 @@ class PurchaseController{
                 $mail->Port = 587;
 
 
-                $mail->AddAttachment('QRimages/' . $purchase->getIdPurchase() . '.jpg');
-
+              //  $mail->AddAttachment('QRimages/' . $purchase->getIdPurchase() . '.jpg');
+            //  $mail->AddAttachment($url);
     
                 $showAux = new Show;
                 $showAux = $purchase->getShow();
@@ -374,7 +374,8 @@ class PurchaseController{
                     <div class="info" Style="align:left;">           
     
                     <br>
-                    <p>Please find the QR code attached to this email.   </p> 
+                  <!--  <p>Please find the QR code in <a href=" '.$url. '"> this </a> link </p> -->
+                    <p> <img src=" '.$url.'"/>
                     <br>
                     </div>
     

@@ -25,10 +25,10 @@ use Models\Cinema as Cinema;
                     <th>Show date</th>
                     <th>Show time</th>
                     <?php  if(isset($_SESSION['isAdmin'])){ ?>
-                    <th>Total Capacity</th>
                     <th>Buy Tickets</th>
                     <?php } 
                    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){ ?>
+                    <th>Total Capacity</th>
                     <th>Delete Show</th>
                     <?php } ?>
 
