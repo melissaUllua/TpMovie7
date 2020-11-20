@@ -21,9 +21,9 @@
 
 
 
-        public function Add(Purchase $purchase, $idCreditCard)   //agrega un genero a la base de datos
+        public function Add(Purchase $purchase, $idCreditCard)  //agrega la compra a la base de datos
         {
-    
+            //var_dump($purchase);
             $query = "INSERT INTO " . $this->tableName .
                 " (IdShow, IdCard, Seats, FinalPrice) VALUES
                     (:IdShow, :IdCard,:Seats, :FinalPrice);";
@@ -48,6 +48,10 @@
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally
+            {
+                return $this->connection->getLastId();
             }
         }
 
@@ -88,14 +92,13 @@
             }
         }
         public function TotalSeatsByShow($IdShow)
-        {///funciona, hay que agregarla a las vistas
+        {///Devuelve la cantidad de asientos comprados en determinado show
            
             try
             {
                 $purchaseList = array();
                 $totalSeats = 0;
                
-                ///funciona bien, necesito ver como pasarlo a una sola variable
                 $query = 'SELECT SUM(seats) as totalSeats FROM '.$this->tableName . ' WHERE IdShow = "' . $IdShow . '";';
                 
                 $this->connection = Connection::GetInstance();
@@ -393,7 +396,7 @@
                 INNER JOIN shows s on p.idShow = s.Idshow
                 INNER JOIN movies m on s.idMovie = " '  . $idMovie . ' "
                 where s.ShowDate BETWEEN " ' .$fisrtDate. ' " AND "' .$lastDate. ' ";';
-                var_dump($query);
+                //var_dump($query);
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
@@ -454,7 +457,7 @@
                   
                   if ($row["TotalIncome"] == null)
                   {
-                      
+                     // var_dump($TotalIncome);
                       $TotalIncome = 0;
                     
                   }

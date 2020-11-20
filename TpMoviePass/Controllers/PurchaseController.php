@@ -18,8 +18,9 @@ use Models\Movie as Movie;
 use Models\CreditCard as CreditCard;
 use Models\Purchase as Purchase;
 use Models\PHPMailer as PHPMailer;
-use Models\ExceptionMailer as ExceptionMailer;
+use Models\Exception as ExceptionMailer;
 use Models\SMTP as SMTP;
+
 
 class PurchaseController{
     private $purchaseDAO;
@@ -29,7 +30,7 @@ class PurchaseController{
        // $this->roomDAO = new RoomDAO();
         $this->purchaseDAO = new PurchaseDAOBD();
     }
-    public function ShowConsultsByMovies()
+    public function ShowConsultsByMovies($TotalIncome = "")
     {
         $movieDAOBD = new MovieDAOBD();
         try{
@@ -52,8 +53,9 @@ class PurchaseController{
             require_once(VIEWS_PATH.'consultsByMovie.php');
             }
     }
-    public function ShowConsultsByCinema()
+    public function ShowConsultsByCinema($TotalIncome = "")
     {
+        //var_dump($totalIncome);
         $CinemaDAO = new CinemaDAOBD();
         $cinemaList = array();
         try{
@@ -78,7 +80,8 @@ class PurchaseController{
     public function ConsultByMovie($IdMovie, $firstDate, $lastDate)
     {
         try{
-        $TotalIncome = $this->purchaseDAO->TotalIncomeByDate($IdMovie, $firstDate, $lastDate);
+        $totalIncome = $this->purchaseDAO->TotalIncomeByDate($IdMovie, $firstDate, $lastDate);
+        //var_dump($totalIncome);
     }
     catch(PDOException $pdoE){
         if($pdoE->getCode() == 1045){
@@ -94,7 +97,8 @@ class PurchaseController{
         finally
         {
         
-        require_once(VIEWS_PATH.'purchase-list.php');
+            $this->ShowConsultsByMovies($totalIncome);
+           // var_dump($totalIncome);
         }
 
 
@@ -117,14 +121,13 @@ class PurchaseController{
         }
         finally
         {
-        require_once(VIEWS_PATH.'purchase-list.php');
+            //var_dump($TotalIncome);
+        $this->ShowConsultsByCinema($TotalIncome);
         }
 
 
     }
-
-    
-    public function ShowBuyView($ShowId, $message="")
+    public function ShowBuyView($ShowId, $message ="")
     {
         ///Verificacion de tickets disponibles
         $Show = new Show();
@@ -201,6 +204,23 @@ class PurchaseController{
             $show = new Show();
             $show->setShowId($ShowId);
             $purchase = new Purchase();
+           // $purchase->setAmountOfSeats($Seats);
+            $TotalSeats = $this->purchaseDAO->TotalSeatsByShow($ShowId);
+            $TotalSeats = $TotalSeats + $Seats;
+            $show = new Show();
+            $showDao = new ShowDAOBD();
+            $show = $showDao->GetOneById($ShowId); //GetOneById
+            $room = new Room();
+            $roomDao = new RoomDAOBD();
+            $room = $roomDao->getOneRoom($show->getShowRoom()->getRoomId());
+            if($TotalSeats > $room->getRoomCapacity()) ///Reviso que la cantidad de asientos agregados sea < que la capacidad
+            {
+                ///Puede que esa no sea la frase correcta
+                $message = "Sorry! There's not available that amount of seats";
+                $this->ShowBuyView($ShowId, $message);
+            }
+            else
+            {
             $purchase->setAmountOfSeats($Seats);
             $cardDAO = new CreditCardDAOBD();
             $creditCard = $cardDAO->GetCardByNumber($CardNumber); //busca una tarjeta por número, retorna un objeto
@@ -218,14 +238,14 @@ class PurchaseController{
             }
                 $flag = $cardDAO->validateData($creditCard, $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear);
             if ($flag == "Success"){
-                $room = new Room();
-                $roomDao = new RoomDAOBD();
-                $show = new Show();
-                $showDao = new ShowDAOBD();
+            //    $room = new Room();
+            //    $roomDao = new RoomDAOBD();
+            //    $show = new Show();
+            //    $showDao = new ShowDAOBD();
 
                 $show = $showDao->GetOneById($ShowId); //GetOneById
-          
                 $room = $roomDao->getOneRoom($show->getShowRoom()->getRoomId());
+               
                 $date= $show->getShowDate();
                 $day = date('l', strtotime($date));
                 $finalPrice = ($room->getroomPrice() * $Seats);
@@ -254,14 +274,14 @@ class PurchaseController{
                 $img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
                 file_put_contents($img, file_get_contents($url));
                 $this->sendPurchaseEmail($purchase);
-
+            
             }
             else{
-                var_dump($flag);
-                //$this->ShowBuyView($ShowId, $message);
+                $message = $flag;
+                $this->ShowBuyView($ShowId, $message);
 
             }
-            
+        }
         }
         catch(PDOException $pdoE){
             if($pdoE->getCode() == 1045){
