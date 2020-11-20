@@ -19,14 +19,14 @@
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-namespace PHPMailer\PHPMailer;
+namespace Models;
 
 /**
  * PHPMailer exception handler.
  *
  * @author Marcus Bointon <phpmailer@synchromedia.co.uk>
  */
-class Exception extends \Exception
+class ExceptionMailer extends \Exception
 {
     /**
      * Prettify error message output.

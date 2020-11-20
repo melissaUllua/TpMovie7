@@ -4,7 +4,6 @@ namespace Controllers;
 
 use \Exception as Exception;
 use \PDOException as PDOException;
-use \MailController as MailController;
 use Models\Show as Show;
 use DAO\ShowDAO as ShowDAO;
 use DAOBD\ShowDAOBD as ShowDAOBD;
@@ -18,6 +17,9 @@ use Models\Cinema as Cinema;
 use Models\Movie as Movie;
 use Models\CreditCard as CreditCard;
 use Models\Purchase as Purchase;
+use Models\PHPMailer as PHPMailer;
+use Models\ExceptionMailer as ExceptionMailer;
+use Models\SMTP as SMTP;
 
 class PurchaseController{
     private $purchaseDAO;
@@ -126,8 +128,7 @@ class PurchaseController{
 
             $this->ShowPurchaseView($purchase);
 
-            //$emailcontroller = new MailController();
-            //$emailcontroller->sendEmailFalopa();
+            $this->sendEmailFalopa($purchase);
 
         }
         catch(PDOException $pdoE){
@@ -144,6 +145,121 @@ class PurchaseController{
         }
             
         }
+
+
+
+        public function sendEmailFalopa(Purchase $purchase){
+
+
+            $mail = new PHPMailer(TRUE);
+    
+            /* Open the try/catch block. */
+            try {
+                /* Set the mail sender. */
+                $mail->setFrom('tpmoviepass.lab4.utn@gmail.com', 'Agus SENDER');
+                
+                /* Add a recipient. */
+                $mail->addAddress('agusttinv@gmail.com', 'Agus RECIPIENT');
+                
+                /* Set the subject. */
+                $mail->Subject = 'esto es un Test';
+    
+                /* SMTP parameters. */
+                
+                /* Tells PHPMailer to use SMTP. */
+                $mail->isSMTP();
+                $mail->isHTML(true);
+                
+                /* SMTP server address. */
+                $mail->Host = 'smtp.gmail.com';
+    
+                /* Use SMTP authentication. */
+                $mail->SMTPAuth = TRUE;
+                
+                /* Set the encryption system. */
+                $mail->SMTPSecure = 'tls';
+                
+                /* SMTP authentication username. */
+                $mail->Username = 'tpmoviepass.lab4.utn@gmail.com';
+                
+                /* SMTP authentication password. */
+                $mail->Password = 'melidaiagus';
+                
+                /* Set the SMTP port. */
+                $mail->Port = 587;
+    
+    
+    
+    
+                $mail->Body    = '<BODY BGCOLOR="White">
+                    <body>
+                    <div Style="align:center;">
+                    <p> PURCHASE INFORMATION  </p>
+                    <pre>
+                    <p>'."Date: AGREGAR FECHA - Hour: AGREGAR HORA </p>
+                    <p>TicketsAmount: AGREGAR PRECIO </p>
+                    <p>Credit Card: AGREGAR CON QUE TARJETA SE PAGO </p>
+                    <p>TOTAL: AGREGAR EL MONTO TOTAL </p>".'
+                    </pre>
+                    <p>
+                    </p>
+                    </div>
+                    </br>
+                    <div style=" height="40" align="left">
+                    <font size="3" color="#000000" style="text-decoration:none;font-family:Lato light">
+                    <div class="info" Style="align:left;">           
+    
+                    <br>
+                    <p>AGREGAR EL ARCHIVO ADJUNTO CON EL QR   </p> 
+                    <br>
+                    </div>
+    
+                    </br>
+                    <p>-----------------------------------------------------------------------------------------------------------------</p>
+                    </br>
+                    </font>
+                    </div>
+                    </body>';
+    
+                
+                /* Finally send the mail. */
+                $mail->send();
+    
+    
+            }
+            catch (ExceptionMailer $e)
+            {
+            /* PHPMailer exception. */
+            echo $e->errorMessage();
+            //$message = $e->errorMessage();
+            }
+            catch (\Exception $e)
+            {
+            /* PHP exception (note the backslash to select the global namespace Exception class). */
+            echo $e->getMessage();
+            //$message = $e->errorMessage();
+            }
+    
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
