@@ -2,9 +2,9 @@
    // require_once('nav.php');
     //require "Config/Autoload.php";
 
-    use Models\Movie as Moevie; 
+    use Models\Movie as Movie; 
     use Models\Room as Room;
-   
+
 ?>
 <main class="py-5">
      <h1></h1>
