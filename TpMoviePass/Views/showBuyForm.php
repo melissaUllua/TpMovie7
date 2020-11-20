@@ -8,14 +8,14 @@
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-          <?php 
+               <h2 class="mb-4 message">Confirm Purchase </h2>
+               <?php 
                if(isset($message))
                {
                     ?> <p class= "message-small"> <?php echo $message; ?> </p>
                     <?php   
                }                                                                                                                                                                                                                                                                                                                                                                                                                               
           ?>
-               <h2 class="mb-4 message">Confirm Purchase </h2>
                <?php
               // var_dump($cinemaID); 
                //for($i=0 ; $i < $totalRooms ; $i++){ ?>

@@ -124,7 +124,7 @@ class PurchaseController{
     }
 
     
-    public function ShowBuyView($ShowId)
+    public function ShowBuyView($ShowId, $message="")
     {
         ///Verificacion de tickets disponibles
         $Show = new Show();
@@ -143,6 +143,11 @@ class PurchaseController{
         } else{
             $message = $pdoE->getMessage();
         }
+        if($pdoE->getCode() == 1062){
+            $message = "There already exists a credit card with that number";
+        } else{
+            $message = $pdoE->getMessage();
+        }
         
          }
         catch(Exception $e){
@@ -154,7 +159,7 @@ class PurchaseController{
         }
     }
 
-    public function ShowPurchaseView($purchase)
+    public function ShowPurchaseView($purchase, $message="")
     {
        $show = new Show();
        $show = $purchase->getShow();
@@ -186,7 +191,7 @@ class PurchaseController{
         }
         finally
         {    
-            require_once(VIEWS_PATH."purchaseList.php");
+            require_once(VIEWS_PATH."purchase-list.php");
         }
     }
 
@@ -198,55 +203,74 @@ class PurchaseController{
             $purchase = new Purchase();
             $purchase->setAmountOfSeats($Seats);
             $cardDAO = new CreditCardDAOBD();
-            $creditCard = new CreditCard();
-            if($cardDAO->ExistsCardNumber($CardNumber)>= 0) //me fijo si la tarjeta existe
-            {
-                $idCreditCard = $cardDAO->ExistsCardNumber($CardNumber); //si existe, me retorna el id de la tarjeta
-            }
-            else
+            $creditCard = $cardDAO->GetCardByNumber($CardNumber); //busca una tarjeta por número, retorna un objeto
+            if($creditCard->getCardNumber() == null) //me fijo si la tarjeta existe
             { //si no existe, la agrego
-            $creditCard = new CreditCard();
-            $creditCard->setCardOwner($Owner);
-            $creditCard->setCardNumber($CardNumber);
-            $creditCard->setCardCvv($Cvv);
-            $creditCard->setCardExpirationMonth($ExpMonth);
-            $creditCard->setCardExpirationYear($ExpYear);
-            $creditCardDao = new CreditCardDAOBD();
-            $creditCardDao->Add($creditCard);
+                $creditCard = new CreditCard();
+                $creditCard->setCardOwner($Owner);
+                $creditCard->setCardNumber($CardNumber);
+                $creditCard->setCardCvv($Cvv);
+                $creditCard->setCardExpirationMonth($ExpMonth);
+                $creditCard->setCardExpirationYear($ExpYear);
+                $creditCardDao = new CreditCardDAOBD();
+                $creditCardDao->Add($creditCard);
+                $idCreditCard = $cardDAO->GetCardByNumber($CardNumber); //ahora me aseguro que la tarjeta está ingresada y que me retorne el Id
+            }
+                $flag = $cardDAO->validateData($creditCard, $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear);
+            if ($flag == "Success"){
+                $room = new Room();
+                $roomDao = new RoomDAOBD();
+                $show = new Show();
+                $showDao = new ShowDAOBD();
 
-            $idCreditCard = $cardDAO->ExistsCardNumber($CardNumber); //ahora me aseguro que la tarjeta está ingresada y que me retorne el Id
+                $show = $showDao->GetOneById($ShowId); //GetOneById
+          
+                $room = $roomDao->getOneRoom($show->getShowRoom()->getRoomId());
+                $date= $show->getShowDate();
+                $day = date('l', strtotime($date));
+                $finalPrice = ($room->getroomPrice() * $Seats);
+                $discount = 0;
+                if ($Seats>=0){
+                    if (($day == 'Tuesday') OR ($day == 'Wednesday')){
+                        $discount = ($finalPrice * 0.25);
+                        $message = "You have $". $discount ." off because the show is on a ". $day;
+                    }
+                    else {
+                        $message = ""; //me aseguro de que retorne un mensaje para poder pasárselo a la vista
+                    }
+
+                }else {
+                    $message = "";
+                }           
+                $finalPrice = $finalPrice - $discount;
+                $purchase->setCreditCard($creditCard);
+                $purchase->setShow($show);
+                $purchase->setFinalPrice($finalPrice);
+                $this->purchaseDAO->Add($purchase, $creditCard->getIdCreditCard());
+
+                $this->ShowPurchaseView($purchase, $message);
+
+                $url = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $purchase->getIdPurchase() . '&choe=UTF-8.jpg';
+                $img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
+                file_put_contents($img, file_get_contents($url));
+                $this->sendPurchaseEmail($purchase);
 
             }
-             
-            //// faltaria el calculo para el precio final////
-            $room = new Room();
-            $roomDao = new RoomDAOBD();
-            $show = new Show();
-            $showDao = new ShowDAOBD();
+            else{
+                var_dump($flag);
+                //$this->ShowBuyView($ShowId, $message);
 
-            $show = $showDao->GetOneById($ShowId); //GetOneById
-          
-            $room = $roomDao->getOneRoom($show->getShowRoom()->getRoomId());
-
-            $finalPrice = ($room->getroomPrice() * $Seats);
-            $purchase->setCreditCard($creditCard);
-            $purchase->setShow($show);
-            $purchase->setFinalPrice($finalPrice);
-            $this->purchaseDAO->Add($purchase, $idCreditCard);
-
-            $this->ShowPurchaseView($purchase);
-
-            $url = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $purchase->getIdPurchase() . '&choe=UTF-8.jpg';
-            $img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
-            file_put_contents($img, file_get_contents($url));
-
-
-            $this->sendPurchaseEmail($purchase);
-
+            }
+            
         }
         catch(PDOException $pdoE){
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
+            } else{
+                $message = $pdoE->getMessage();
+            }
+            if($pdoE->getCode() == 23000){
+                $message = "There already exists a credit card with that number";
             } else{
                 $message = $pdoE->getMessage();
             }
