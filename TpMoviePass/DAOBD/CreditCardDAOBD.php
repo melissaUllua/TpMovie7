@@ -120,4 +120,69 @@ CREATE TABLE IF NOT EXISTS creditCards(IdCard int AUTO_INCREMENT,
             }
         }
 
+        public function GetCardByNumber($ccnumber)
+        {
+            $card = new CreditCard();
+            $query = "SELECT * FROM creditcards WHERE CardNnumber = " . $ccnumber . ";";
+            try {
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+                if($resultSet){
+                    $row = $resultSet[0];
+                    $card->setCardOwner($row['CardOwner']);
+                    $card->setCardNumber($row['CardNnumber']);
+                    $card->setCardCvv($row['CardCvv']);
+                    $card->setCardExpirationMonth($row['CardExpirationMonth']);
+                    $card->setCardExpirationYear($row['CardExpirationYear']);
+                    $card->setIdCreditCard($row['IdCard']);
+
+                }                
+            } catch(PDOException $pdoE){
+                throw $pdoE;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+            finally {
+                return $card;
+            }
+        }
+
+        /**
+         * @return message indicando "Success" en caso de éxito, o tipo de error en caso contrario
+         */
+
+        public function validateData($creditCard, $Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear){
+            if($creditCard->getCardNumber()== $CardNumber){
+                if ($creditCard->getCardOwner()== $Owner){
+                    if($creditCard->getCardCvv()== $Cvv){
+                        if($creditCard->getCardExpirationMonth()== $ExpMonth){
+                            if($creditCard->getCardExpirationYear()== $ExpYear){
+                                $message = "Success";
+
+                            } else {
+                                $message = "Wrong expiration year";
+                            }
+
+                        }else {
+                            $message = "Wrong expiration month";
+                        }
+                    }
+                    else {
+                        $message = "Wrong Cvv";
+                    }
+
+
+                }else{
+                    $message = "Wrong Owner";
+                }
+            }
+            else {
+                $message = "Wrong card number";
+            }
+            return $message;
+        }
+
     }
