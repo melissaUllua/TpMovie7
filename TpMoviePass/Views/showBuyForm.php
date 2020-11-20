@@ -42,7 +42,7 @@
                          </div>
                          <div class="form-group">
                              <label for="cvv">CVV</label>
-                             <input type="text" class="form-control" name="Cvv" maxlength="3" placeholder= "Example: 765" required>
+                             <input type="password" class="form-control" name="Cvv" maxlength="3" placeholder= "Example: 765" required>
                          </div>
                          <div class="col-lg-4">
                                    <label for="">Expiration Month</label>

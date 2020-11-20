@@ -433,7 +433,7 @@
                 INNER JOIN Rooms r on r.IdRoom = s.IdRoom
                 WHERE r.IdCinema = " ' . $idCinema . '" 
                 AND s.ShowDate BETWEEN " ' .$firstDate. ' " AND "' .$lastDate. ' ";';
-                var_dump($query);
+                //var_dump($query);
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
@@ -445,7 +445,7 @@
                   
                   if ($row["TotalIncome"] == null)
                   {
-                      var_dump($totalIncome);
+                      var_dump($TotalIncome);
                       $TotalIncome = 0;
                     
                   }

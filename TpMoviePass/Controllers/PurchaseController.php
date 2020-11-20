@@ -51,9 +51,6 @@ class PurchaseController{
         var_dump($TotalIncome);
         require_once(VIEWS_PATH.'purchase-list.php');
 
-<<<<<<< HEAD
-    public function ShowBuyView($ShowId, $message="")
-=======
 
     }
     public function ConsultByCinema($IdCinema, $firstDate, $lastDate)
@@ -66,7 +63,6 @@ class PurchaseController{
 
     }
     public function ShowBuyView($ShowId)
->>>>>>> 4ba3a86b76ee32b0839856263600cf4fffe270b5
     {
         ///Verificacion de tickets disponibles
         $Show = new Show();
@@ -164,7 +160,12 @@ class PurchaseController{
 
             $this->ShowPurchaseView($purchase);
 
-            $this->sendEmailFalopa($purchase);
+            $url = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $purchase->getIdPurchase() . '&choe=UTF-8.jpg';
+            $img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
+            file_put_contents($img, file_get_contents($url));
+
+
+            $this->sendPurchaseEmail($purchase);
 
         }
         catch(PDOException $pdoE){
@@ -184,7 +185,7 @@ class PurchaseController{
 
 
 
-        public function sendEmailFalopa(Purchase $purchase){
+        public function sendPurchaseEmail(Purchase $purchase){
 
 
             $mail = new PHPMailer(TRUE);
@@ -192,13 +193,13 @@ class PurchaseController{
             /* Open the try/catch block. */
             try {
                 /* Set the mail sender. */
-                $mail->setFrom('tpmoviepass.lab4.utn@gmail.com', 'Agus SENDER');
+                $mail->setFrom('tpmoviepass.lab4.utn@gmail.com', 'TpMoviePass ADMIN');
                 
                 /* Add a recipient. */
-                $mail->addAddress('agusttinv@gmail.com', 'Agus RECIPIENT');
+                $mail->addAddress($_SESSION['userEmail'], $_SESSION['userName']);
                 
                 /* Set the subject. */
-                $mail->Subject = 'esto es un Test';
+                $mail->Subject = 'Tu compra en MoviePass';
     
                 /* SMTP parameters. */
                 
@@ -223,8 +224,15 @@ class PurchaseController{
                 
                 /* Set the SMTP port. */
                 $mail->Port = 587;
+
+
+                $mail->AddAttachment('QRimages/' . $purchase->getIdPurchase() . '.jpg');
+
     
-    
+                $showAux = new Show;
+                $showAux = $purchase->getShow();
+                $creditCardAux = new CreditCard;
+                $creditCardAux = $purchase->getcreditCard();
     
     
                 $mail->Body    = '<BODY BGCOLOR="White">
@@ -232,10 +240,10 @@ class PurchaseController{
                     <div Style="align:center;">
                     <p> PURCHASE INFORMATION  </p>
                     <pre>
-                    <p>'."Date: AGREGAR FECHA - Hour: AGREGAR HORA </p>
-                    <p>TicketsAmount: AGREGAR PRECIO </p>
-                    <p>Credit Card: AGREGAR CON QUE TARJETA SE PAGO </p>
-                    <p>TOTAL: AGREGAR EL MONTO TOTAL </p>".'
+                    <p>'."Date:". $showAux->getShowDate() ." - Hour: " .$showAux->getShowTime()."</p>
+                    <p>Tickets Quantity: " .$purchase->getAmountOfSeats()."</p>
+                    <p>Credit Card: " . $creditCardAux->getCardNumber()."</p>
+                    <p>TOTAL: $" .$purchase->getFinalPrice()."</p>".'
                     </pre>
                     <p>
                     </p>
@@ -246,7 +254,7 @@ class PurchaseController{
                     <div class="info" Style="align:left;">           
     
                     <br>
-                    <p>AGREGAR EL ARCHIVO ADJUNTO CON EL QR   </p> 
+                    <p>Please find the QR code attached to this email.   </p> 
                     <br>
                     </div>
     
