@@ -32,9 +32,9 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
 
 
 
-        public function Add(Purchase $purchase, $idCreditCard)   //agrega un genero a la base de datos
+        public function Add(Purchase $purchase, $idCreditCard)  //agrega la compra a la base de datos
         {
-    
+            //var_dump($purchase);
             $query = "INSERT INTO " . $this->tableName .
                 " (IdShow, IdCard, Seats, FinalPrice) VALUES
                     (:IdShow, :IdCard,:Seats, :FinalPrice);";
@@ -99,14 +99,13 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
             }
         }
         public function TotalSeatsByShow($IdShow)
-        {///funciona, hay que agregarla a las vistas
+        {///Devuelve la cantidad de asientos comprados en determinado show
            
             try
             {
                 $purchaseList = array();
                 $totalSeats = 0;
                
-                ///funciona bien, necesito ver como pasarlo a una sola variable
                 $query = 'SELECT SUM(seats) as totalSeats FROM '.$this->tableName . ' WHERE IdShow = "' . $IdShow . '";';
                 
                 $this->connection = Connection::GetInstance();
@@ -456,7 +455,7 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                   
                   if ($row["TotalIncome"] == null)
                   {
-                      var_dump($totalIncome);
+                      var_dump($TotalIncome);
                       $TotalIncome = 0;
                     
                   }
