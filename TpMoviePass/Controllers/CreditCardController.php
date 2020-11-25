@@ -21,10 +21,16 @@ class CreditCardController{
         require_once(VIEWS_PATH."showBuyForm.php");
     }
 
+    /**
+     * @return 1 si se agregó con éxito, 0 si la tarjeta ya existía- de acuerdo al número de tarjeta
+     */
+
 public function Add($Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
         {
              $creditCard = new CreditCard();
             try{
+                $this->CreditCardDAO->GetCardByNumber($CardNumber);
+                if($creditCard == null){
                 $creditCard->setCardOwner($Owner);
                 $creditCard->setCardNumber($CardNumber);
                 $creditCard->setCardCvv($Cvv);
@@ -32,12 +38,18 @@ public function Add($Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
                 $creditCard->setCardExpirationYear($ExpYear);
             
                 $this->CreditCardDAO->Add($creditCard);
+                $flag = 1; 
+                } 
+                else{
+                    $flag = 0;
+                }
+                
             }
             catch(PDOException $pdoE){
                 if($pdoE->getCode() == 1045){
                     $message = "Wrong DB Password";
                 } else{
-                    $message = $pdo->getMessage();
+                    $message = $pdoE->getMessage();
                 }
                 
             }
@@ -45,7 +57,7 @@ public function Add($Owner, $CardNumber, $Cvv, $ExpMonth, $ExpYear)
                 $message = $e->getMessage();
             } 
             finally{
-               // require_once(VIEWS_PATH."aaprueba.php");
+               return $flag;
             }
 
         }

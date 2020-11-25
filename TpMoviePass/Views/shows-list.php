@@ -2,8 +2,6 @@
 require_once('nav.php');
 use Models\Movie as Movie;
 use Models\Cinema as Cinema;
-use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
-
 
 
 ?>
@@ -27,11 +25,12 @@ use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
                     <th>Show date</th>
                     <th>Show time</th>
                     <?php  if(isset($_SESSION['isAdmin'])){ ?>
+                   
                     <th>Buy Tickets</th>
                     <?php } 
                    if((isset($_SESSION['isAdmin']) && ($_SESSION['isAdmin'] == 1))){ ?>
+                    <th>Total Capacity</th>
                     <th>Delete Show</th>
-                    <th>Total </th>
                     <?php } ?>
 
                 </thead>
@@ -66,6 +65,10 @@ use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
 
                         <?php if($_SESSION['isAdmin'] == 1){ ?>
                         <td>
+                            <?php echo ($purchase->TotalSeatsByShow($show->getShowId()) . "/" . $show->getShowRoom()->getRoomCapacity()) ?>
+
+                        </td>
+                        <td>
                             <form action="<?php echo FRONT_ROOT."Show/DeleteShow/".$show->getShowId();?>" method="get"
                                 class="mb-5">
                                 <input type="hidden" value="<?php echo $show->getShowId();?>" name="IdShow">
@@ -73,17 +76,11 @@ use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
                                     Show</button>
                             </form>
                         </td>
-                        <?php if($_SESSION['isAdmin'] == 1){ ?>
-                        <td>
-                           <?php echo ($purchase->TotalSeatsByShow($show->getShowId()) . "/" . $show->getShowRoom()->getRoomCapacity()) ?>
-                           
-                        </td>
                         <?php } ?>
 
 
                         <?php }
                               }
-                            }
                          ?>
                 </tbody>
             </table>

@@ -9,6 +9,13 @@
     use Models\Show as Show; 
 
     
+   // $idGenreShown = $_GET;
+ 
+   
+
+
+    //getMoviesByIdGenre($idGenre)
+
 ?>
 <main>
 <?php  if(isset($message))
