@@ -35,7 +35,7 @@ class RoomController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
@@ -63,7 +63,7 @@ class RoomController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
@@ -108,7 +108,7 @@ class RoomController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             $this->ShowAddView($cinemaID, $message);
             
@@ -169,7 +169,7 @@ class RoomController{
     if($pdoE->getCode() == 1045){
         $message = "Wrong DB Password";
     } else{
-        $message = $pdo->getMessage();
+        $message = $pdoE->getMessage();
     }
     $this->ShowEditView($idCinema, $message);
 }

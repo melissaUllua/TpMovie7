@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\Ticket as Ticket;    
     use DAOBD\Connection as Connection;
 
@@ -17,6 +18,7 @@
 
         public function Add(Ticket $ticket)
         {
+            $message = ""; 
             try
             { ///if con verificacion de asiento en la sala 
                     $query = "INSERT INTO ".$this->tableName." (IdShow, Purchase, IdUser) 
@@ -28,23 +30,26 @@
                 
                 $this->connection = Connection::GetInstance();
 
-                $this->connection->ExecuteNonQuery($query, $parameters);
-                $message = ""; 
-                  return $message;
+                $this->connection->ExecuteNonQuery($query, $parameters);               
     
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally{
+                 return $message;
+            }
         }
 
         public function GetAll()
         {
+            $TicketList = array();
             try
-            {
-                $TicketList = array();
-
+            {  
                 $query = "SELECT * FROM ".$this->tableName;
 
                 $this->connection = Connection::GetInstance();
@@ -61,11 +66,17 @@
                     array_push($TicketList, $ticket);
                 }
 
-                return $TicketList;
+                
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally{
+                return $TicketList;
             }
         }
         public function GetTicketsByShow($IdShow)
@@ -99,6 +110,10 @@
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally
+            {
+                return $cinemaList;
             }
         }
 

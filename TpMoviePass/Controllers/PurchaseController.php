@@ -17,6 +17,9 @@ use Models\Cinema as Cinema;
 use Models\Movie as Movie;
 use Models\CreditCard as CreditCard;
 use Models\Purchase as Purchase;
+use Models\PHPMailer as PHPMailer;
+use Models\ExceptionMailer as ExceptionMailer;
+use Models\SMTP as SMTP;
 
 class PurchaseController{
     private $purchaseDAO;
@@ -98,7 +101,7 @@ class PurchaseController{
         if($pdoE->getCode() == 1045){
             $message = "Wrong DB Password";
         } else{
-            $message = $pdo->getMessage();
+            $message = $pdoE->getMessage();
         }
         
          }
@@ -175,6 +178,13 @@ class PurchaseController{
             $this->ShowPurchaseView($purchase);
         }
 
+            $url = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $purchase->getIdPurchase() . '&choe=UTF-8.jpg';
+            $img = FRONT_ROOT . 'QRimages/' . $purchase->getIdPurchase() . '.jpg';
+            file_put_contents($img, file_get_contents($url));
+
+
+            $this->sendPurchaseEmail($purchase);
+
         }
         catch(PDOException $pdoE){
             if($pdoE->getCode() == 1045){
@@ -182,13 +192,136 @@ class PurchaseController{
             } else{
                 $message = $pdoE->getMessage();
             }
-            
+            $this->ShowBuyView($ShowId, $message);
         }
         catch(Exception $e){
             $message = $e->getMessage();
+            $this->ShowBuyView($ShowId, $message);
         }
             
         }
+
+
+
+        public function sendPurchaseEmail(Purchase $purchase){
+
+
+            $mail = new PHPMailer(TRUE);
+    
+            /* Open the try/catch block. */
+            try {
+                /* Set the mail sender. */
+                $mail->setFrom('tpmoviepass.lab4.utn@gmail.com', 'TpMoviePass ADMIN');
+                
+                /* Add a recipient. */
+                $mail->addAddress($_SESSION['userEmail'], $_SESSION['userName']);
+                
+                /* Set the subject. */
+                $mail->Subject = 'Tu compra en MoviePass';
+    
+                /* SMTP parameters. */
+                
+                /* Tells PHPMailer to use SMTP. */
+                $mail->isSMTP();
+                $mail->isHTML(true);
+                
+                /* SMTP server address. */
+                $mail->Host = 'smtp.gmail.com';
+    
+                /* Use SMTP authentication. */
+                $mail->SMTPAuth = TRUE;
+                
+                /* Set the encryption system. */
+                $mail->SMTPSecure = 'tls';
+                
+                /* SMTP authentication username. */
+                $mail->Username = 'tpmoviepass.lab4.utn@gmail.com';
+                
+                /* SMTP authentication password. */
+                $mail->Password = 'melidaiagus';
+                
+                /* Set the SMTP port. */
+                $mail->Port = 587;
+
+
+                $mail->AddAttachment('QRimages/' . $purchase->getIdPurchase() . '.jpg');
+
+    
+                $showAux = new Show;
+                $showAux = $purchase->getShow();
+                $creditCardAux = new CreditCard;
+                $creditCardAux = $purchase->getcreditCard();
+    
+    
+                $mail->Body    = '<BODY BGCOLOR="White">
+                    <body>
+                    <div Style="align:center;">
+                    <p> PURCHASE INFORMATION  </p>
+                    <pre>
+                    <p>'."Date:". $showAux->getShowDate() ." - Hour: " .$showAux->getShowTime()."</p>
+                    <p>Tickets Quantity: " .$purchase->getAmountOfSeats()."</p>
+                    <p>Credit Card: " . $creditCardAux->getCardNumber()."</p>
+                    <p>TOTAL: $" .$purchase->getFinalPrice()."</p>".'
+                    </pre>
+                    <p>
+                    </p>
+                    </div>
+                    </br>
+                    <div style=" height="40" align="left">
+                    <font size="3" color="#000000" style="text-decoration:none;font-family:Lato light">
+                    <div class="info" Style="align:left;">           
+    
+                    <br>
+                    <p>Please find the QR code attached to this email.   </p> 
+                    <br>
+                    </div>
+    
+                    </br>
+                    <p>-----------------------------------------------------------------------------------------------------------------</p>
+                    </br>
+                    </font>
+                    </div>
+                    </body>';
+    
+                
+                /* Finally send the mail. */
+                $mail->send();
+    
+    
+            }
+            catch (ExceptionMailer $e)
+            {
+            /* PHPMailer exception. */
+            echo $e->errorMessage();
+            //$message = $e->errorMessage();
+            }
+            catch (\Exception $e)
+            {
+            /* PHP exception (note the backslash to select the global namespace Exception class). */
+            echo $e->getMessage();
+            //$message = $e->errorMessage();
+            }
+    
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
