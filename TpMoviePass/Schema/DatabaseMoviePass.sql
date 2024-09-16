@@ -72,4 +72,16 @@ create table if not exists  Shows(
                             constraint pk_show PRIMARY KEY(IdShow),
                             constraint pfk_show_idMovie FOREIGN KEY(IdMovie) REFERENCES Movies(IdMovie) ON DELETE CASCADE ON UPDATE CASCADE,
                             constraint pfk_show_idRoom FOREIGN KEY(IdRoom) REFERENCES Rooms(IdRoom) ON DELETE CASCADE ON UPDATE CASCADE
-    );
+);
+
+    CREATE TABLE IF NOT EXISTS creditCards(IdCard int AUTO_INCREMENT,
+										IdUser int not null,
+										CardOwner varchar (60) not null,
+										CardNnumber varchar(16) not null,
+                                        CardCvv varchar (3) not null,
+                                        CardExpirationMonth varchar (2) not null,
+                                        CardExpirationYear varchar (4) not null,
+										CONSTRAINT pk_IdCard PRIMARY KEY (IdCard),
+										CONSTRAINT fk_IdUser foreign key(IdUser) references Users(IdUser),
+                                        CONSTRAINT unq_CardNumber unique (CardNnumber)
+);

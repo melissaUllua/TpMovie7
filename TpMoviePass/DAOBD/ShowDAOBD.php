@@ -151,19 +151,16 @@
         }
         public function GetOneById($showID)    //devuelve una función a partir de su ID
         {
-            $show = new Show();
+
             try
             {
-
-                $query = 'SELECT * FROM '.$this->tableName . ' WHERE Idshow =' . "$showID";
-
+                $show = new Show();
+                $query = 'SELECT * FROM '.$this->tableName .' WHERE IdShow = ' . $showID. ';';
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
-                
                 $movie_aux = new MovieDAOBD();
                 $room_aux = new RoomDAOBD();
-                
 
                 if ($resultSet)
                 {                

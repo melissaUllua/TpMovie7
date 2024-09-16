@@ -5,7 +5,6 @@
     use Models\Movie as Movie; 
     //use DAO\MovieDAOBD as MovieDAOBD; 
     use Models\Genre as Genre; 
-    use DAOBD\PurchaseDAOBD as PurchasDAOBD; 
     //use DAO\GenreDAOBD as GenreDAOBD; 
     
     $idGenreShown = $_GET;
@@ -42,8 +41,7 @@
                                              <?php echo ("Duration: " . $movie->getDuration() . " minutes.") ?><br>
                                              <?php echo ("Language: " . $movie->getOriginal_language()) ?><br>
                                              <?php echo ("Release date: " . $movie->getRelease_date()) ?><br>
-                                             <?php echo ("Total income: ". $purchase->GetPurchasesTotalIncomeByMovie($movie->getId())) ?> <br>
-                                             <?php echo ("Total sold seats: ". $purchase->TotalSeatsByMovie($movie->getId())) ?>
+
                                              </div>
                                              </div>
                                    <?php

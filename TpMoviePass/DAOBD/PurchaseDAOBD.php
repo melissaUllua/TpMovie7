@@ -8,18 +8,7 @@
     use Models\CreditCard as CreditCard;       
     use DAOBD\Connection as Connection;
 
-    /*
-CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
-										IdCard int not null,
-										IdShow int not null,
-                                        IdUser int not null,
-                                        Seats int not null,
-										FinalPrice float not null,
-										CONSTRAINT pk_IdPurchase PRIMARY KEY (IdPurchase),
-                                        CONSTRAINT fk_IdCard foreign key(IdCard) references creditCards(IdCard),
-                                        CONSTRAINT fk_IdShow foreign key(IdShow) references Shows(IdShow)
-										);
-     */
+
 
     class PurchaseDAOBD 
     {
@@ -59,6 +48,10 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
             catch(Exception $ex)
             {
                 throw $ex;
+            }
+            finally
+            {
+                return $this->connection->getLastId();
             }
         }
 
@@ -379,10 +372,14 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                   
                 }
             }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
+        
+        catch(PDOException $pdoE){
+            throw $pdoE;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
             finally
             {
                 return $totalSeats; 
@@ -390,15 +387,16 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
         }
         public function TotalIncomeByDate($idMovie, $fisrtDate, $lastDate)
         {
+            $TotalIncome = 0 ;
             try
             {
                 $purchaseList = array();
-                $TotalIncome = 0 ;
+                
                 $query = 'SELECT sum(finalPrice) as TotalIncome FROM ' . $this->tableName .' p
                 INNER JOIN shows s on p.idShow = s.Idshow
                 INNER JOIN movies m on s.idMovie = " '  . $idMovie . ' "
                 where s.ShowDate BETWEEN " ' .$fisrtDate. ' " AND "' .$lastDate. ' ";';
-                var_dump($query);
+                //var_dump($query);
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
@@ -421,6 +419,9 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                   
                 }
             
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
@@ -434,16 +435,17 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
        
         public function TotalIncomeByDateByCinema($idCinema, $firstDate, $lastDate)
         {
+            $TotalIncome = 0 ;
             try
             {
                 $purchaseList = array();
-                $TotalIncome = 0 ;
+                
                 $query = 'SELECT SUM(FinalPrice) as TotalIncome FROM '.$this->tableName .  ' as p 
                 INNER JOIN Shows s on p.IdShow = s.IdShow 
                 INNER JOIN Rooms r on r.IdRoom = s.IdRoom
                 WHERE r.IdCinema = " ' . $idCinema . '" 
                 AND s.ShowDate BETWEEN " ' .$firstDate. ' " AND "' .$lastDate. ' ";';
-                var_dump($query);
+                //var_dump($query);
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
@@ -455,7 +457,7 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                   
                   if ($row["TotalIncome"] == null)
                   {
-                      var_dump($TotalIncome);
+                     // var_dump($TotalIncome);
                       $TotalIncome = 0;
                     
                   }
@@ -467,6 +469,9 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
                   
                 }
             
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
@@ -481,4 +486,3 @@ CREATE TABLE IF NOT EXISTS purchase	(IdPurchase int AUTO_INCREMENT,
       
     }
 ?>
-

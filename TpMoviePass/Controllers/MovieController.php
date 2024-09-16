@@ -9,7 +9,6 @@ use DAO\MovieDAO as MovieDAO;
 use DAO\GenreDAO as GenreDAO;
 use DAOBD\MovieDAOBD as MovieDAOBD;
 use DAOBD\GenreDAOBD as GenreDAOBD;
-use DAOBD\PurchaseDAOBD as PurchaseDAOBD;
 
 
 class MovieController{
@@ -41,7 +40,7 @@ class MovieController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
@@ -70,7 +69,6 @@ class MovieController{
             }else{
                 $movieList = $this->MovieDao->getMoviesByGenre($idGenre);
                 $genreSelected = $this->GenreDao->searchById($idGenre);
-                $purchase = new PurchaseDAOBD();
          
             }
         }
@@ -78,7 +76,7 @@ class MovieController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }
@@ -101,7 +99,7 @@ class MovieController{
             if($pdoE->getCode() == 1045){
                 $message = "Wrong DB Password";
             } else{
-                $message = $pdo->getMessage();
+                $message = $pdoE->getMessage();
             }
             
         }

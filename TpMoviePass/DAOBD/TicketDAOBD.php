@@ -2,6 +2,7 @@
     namespace DAOBD;
 
     use \Exception as Exception;
+    use \PDOException as PDOException;
     use Models\Ticket as Ticket;    
     use DAOBD\Connection as Connection;
 
@@ -17,34 +18,37 @@
 
         public function Add(Ticket $ticket)
         {
+            $message = ""; 
             try
             { ///if con verificacion de asiento en la sala 
-                    $query = "INSERT INTO ".$this->tableName." (IdShow, Purchase, IdUser) 
-                VALUES (:IdShow, :Purchase, :IdUser);";
+                    $query = "INSERT INTO ".$this->tableName." (IdShow, TicketSeatNumber) 
+                VALUES (:IdShow, :TicketSeatNumber);";
                 
-                $parameters["IdShow"] = $ticket->getTicketShow()->getShowId();
-                $parameters["Purchase"] = $ticket->getTicketPurchase();
-                $parameters["IdUser"] = $ticket->getTicketUser()->getUserId();
+                $parameters["IdShow"] = $ticket->getTicketShow();
+                $parameters["TicketSeatNumber"] = $ticket->getTicketSeatNumber();
                 
                 $this->connection = Connection::GetInstance();
 
-                $this->connection->ExecuteNonQuery($query, $parameters);
-                $message = ""; 
-                  return $message;
+                $this->connection->ExecuteNonQuery($query, $parameters);               
     
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally{
+                 return $message;
+            }
         }
 
         public function GetAll()
         {
+            $TicketList = array();
             try
-            {
-                $TicketList = array();
-
+            {  
                 $query = "SELECT * FROM ".$this->tableName;
 
                 $this->connection = Connection::GetInstance();
@@ -55,28 +59,30 @@
                 {                
                     $ticket = new Ticket();
                     $ticket->setTicketShow($row["IdShow"]);
-                    $ticket->setTicketPurchase($row["TicketPurchase"]);
-                    $ticket->setTicketUser($row["IdUser"]);
+                    $ticket->setTicketSeatNumber($row["TicketSeatNumber"]);
                     
                     array_push($TicketList, $ticket);
                 }
 
-                return $TicketList;
+                
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally{
+                return $TicketList;
+            }
         }
-        public function GetTicketsByShow($IdShow)
+        public function getAvailable() ///modificar para disponibles x show
         {
-           
+            $cinemaList = array();
             try
-            {
-                $ticketList = array();
-               
-                
-                $query = 'SELECT * FROM '.$this->tableName . ' WHERE IdShow = "' . $IdShow . '";';
+            {                
+                $query = 'SELECT * FROM '.$this->tableName . ' WHERE cinemaAvailability = "1";';
                 
                 $this->connection = Connection::GetInstance();
 
@@ -84,24 +90,28 @@
                 
                 foreach ($resultSet as $row)
                 {                
-                   
-                    $ticket = new Ticket();
-                    $ticket->setTicketId("IdTicket");
-                    $ticket->setTicketShow($row["IdShow"]);
-                    $ticket->setTicketUser($row["IdUser"]);
+                    $cinema = new Cinema();
+                    $cinema->setCinemaId($row["IdCinema"]);
+                    $cinema->setCinemaName($row["CinemaName"]);
+                    $cinema->setCinemaAddress($row["CinemaAddress"]);
+                    $cinema->setCinemaAvailability($row["CinemaAvailability"]);
+                    
 
-                   
-                    array_push($ticketList, $ticket);
+                    array_push($cinemaList, $cinema);
                 }
-                //var_dump($ticketList);
-                return $ticketList;
+            }
+            catch(PDOException $pdoE){
+                throw $pdoE;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+            finally
+            {
+                return $cinemaList;
+            }
         }
-
     
     } 
     ?>
